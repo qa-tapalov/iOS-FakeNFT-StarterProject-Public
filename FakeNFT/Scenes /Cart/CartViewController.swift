@@ -21,6 +21,41 @@ final class CartViewController: UIViewController {
         return view
     }()
     
+    private lazy var paymentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        view.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var totalCountLabel: UILabel = {
+        let view = UILabel()
+        view.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var totalPriceLabel: UILabel = {
+        let view = UILabel()
+        view.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        view.textColor = .green
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var paymentButton: UIButton = {
+        let view = UIButton()
+        view.setTitle("К оплате", for: .normal)
+        view.titleLabel?.textColor = .white
+        view.backgroundColor = .black
+        view.layer.cornerRadius = 16
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var tableView: UITableView = {
         let view = UITableView(frame: .zero, style: .plain)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -61,16 +96,36 @@ final class CartViewController: UIViewController {
     private func setupView(){
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
+        view.addSubview(paymentView)
+        paymentView.addSubview(paymentButton)
+        paymentView.addSubview(totalCountLabel)
+        paymentView.addSubview(totalPriceLabel)
         tableView.refreshControl = refreshControl
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: paymentView.topAnchor),
             
             emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            paymentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            paymentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            paymentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            paymentView.heightAnchor.constraint(equalToConstant: 76),
+            
+            paymentButton.widthAnchor.constraint(equalToConstant: 240),
+            paymentButton.trailingAnchor.constraint(equalTo: paymentView.trailingAnchor, constant: -16),
+            paymentButton.topAnchor.constraint(equalTo: paymentView.topAnchor, constant: 16),
+            paymentButton.bottomAnchor.constraint(equalTo: paymentView.bottomAnchor, constant: -16),
+            
+            totalCountLabel.topAnchor.constraint(equalTo: paymentButton.topAnchor),
+            totalCountLabel.leadingAnchor.constraint(equalTo: paymentView.leadingAnchor, constant: 16),
+            
+            totalPriceLabel.topAnchor.constraint(equalTo: totalCountLabel.bottomAnchor, constant: 2),
+            totalPriceLabel.leadingAnchor.constraint(equalTo: totalCountLabel.leadingAnchor),
             
         ])
     }
@@ -111,9 +166,13 @@ final class CartViewController: UIViewController {
     }
     
     private func updateUI(){
+        totalCountLabel.text = String(items.count) + " NFT"
+        let totalPrice = items.map {$0.price}.reduce(0, +)
+        totalPriceLabel.text = totalPrice.formatDecimal() + " ETH"
         tableView.isHidden = items.isEmpty
         emptyLabel.isHidden = !items.isEmpty
         navigationItem.rightBarButtonItem = items.isEmpty ? nil : sortButton
+        paymentView.isHidden = items.isEmpty
         tableView.reloadData()
     }
     
@@ -176,4 +235,11 @@ extension CartViewController: DeleteItemFromCartDelegate{
     }
 }
 
-
+extension Double {
+    func formatDecimal() -> String{
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.numberStyle = .decimal
+        return formatter.string(from: NSNumber(value: self)) ?? ""
+    }
+}
