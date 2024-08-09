@@ -83,6 +83,31 @@ final class CartViewController: UIViewController {
     
     @objc
     private func sortItems(){
+        let price = UIAlertAction(title: "По цене", style: .default) { _ in
+            self.items.sort {$0.price < $1.price}
+            self.tableView.reloadData()
+        }
+        
+        let rating = UIAlertAction(title: "По рейтингу", style: .default) { _ in
+            self.items.sort {$0.rating < $1.rating}
+            self.tableView.reloadData()
+        }
+        
+        let name = UIAlertAction(title: "По названию", style: .default) { _ in
+            self.items.sort {$0.title < $1.title}
+            self.tableView.reloadData()
+        }
+        
+        let cancel = UIAlertAction(title: "Закрыть", style: .cancel) { _ in
+            self.dismiss(animated: true)
+        }
+        
+        let alert = UIAlertController(title: .none, message: "Сортировка", preferredStyle: .actionSheet)
+        alert.addAction(price)
+        alert.addAction(rating)
+        alert.addAction(name)
+        alert.addAction(cancel)
+        present(alert, animated: true)
     }
     
     private func updateUI(){
