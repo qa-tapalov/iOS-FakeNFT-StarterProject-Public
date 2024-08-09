@@ -71,7 +71,7 @@ final class CartViewController: UIViewController {
             
             emptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        
+            
         ])
     }
     
@@ -117,6 +117,18 @@ final class CartViewController: UIViewController {
         tableView.reloadData()
     }
     
+    private func showConfirmDeleteView(item: ProductModel, indexPath: IndexPath){
+        let vc = ConfirmDeletionViewController()
+        vc.modalPresentationStyle = .overFullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        vc.itemImage = item.image
+        vc.confirmDelete = { [weak self] in
+            guard let self else {return}
+            self.items.remove(at: indexPath.row)
+            self.updateUI()
+        }
+        self.present(vc, animated: true)
+    }
 }
 
 extension CartViewController: UITableViewDataSource {
@@ -140,12 +152,27 @@ extension CartViewController: UITableViewDataSource {
     }
 }
 extension CartViewController: UITableViewDelegate {
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] action, tableView, complition in
+            guard let self else {return}
+            let item = items[indexPath.row]
+            self.showConfirmDeleteView(item: item, indexPath: indexPath)
+        }
+        
+        let swipeAction = UISwipeActionsConfiguration(actions: [delete])
+        swipeAction.performsFirstActionWithFullSwipe = true
+        return swipeAction
+    }
 }
 
 extension CartViewController: DeleteItemFromCartDelegate{
     func deleteItem(indexPath: IndexPath) {
-       
+        let item = items[indexPath.row]
+        showConfirmDeleteView(item: item, indexPath: indexPath)
     }
 }
 
