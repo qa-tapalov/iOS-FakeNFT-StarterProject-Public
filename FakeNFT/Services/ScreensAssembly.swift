@@ -30,6 +30,9 @@ final class ScreensAssembly: ScreensAssemblyProtocol {
     static func buildProfileScreen() -> UIViewController {
         let profileController = ProfileViewController()
         let navigationController = UINavigationController(rootViewController: profileController)
+        let profileRouter = ProfileRouter(view: profileController)
+        let profilePresenter = ProfilePresenter(view: profileController, router: profileRouter)
+        profileController.presenter = profilePresenter
 
         return navigationController
     }

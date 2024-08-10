@@ -23,7 +23,7 @@ final class ProfileDetailCell: UITableViewCell {
 
     private lazy var titleLabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = .bodyBold
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -31,7 +31,7 @@ final class ProfileDetailCell: UITableViewCell {
 
     private lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = .bodyBold
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

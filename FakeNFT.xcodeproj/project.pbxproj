@@ -46,6 +46,7 @@
 		C3B17C3E2C67ACAE00446588 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C3D2C67ACAE00446588 /* ProfilePresenter.swift */; };
 		C3B17C432C67AF2B00446588 /* ProfileDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C422C67AF2B00446588 /* ProfileDetailCell.swift */; };
 		C3B17C452C6803DC00446588 /* ScreensAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C442C6803DC00446588 /* ScreensAssembly.swift */; };
+		C3B17C482C6813BB00446588 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C472C6813BB00446588 /* ProfileRouter.swift */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
 		E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD40DB2A96BECC00BE7FE8 /* Localizable.strings */; };
@@ -110,6 +111,7 @@
 		C3B17C3D2C67ACAE00446588 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		C3B17C422C67AF2B00446588 /* ProfileDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailCell.swift; sourceTree = "<group>"; };
 		C3B17C442C6803DC00446588 /* ScreensAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreensAssembly.swift; sourceTree = "<group>"; };
+		C3B17C472C6813BB00446588 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
 		E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E1CD40D92A96BE7D00BE7FE8 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -342,10 +344,8 @@
 		C3B17C382C67AB1300446588 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				C3B17C462C6812A300446588 /* Main */,
 				C3B17C3F2C67AECE00446588 /* Cells */,
-				C3B17C3B2C67ACA100446588 /* ProfileScreenModel.swift */,
-				C3B17C392C67AB2300446588 /* ProfileViewController.swift */,
-				C3B17C3D2C67ACAE00446588 /* ProfilePresenter.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -356,6 +356,17 @@
 				C3B17C422C67AF2B00446588 /* ProfileDetailCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		C3B17C462C6812A300446588 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				C3B17C3B2C67ACA100446588 /* ProfileScreenModel.swift */,
+				C3B17C392C67AB2300446588 /* ProfileViewController.swift */,
+				C3B17C3D2C67ACAE00446588 /* ProfilePresenter.swift */,
+				C3B17C472C6813BB00446588 /* ProfileRouter.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		E19CD5A92A98B55900CA39A5 /* Cell */ = {
@@ -559,6 +570,7 @@
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				C3B17C3E2C67ACAE00446588 /* ProfilePresenter.swift in Sources */,
+				C3B17C482C6813BB00446588 /* ProfileRouter.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* NftService.swift in Sources */,
 				C3B17C3A2C67AB2300446588 /* ProfileViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
@@ -752,6 +764,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PW666TFNS4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -764,7 +777,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.practicum.FakeNFT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ykleimenov.FakeNFT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -779,6 +792,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PW666TFNS4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FakeNFT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -791,7 +805,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.practicum.FakeNFT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ykleimenov.FakeNFT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
