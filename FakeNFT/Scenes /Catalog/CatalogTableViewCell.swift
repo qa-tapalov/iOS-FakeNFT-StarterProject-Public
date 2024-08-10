@@ -8,6 +8,8 @@
 import UIKit
 
 final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
+    static let identifier = "CatalogCell"
+    
     private lazy var catalogImage: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
@@ -34,7 +36,6 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     private func setupCatalogTableViewCell() {
-        // TODO: реализовать элементы на экране католога
         backgroundColor = .clear
         selectionStyle = .none
         addSubviews()
