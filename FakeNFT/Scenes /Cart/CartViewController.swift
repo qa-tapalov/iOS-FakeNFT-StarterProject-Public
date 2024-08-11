@@ -8,9 +8,7 @@
 import UIKit
 
 final class CartViewController: UIViewController {
-    
-    let servicesAssembly: ServicesAssembly
-    
+        
     let refreshControl = UIRefreshControl()
     
     var items: [ProductModel] = [ProductModel(image: UIImage(resource: .stub), title: "Test 1", rating: 3, price: 3.32),ProductModel(image: UIImage(resource: .stub), title: "Test 2", rating: 2, price: 3),ProductModel(image: UIImage(resource: .stub), title: "Test 3", rating: 3, price: 1.3),ProductModel(image: UIImage(resource: .stub), title: "Test 4", rating: 4, price: 64.3)]
@@ -76,15 +74,6 @@ final class CartViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    init(servicesAssembly: ServicesAssembly) {
-        self.servicesAssembly = servicesAssembly
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

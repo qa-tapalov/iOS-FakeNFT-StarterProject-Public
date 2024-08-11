@@ -43,13 +43,13 @@ final class TabBarController: UITabBarController {
         //        let catalogViewController =
         //        catalogViewController.tabBarItem = catalogTabBarItem
         //        
-        //        let cartViewController = UINavigationController(rootViewController: )
-        //        cartViewController.tabBarItem = cartTabBarItem
+                let cartViewController = UINavigationController(rootViewController: CartViewController())
+                cartViewController.tabBarItem = cartTabBarItem
         //        
         //        let statisticViewController = UINavigationController(rootViewController: )
         //        statsViewController.tabBarItem = statisticsTabBarItem
         //        
-        //        viewControllers = [profileViewController, catalogViewController, cartViewController, statisticViewController]
+                viewControllers = [cartViewController]
         //
       
     }
