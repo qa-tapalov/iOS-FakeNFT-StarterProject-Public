@@ -1,38 +1,53 @@
 import UIKit
 
-// final class TabBarController: UITabBarController {
-//
-//    var servicesAssembly: ServicesAssembly!
-//
-//    private let catalogTabBarItem = UITabBarItem(
-//        title: NSLocalizedString("Tab.catalog", comment: ""),
-//        image: UIImage(systemName: "square.stack.3d.up.fill"),
-//        tag: 0
-//    )
-//
-//    private let profileTabBarItem = UITabBarItem(
-//        title: "Профиль",
-//        image: UIImage(systemName: "person.crop.circle.fill"),
-//        tag: 0
-//    )
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        let catalogController = TestCatalogViewController(
-//            servicesAssembly: servicesAssembly
-//        )
-//        catalogController.tabBarItem = catalogTabBarItem
-//
-//        let profileController = ProfileViewController(
-//            servicesAssembly: servicesAssembly
-//        )
-//        profileController.tabBarItem = profileTabBarItem
-//
-//        viewControllers = [catalogController, profileController]
-//
-//        view.backgroundColor = .systemBackground
-//    }
-//    
-//    
-// }
+final class TabBarController: UITabBarController {
+    
+    private let profileTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.profile", comment: "Профиль"),
+        image: UIImage(resource: .tabProfile),
+        tag: 0
+    )
+    
+    private let catalogTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.catalog", comment: "Каталог"),
+        image: UIImage(resource: .tabCatalog),
+        tag: 1
+    )
+    
+    private let cartTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.cart", comment: "Корзина"),
+        image: UIImage(resource: .tabCart),
+        tag: 2
+    )
+    
+    private let statisticsTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.statistics", comment: "Статистика"),
+        image: UIImage(resource: .tabStatistic),
+        tag: 3
+    )
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTabBar()
+    }
+    
+    private func setupTabBar() {
+        view.backgroundColor = UIColor.systemBackground
+        
+        //        let profileViewController = UINavigationController(rootViewController: )
+        //        profileViewController.tabBarItem = profileTabBarItem
+        //
+        //        let catalogViewController = UINavigationController(rootViewController: )
+        //        catalogViewController.tabBarItem = catalogTabBarItem
+        //
+        //        let cartViewController = UINavigationController(rootViewController: )
+        //        cartViewController.tabBarItem = cartTabBarItem
+        //
+        //        let statisticViewController = UINavigationController(rootViewController: )
+        //        statsViewController.tabBarItem = statisticsTabBarItem
+        //
+        //        viewControllers = [profileViewController, catalogViewController, cartViewController, statisticViewController]
+        //
+        
+    }
+}
