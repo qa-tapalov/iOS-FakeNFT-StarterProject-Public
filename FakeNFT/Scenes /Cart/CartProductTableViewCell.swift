@@ -27,7 +27,7 @@ final class CartProductTableViewCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = .bodyBold
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -40,19 +40,19 @@ final class CartProductTableViewCell: UITableViewCell {
         
         for _ in 0..<5 {
             let starImageView = UIImageView(image: UIImage(systemName: "star.fill"))
-            starImageView.tintColor = .gray
+            starImageView.tintColor = UIColor.init(hexString: "F7F7F8")
             starImageView.translatesAutoresizingMaskIntoConstraints = false
-            starImageView.widthAnchor.constraint(equalToConstant: 14).isActive = true
-            starImageView.heightAnchor.constraint(equalToConstant: 14).isActive = true
+            starImageView.widthAnchor.constraint(equalToConstant: 12).isActive = true
+            starImageView.heightAnchor.constraint(equalToConstant: 12).isActive = true
             stackView.addArrangedSubview(starImageView)
         }
-        stackView.arrangedSubviews.first?.tintColor = .yellow
+        stackView.arrangedSubviews.first?.tintColor = UIColor.init(hexString: "FEEF0D")
         return stackView
     }()
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = .bodyBold
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -60,7 +60,7 @@ final class CartProductTableViewCell: UITableViewCell {
     private lazy var priceTextLabel: UILabel = {
         let label = UILabel()
         label.text = "Цена"
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = .caption2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -124,7 +124,7 @@ final class CartProductTableViewCell: UITableViewCell {
         self.indexPath = indexPath
         for (index, view) in starRatingView.arrangedSubviews.enumerated() {
             if let starImageView = view as? UIImageView {
-                starImageView.tintColor = index < rating ? .yellow : .gray
+                starImageView.tintColor = index < rating ? UIColor.init(hexString: "FEEF0D") : UIColor.init(hexString: "F7F7F8")
             }
         }
         priceLabel.text = String(price) + " ETH"

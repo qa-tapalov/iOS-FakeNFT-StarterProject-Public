@@ -23,7 +23,7 @@ final class CartViewController: UIViewController {
     
     private lazy var paymentView: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor.init(hexString: "F7F7F8")
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
         view.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMinYCorner]
@@ -33,15 +33,15 @@ final class CartViewController: UIViewController {
     
     private lazy var totalCountLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        view.font = .caption1
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var totalPriceLabel: UILabel = {
         let view = UILabel()
-        view.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        view.textColor = .green
+        view.font = .bodyBold
+        view.textColor = UIColor.init(hexString: "1C9F00")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -49,6 +49,7 @@ final class CartViewController: UIViewController {
     private lazy var paymentButton: UIButton = {
         let view = UIButton()
         view.setTitle("К оплате", for: .normal)
+        view.titleLabel?.font = .bodyBold
         view.titleLabel?.textColor = .white
         view.backgroundColor = .black
         view.layer.cornerRadius = 16
@@ -71,7 +72,7 @@ final class CartViewController: UIViewController {
     private lazy var emptyLabel: UILabel = {
         let view = UILabel()
         view.text = "Корзина пустая"
-        view.font = UIFont.systemFont(ofSize: 22)
+        view.font = .bodyBold
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
