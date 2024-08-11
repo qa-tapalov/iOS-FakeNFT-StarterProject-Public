@@ -18,6 +18,7 @@ final class EditProfileViewController: UIViewController {
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "multiply"), for: .normal)
+        button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -58,6 +59,12 @@ final class EditProfileViewController: UIViewController {
         return tableView
     }()
     
+    private var model: EditProfileScreenModel = .empty {
+        didSet {
+            setup()
+        }
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -67,12 +74,18 @@ final class EditProfileViewController: UIViewController {
     
     // MARK: - Private methods
     
+    private func setup() {
+        avatarImageView.image = model.image
+    }
+    
     private func setupView() {
         view.backgroundColor = .white
         view.addSubview(tableView)
         view.addSubview(avatarImageView)
         view.addSubview(backButton)
         setupTableView()
+        configureAvatarImageView()
+        configureBackButton()
     }
     
     private func setupTableView() {
@@ -116,23 +129,100 @@ final class EditProfileViewController: UIViewController {
             backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.backButtonTop),
             backButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.horizont)
         ])
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+    }
+    
+    private func tableDataCell(indexPath: IndexPath) -> Cell {
+        let section = model.tableData.sections[indexPath.section]
+        
+        switch section {
+        case .headeredSection(_, cells: let cells):
+            return cells[indexPath.row]
+        }
+    }
+    
+    private func configureTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
+    @objc private func backButtonTapped() {
+        // TODO: - Add changes save logic
+        dismiss(animated: true)
     }
 }
 
+// MARK: - UITextFieldDelegate
+
+extension EditProfileViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
 
 // MARK: - UITableViewDelegate
 
 extension EditProfileViewController: UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        model.tableData.sections.count
+    }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch model.tableData.sections[section] {
+        case .headeredSection(_, cells: let cells):
+            return cells.count
+        }
+    }
 }
 
 // MARK: - UITableViewDataSource
 
 extension EditProfileViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellType = tableDataCell(indexPath: indexPath)
+        let cell: UITableViewCell
+        
+        switch cellType {
+        case let .textViewCell(model):
+            guard let textViewCell = tableView.dequeueReusableCell(withIdentifier: TextViewCell.identifier, for: indexPath) as? TextViewCell else { return UITableViewCell() }
+            textViewCell.model = model
+            cell = textViewCell
+        case let .textFieldCell(model):
+            guard let textFieldCell = tableView.dequeueReusableCell(withIdentifier: TextFieldCell.identifier, for: indexPath) as? TextFieldCell else { return UITableViewCell() }
+            textFieldCell.model = model
+            cell = textFieldCell
+        }
+        return cell
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as? TableHeaderView else {
+            return nil
+        }
+        
+        let headerText: String
+        
+        switch model.tableData.sections[section] {
+        case .headeredSection(header: let header, _):
+            headerText = header
+        }
+        
+        headerView.setup(with: headerText)
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 // MARK: - Constants

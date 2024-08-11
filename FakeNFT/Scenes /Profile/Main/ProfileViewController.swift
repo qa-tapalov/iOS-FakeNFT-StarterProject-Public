@@ -182,6 +182,7 @@ final class ProfileViewController: UIViewController {
             style: .plain,
             target: self,
             action: #selector(editButtonTapped))
+        editButton.tintColor = .black
         navigationItem.rightBarButtonItem = editButton
     }
 
