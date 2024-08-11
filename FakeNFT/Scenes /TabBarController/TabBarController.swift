@@ -2,8 +2,6 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     
-    var servicesAssembly: ServicesAssembly!
-    
     private let profileTabBarItem = UITabBarItem(
         title: NSLocalizedString("Tab.profile", comment: "Профиль"),
         image: UIImage(resource: .tabProfile),
@@ -36,21 +34,20 @@ final class TabBarController: UITabBarController {
     private func setupTabBar() {
         view.backgroundColor = UIColor.systemBackground
         
-        
         //        let profileViewController = UINavigationController(rootViewController: )
         //        profileViewController.tabBarItem = profileTabBarItem
-        //        
-        //        let catalogViewController =
+        //
+        //        let catalogViewController = UINavigationController(rootViewController: )
         //        catalogViewController.tabBarItem = catalogTabBarItem
-        //        
+        //
         //        let cartViewController = UINavigationController(rootViewController: )
         //        cartViewController.tabBarItem = cartTabBarItem
-        //        
+        //
         //        let statisticViewController = UINavigationController(rootViewController: )
         //        statsViewController.tabBarItem = statisticsTabBarItem
-        //        
+        //
         //        viewControllers = [profileViewController, catalogViewController, cartViewController, statisticViewController]
         //
-      
+        
     }
 }
