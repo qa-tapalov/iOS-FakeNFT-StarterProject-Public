@@ -36,6 +36,7 @@ final class TabBarController: UITabBarController {
     private func setupTabBar() {
         view.backgroundColor = UIColor.systemBackground
         
+        
         //        let profileViewController = UINavigationController(rootViewController: )
         //        profileViewController.tabBarItem = profileTabBarItem
         //        
