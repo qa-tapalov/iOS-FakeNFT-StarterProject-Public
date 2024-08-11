@@ -10,6 +10,12 @@ final class TabBarController: UITabBarController {
         tag: 0
     )
     
+    private let catalogTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.catalog", comment: "Каталог"),
+        image: UIImage(resource: .tabCatalog),
+        tag: 1
+    )
+    
     private let cartTabBarItem = UITabBarItem(
         title: "Корзина",
         image: UIImage(resource: .cart),
