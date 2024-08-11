@@ -12,7 +12,6 @@ protocol ScreensAssemblyProtocol: AnyObject {
 }
 
 final class ScreensAssembly: ScreensAssemblyProtocol {
-
     static func buildMainScreen() -> UIViewController {
         let tabBarController = UITabBarController()
         let profileController = Self.buildProfileScreen()
@@ -21,7 +20,6 @@ final class ScreensAssembly: ScreensAssemblyProtocol {
             title: NSLocalizedString("Профиль", comment: ""),
             image: UIImage(systemName: "person.crop.circle.fill"),
             tag: 0)
-
         tabBarController.viewControllers = [profileController]
 
         return tabBarController

@@ -41,6 +41,11 @@
 		3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */; };
 		3FC8C39129D2453B0081F015 /* ExampleRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39029D2453B0081F015 /* ExampleRequest.swift */; };
 		3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */; };
+		C3370ECB2C682A1400E6AD29 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3370ECA2C682A1400E6AD29 /* EditProfileViewController.swift */; };
+		C3370ECD2C682A4F00E6AD29 /* EditProfileScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3370ECC2C682A4F00E6AD29 /* EditProfileScreenModel.swift */; };
+		C3370ECF2C682A5A00E6AD29 /* EditProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3370ECE2C682A5A00E6AD29 /* EditProfilePresenter.swift */; };
+		C3370ED12C682D4B00E6AD29 /* TextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3370ED02C682D4B00E6AD29 /* TextViewCell.swift */; };
+		C3370ED32C682D9A00E6AD29 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3370ED22C682D9A00E6AD29 /* TextFieldCell.swift */; };
 		C3B17C3A2C67AB2300446588 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C392C67AB2300446588 /* ProfileViewController.swift */; };
 		C3B17C3C2C67ACA100446588 /* ProfileScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C3B2C67ACA100446588 /* ProfileScreenModel.swift */; };
 		C3B17C3E2C67ACAE00446588 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C3D2C67ACAE00446588 /* ProfilePresenter.swift */; };
@@ -106,6 +111,12 @@
 		3FC8C38A29D242E90081F015 /* ProductDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		3FC8C39029D2453B0081F015 /* ExampleRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRequest.swift; sourceTree = "<group>"; };
 		3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatters+Presets.swift"; sourceTree = "<group>"; };
+		C3370ECA2C682A1400E6AD29 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		C3370ECC2C682A4F00E6AD29 /* EditProfileScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileScreenModel.swift; sourceTree = "<group>"; };
+		C3370ECE2C682A5A00E6AD29 /* EditProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfilePresenter.swift; sourceTree = "<group>"; };
+		C3370ED02C682D4B00E6AD29 /* TextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCell.swift; sourceTree = "<group>"; };
+		C3370ED22C682D9A00E6AD29 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
+		C3370ED42C68D12600E6AD29 /* Decomposition.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Decomposition.md; sourceTree = "<group>"; };
 		C3B17C392C67AB2300446588 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C3B17C3B2C67ACA100446588 /* ProfileScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenModel.swift; sourceTree = "<group>"; };
 		C3B17C3D2C67ACAE00446588 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
@@ -341,10 +352,22 @@
 			path = Requests;
 			sourceTree = "<group>";
 		};
+		C3370EC92C6829F200E6AD29 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				C3370ECC2C682A4F00E6AD29 /* EditProfileScreenModel.swift */,
+				C3370ECA2C682A1400E6AD29 /* EditProfileViewController.swift */,
+				C3370ECE2C682A5A00E6AD29 /* EditProfilePresenter.swift */,
+			);
+			path = EditProfile;
+			sourceTree = "<group>";
+		};
 		C3B17C382C67AB1300446588 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				C3370ED42C68D12600E6AD29 /* Decomposition.md */,
 				C3B17C462C6812A300446588 /* Main */,
+				C3370EC92C6829F200E6AD29 /* EditProfile */,
 				C3B17C3F2C67AECE00446588 /* Cells */,
 			);
 			path = Profile;
@@ -354,6 +377,8 @@
 			isa = PBXGroup;
 			children = (
 				C3B17C422C67AF2B00446588 /* ProfileDetailCell.swift */,
+				C3370ED02C682D4B00E6AD29 /* TextViewCell.swift */,
+				C3370ED22C682D9A00E6AD29 /* TextFieldCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -569,6 +594,7 @@
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				C3370ECD2C682A4F00E6AD29 /* EditProfileScreenModel.swift in Sources */,
 				C3B17C3E2C67ACAE00446588 /* ProfilePresenter.swift in Sources */,
 				C3B17C482C6813BB00446588 /* ProfileRouter.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* NftService.swift in Sources */,
@@ -586,10 +612,14 @@
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
+				C3370ECF2C682A5A00E6AD29 /* EditProfilePresenter.swift in Sources */,
+				C3370ECB2C682A1400E6AD29 /* EditProfileViewController.swift in Sources */,
+				C3370ED32C682D9A00E6AD29 /* TextFieldCell.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
 				0CFCB7492A7808900009A829 /* TestCatalogController.swift in Sources */,
+				C3370ED12C682D4B00E6AD29 /* TextViewCell.swift in Sources */,
 				C3B17C432C67AF2B00446588 /* ProfileDetailCell.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
 				0CFCB7442A7802440009A829 /* NftDetailInput.swift in Sources */,

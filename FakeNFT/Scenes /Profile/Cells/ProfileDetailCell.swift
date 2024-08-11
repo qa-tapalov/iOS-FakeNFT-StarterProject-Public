@@ -103,6 +103,8 @@ final class ProfileDetailCell: UITableViewCell {
     }
 }
 
+// MARK: - Constants
+
 private extension CGFloat {
     static let subtitleGap: CGFloat = 8
 }
