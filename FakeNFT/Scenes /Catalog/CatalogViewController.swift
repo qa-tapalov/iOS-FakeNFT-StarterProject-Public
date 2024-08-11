@@ -6,8 +6,15 @@
 //
 
 import UIKit
+import Kingfisher
 
-final class CatalogViewController: UIViewController {
+protocol CatalogViewControllerProtocol: AnyObject {
+    func reloadCatalogTableView()
+}
+
+final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
+    private weak var presenter: CatalogPresenterProtocol?
+    
     private lazy var sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
             image: UIImage( systemName: "text.justifyleft"),
@@ -32,8 +39,19 @@ final class CatalogViewController: UIViewController {
         return tableView
     }()
     
+    init(presenter: CatalogPresenterProtocol? = nil) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.catalogView = self
+        presenter?.getNftCollections()
         setupCatalogViewController()
     }
     
@@ -75,16 +93,30 @@ final class CatalogViewController: UIViewController {
     }
 }
 
+// MARK: - CatalogViewController
+extension CatalogViewController {
+    func reloadCatalogTableView() {
+        catalogTableView.reloadData()
+    }
+}
+
 // MARK: - UITableViewDataSource
 extension CatalogViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return presenter?.collectionsNft.count ?? .zero
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = catalogTableView.dequeueReusableCell(withIdentifier: CatalogTableViewCell.identifier, for: indexPath) as? CatalogTableViewCell else {
             return UITableViewCell()
         }
+        guard let collection = presenter?.collectionsNft[indexPath.row] else { return cell }
+        
+        let collectionCover = URL(string: collection.cover)
+        cell.catalogImage.kf.indicatorType = .activity
+        cell.catalogImage.kf.setImage(with: collectionCover)
+        cell.catalogLabel.text = "\(collection.name) (\(collection.nfts.count))"
+        
         return cell
     }
 }

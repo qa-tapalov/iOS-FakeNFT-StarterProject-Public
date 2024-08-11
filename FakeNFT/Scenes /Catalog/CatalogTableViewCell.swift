@@ -10,7 +10,7 @@ import UIKit
 final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     static let identifier = "CatalogCell"
     
-    private lazy var catalogImage: UIImageView = {
+    lazy var catalogImage: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 12
         image.clipsToBounds = true
@@ -18,7 +18,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
         return image
     }()
     
-    private lazy var catalogLabel: UILabel = {
+    lazy var catalogLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
         label.textColor = .textPrimary
