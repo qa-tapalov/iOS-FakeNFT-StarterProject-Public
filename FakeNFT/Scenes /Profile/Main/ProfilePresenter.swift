@@ -31,7 +31,7 @@ extension ProfilePresenter: ProfilePresenterProtocol {
     }
 
     func editProfile() {
-        // TODO: - Add navigation to editProfile screen
+        router?.showEditProfile()
     }
 
     func showWebsite(URL: URL) {

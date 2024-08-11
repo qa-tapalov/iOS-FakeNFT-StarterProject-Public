@@ -10,7 +10,7 @@ import UIKit
 struct TextViewCellModel {
     var text: String
     var textDidChanged: (String) -> Void
-    
+
     static let empty: TextViewCellModel = TextViewCellModel(
         text: "",
         textDidChanged: { _ in }
@@ -18,13 +18,13 @@ struct TextViewCellModel {
 }
 
 final class TextViewCell: UITableViewCell {
-    
+
     // MARK: - Properties
-    
+
     static let identifier = "TextViewCell"
-    
+
     // MARK: - UI Elements
-    
+
     private lazy var textView: UITextView = {
         let textView = UITextView()
         textView.font = .bodyRegular
@@ -35,15 +35,15 @@ final class TextViewCell: UITableViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
-    
+
     var model: TextViewCellModel = .empty {
         didSet {
             setup()
         }
     }
-    
+
     // MARK: - Init
-    
+
     override init(
         style: UITableViewCell.CellStyle,
         reuseIdentifier: String?
@@ -51,21 +51,21 @@ final class TextViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureTextView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Private methods
-    
+
     private func setup() {
         textView.text = model.text
     }
-    
+
     private func configureTextView() {
         contentView.backgroundColor = .segmentInactive
         contentView.addSubview(textView)
-        
+
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: contentView.topAnchor),
             textView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .horizont),

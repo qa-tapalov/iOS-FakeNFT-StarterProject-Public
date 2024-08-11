@@ -46,6 +46,8 @@
 		C3370ECF2C682A5A00E6AD29 /* EditProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3370ECE2C682A5A00E6AD29 /* EditProfilePresenter.swift */; };
 		C3370ED12C682D4B00E6AD29 /* TextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3370ED02C682D4B00E6AD29 /* TextViewCell.swift */; };
 		C3370ED32C682D9A00E6AD29 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3370ED22C682D9A00E6AD29 /* TextFieldCell.swift */; };
+		C37F82152C691FF100AE1F49 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37F82142C691FF100AE1F49 /* Profile.swift */; };
+		C37F82172C6928D500AE1F49 /* TableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37F82162C6928D500AE1F49 /* TableHeaderView.swift */; };
 		C3B17C3A2C67AB2300446588 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C392C67AB2300446588 /* ProfileViewController.swift */; };
 		C3B17C3C2C67ACA100446588 /* ProfileScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C3B2C67ACA100446588 /* ProfileScreenModel.swift */; };
 		C3B17C3E2C67ACAE00446588 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B17C3D2C67ACAE00446588 /* ProfilePresenter.swift */; };
@@ -117,6 +119,8 @@
 		C3370ED02C682D4B00E6AD29 /* TextViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewCell.swift; sourceTree = "<group>"; };
 		C3370ED22C682D9A00E6AD29 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		C3370ED42C68D12600E6AD29 /* Decomposition.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Decomposition.md; sourceTree = "<group>"; };
+		C37F82142C691FF100AE1F49 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		C37F82162C6928D500AE1F49 /* TableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
 		C3B17C392C67AB2300446588 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C3B17C3B2C67ACA100446588 /* ProfileScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenModel.swift; sourceTree = "<group>"; };
 		C3B17C3D2C67ACAE00446588 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
@@ -379,6 +383,7 @@
 				C3B17C422C67AF2B00446588 /* ProfileDetailCell.swift */,
 				C3370ED02C682D4B00E6AD29 /* TextViewCell.swift */,
 				C3370ED22C682D9A00E6AD29 /* TextFieldCell.swift */,
+				C37F82162C6928D500AE1F49 /* TableHeaderView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -390,6 +395,7 @@
 				C3B17C392C67AB2300446588 /* ProfileViewController.swift */,
 				C3B17C3D2C67ACAE00446588 /* ProfilePresenter.swift */,
 				C3B17C472C6813BB00446588 /* ProfileRouter.swift */,
+				C37F82142C691FF100AE1F49 /* Profile.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -594,6 +600,7 @@
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
+				C37F82172C6928D500AE1F49 /* TableHeaderView.swift in Sources */,
 				C3370ECD2C682A4F00E6AD29 /* EditProfileScreenModel.swift in Sources */,
 				C3B17C3E2C67ACAE00446588 /* ProfilePresenter.swift in Sources */,
 				C3B17C482C6813BB00446588 /* ProfileRouter.swift in Sources */,
@@ -614,6 +621,7 @@
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				C3370ECF2C682A5A00E6AD29 /* EditProfilePresenter.swift in Sources */,
 				C3370ECB2C682A1400E6AD29 /* EditProfileViewController.swift in Sources */,
+				C37F82152C691FF100AE1F49 /* Profile.swift in Sources */,
 				C3370ED32C682D9A00E6AD29 /* TextFieldCell.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,

@@ -178,7 +178,7 @@ final class ProfileViewController: UIViewController {
 
     private func configureNavigationBar() {
         let editButton = UIBarButtonItem(
-            image: UIImage(systemName: "pencil"), // TODO: - Change to design asset
+            image: UIImage(systemName: "square.and.pencil"),
             style: .plain,
             target: self,
             action: #selector(editButtonTapped))
@@ -225,7 +225,7 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func editButtonTapped() {
-        // TODO: - Add presenter logic for editButton
+        presenter.editProfile()
     }
 }
 
