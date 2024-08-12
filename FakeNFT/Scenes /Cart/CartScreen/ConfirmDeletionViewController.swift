@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ConfirmDeletionViewController: UIViewController {
     
-    var itemImage: UIImage?
+    var itemImage: String?
     var confirmDelete: (() -> Void)?
     private lazy var blurEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .light)
@@ -38,38 +39,43 @@ class ConfirmDeletionViewController: UIViewController {
     private lazy var confirmationLabel: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.text = "Вы уверены, что хотите удалить объект из корзины?"
+        view.text = "Вы уверены, что хотите\n удалить объект из корзины?"
+        view.font = .caption2
         view.textAlignment = .center
-        view.numberOfLines = 0
+        view.numberOfLines = 2
         return view
     }()
     
     private lazy var deleteButton: UIButton = {
-           let button = UIButton(type: .system)
-           button.setTitle("Удалить", for: .normal)
-           button.setTitleColor(.red, for: .normal)
-           button.backgroundColor = .black
-           button.layer.cornerRadius = 12
-           button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-           button.translatesAutoresizingMaskIntoConstraints = false
-           return button
-       }()
-
-       private lazy var returnButton: UIButton = {
-           let button = UIButton(type: .system)
-           button.setTitle("Вернуться", for: .normal)
-           button.setTitleColor(.white, for: .normal)
-           button.backgroundColor = .black
-           button.layer.cornerRadius = 12
-           button.addTarget(self, action: #selector(returnButtonTapped), for: .touchUpInside)
-           button.translatesAutoresizingMaskIntoConstraints = false
-           return button
-       }()
-
+        let button = UIButton(type: .system)
+        button.setTitle("Удалить", for: .normal)
+        button.setTitleColor(UIColor.init(hexString: "F56B6C"), for: .normal)
+        button.titleLabel?.font = .bodyRegular
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 12
+        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private lazy var returnButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Вернуться", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .bodyRegular
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 12
+        button.addTarget(self, action: #selector(returnButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        imageView.image = itemImage
+        if let itemImage {
+            imageView.kf.setImage(with: URL(string: itemImage))
+        }
     }
     
     private func setupView(){
@@ -82,27 +88,27 @@ class ConfirmDeletionViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             containerView.centerXAnchor.constraint(equalTo: blurEffectView.contentView.centerXAnchor),
-            containerView.centerYAnchor.constraint(equalTo: blurEffectView.contentView.centerYAnchor),
-            containerView.leadingAnchor.constraint(equalTo: blurEffectView.contentView.leadingAnchor, constant: 20),
-            containerView.trailingAnchor.constraint(equalTo: blurEffectView.contentView.trailingAnchor, constant: -20),
+            containerView.topAnchor.constraint(equalTo: blurEffectView.contentView.topAnchor, constant: 244),
+            containerView.leadingAnchor.constraint(equalTo: blurEffectView.contentView.leadingAnchor, constant: 56),
+            containerView.trailingAnchor.constraint(equalTo: blurEffectView.contentView.trailingAnchor, constant: -56),
             
             imageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
-            imageView.widthAnchor.constraint(equalToConstant: 100),
-            imageView.heightAnchor.constraint(equalToConstant: 100),
+            imageView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 108),
+            imageView.heightAnchor.constraint(equalToConstant: 108),
             
-            confirmationLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+            confirmationLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
             confirmationLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             confirmationLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             
             deleteButton.topAnchor.constraint(equalTo: confirmationLabel.bottomAnchor, constant: 20),
-            deleteButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            deleteButton.heightAnchor.constraint(equalToConstant: 50),
+            deleteButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            deleteButton.heightAnchor.constraint(equalToConstant: 44),
             
             returnButton.topAnchor.constraint(equalTo: confirmationLabel.bottomAnchor, constant: 20),
-            returnButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            returnButton.heightAnchor.constraint(equalToConstant: 50),
-            returnButton.leadingAnchor.constraint(equalTo: deleteButton.trailingAnchor, constant: 20),
+            returnButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            returnButton.heightAnchor.constraint(equalToConstant: 44),
+            returnButton.leadingAnchor.constraint(equalTo: deleteButton.trailingAnchor, constant: 8),
             deleteButton.widthAnchor.constraint(equalTo: returnButton.widthAnchor),
             
             returnButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20)

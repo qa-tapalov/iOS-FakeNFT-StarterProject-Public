@@ -8,10 +8,9 @@
 import UIKit
 
 final class CartViewController: UIViewController {
-        
-    let refreshControl = UIRefreshControl()
     
-    var items: [ProductModel] = [ProductModel(image: UIImage(resource: .stub), title: "Test 1", rating: 3, price: 3.32),ProductModel(image: UIImage(resource: .stub), title: "Test 2", rating: 2, price: 3),ProductModel(image: UIImage(resource: .stub), title: "Test 3", rating: 3, price: 1.3),ProductModel(image: UIImage(resource: .stub), title: "Test 4", rating: 4, price: 64.3)]
+    let refreshControl = UIRefreshControl()
+    var presenter: CartViewPresenterProtocol!
     
     private lazy var sortButton: UIBarButtonItem = {
         let view = UIBarButtonItem(image: UIImage(resource: .sort), style: .plain, target: self, action: #selector(sortItems))
@@ -79,6 +78,7 @@ final class CartViewController: UIViewController {
         super.viewDidLoad()
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         view.backgroundColor = .systemBackground
+        presenter = CartViewPresenter(view: self)
         setupView()
         updateUI()
     }
@@ -129,17 +129,17 @@ final class CartViewController: UIViewController {
     @objc
     private func sortItems(){
         let price = UIAlertAction(title: "По цене", style: .default) { _ in
-            self.items.sort {$0.price < $1.price}
+            self.presenter?.sortItems(options: .price)
             self.tableView.reloadData()
         }
         
         let rating = UIAlertAction(title: "По рейтингу", style: .default) { _ in
-            self.items.sort {$0.rating < $1.rating}
+            self.presenter?.sortItems(options: .rating)
             self.tableView.reloadData()
         }
         
         let name = UIAlertAction(title: "По названию", style: .default) { _ in
-            self.items.sort {$0.title < $1.title}
+            self.presenter?.sortItems(options: .names)
             self.tableView.reloadData()
         }
         
@@ -156,6 +156,7 @@ final class CartViewController: UIViewController {
     }
     
     private func updateUI(){
+        let items = presenter.items
         totalCountLabel.text = String(items.count) + " NFT"
         let totalPrice = items.map {$0.price}.reduce(0, +)
         totalPriceLabel.text = totalPrice.formatDecimal() + " ETH"
@@ -170,10 +171,10 @@ final class CartViewController: UIViewController {
         let vc = ConfirmDeletionViewController()
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
-        vc.itemImage = item.image
+        vc.itemImage = item.imageUrl.first
         vc.confirmDelete = { [weak self] in
             guard let self else {return}
-            self.items.remove(at: indexPath.row)
+            self.presenter.deleteItem(index: indexPath.row)
             self.updateUI()
         }
         self.present(vc, animated: true)
@@ -182,16 +183,16 @@ final class CartViewController: UIViewController {
 
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        items.count
+        presenter.numberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CartProductTableViewCell.cellIdentifier, for: indexPath) as? CartProductTableViewCell else { return UITableViewCell() }
-        let product = items[indexPath.row]
+        let item = presenter.getItem(index: indexPath.row)
         cell.delegate = self
         cell.selectionStyle = .none
-        cell.configure(with: product.image, title: product.title, rating: product.rating, price: product.price, indexPath: indexPath)
+        cell.configure(with: item, indexPath: indexPath)
         return cell
         
     }
@@ -200,6 +201,7 @@ extension CartViewController: UITableViewDataSource {
         140
     }
 }
+
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -208,7 +210,7 @@ extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Удалить") { [weak self] action, tableView, complition in
             guard let self else {return}
-            let item = items[indexPath.row]
+            let item = presenter.items[indexPath.row]
             self.showConfirmDeleteView(item: item, indexPath: indexPath)
         }
         
@@ -220,7 +222,7 @@ extension CartViewController: UITableViewDelegate {
 
 extension CartViewController: DeleteItemFromCartDelegate{
     func deleteItem(indexPath: IndexPath) {
-        let item = items[indexPath.row]
+        let item = presenter.items[indexPath.row]
         showConfirmDeleteView(item: item, indexPath: indexPath)
     }
 }

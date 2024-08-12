@@ -8,7 +8,7 @@
 import UIKit
 
 struct ProductModel {
-    let image: UIImage
+    let imageUrl: [String]
     let title: String
     let rating: Int
     let price: Double

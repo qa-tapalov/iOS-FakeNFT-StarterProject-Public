@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol DeleteItemFromCartDelegate: AnyObject {
     func deleteItem(indexPath: IndexPath)
@@ -118,16 +119,19 @@ final class CartProductTableViewCell: UITableViewCell {
         delegate?.deleteItem(indexPath: indexPath)
     }
     
-    func configure(with image: UIImage?, title: String, rating: Int, price: Double, indexPath: IndexPath) {
-        itemImageView.image = image
-        titleLabel.text = title
+    func configure(with item: ProductModel, indexPath: IndexPath) {
+        guard let urlImage = item.imageUrl.first else {return}
+        let url = URL(string: urlImage)
+        itemImageView.kf.indicatorType = .activity
+        itemImageView.kf.setImage(with: url)
+        titleLabel.text = item.title
         self.indexPath = indexPath
         for (index, view) in starRatingView.arrangedSubviews.enumerated() {
             if let starImageView = view as? UIImageView {
-                starImageView.tintColor = index < rating ? UIColor.init(hexString: "FEEF0D") : UIColor.init(hexString: "F7F7F8")
+                starImageView.tintColor = index < item.rating ? UIColor.init(hexString: "FEEF0D") : UIColor.init(hexString: "F7F7F8")
             }
         }
-        priceLabel.text = String(price) + " ETH"
+        priceLabel.text = String(item.price) + " ETH"
     }
 }
 
