@@ -52,14 +52,16 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     private func setupCatalogTableViewCellConstrains() {
         NSLayoutConstraint.activate([
             catalogImage.heightAnchor.constraint(equalToConstant: 140),
-            catalogImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 64),
+//            catalogImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            catalogImage.topAnchor.constraint(equalTo: topAnchor),
             catalogImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             catalogImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             catalogLabel.topAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: 4),
-            catalogLabel.bottomAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: -13),
+            catalogLabel.bottomAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: 25),
             catalogLabel.leadingAnchor.constraint(equalTo: catalogImage.leadingAnchor),
-            catalogLabel.trailingAnchor.constraint(equalTo: catalogImage.trailingAnchor)
+            catalogLabel.trailingAnchor.constraint(equalTo: catalogImage.trailingAnchor),
+            catalogLabel.heightAnchor.constraint(equalToConstant: 22)
         ])
     }
 }
