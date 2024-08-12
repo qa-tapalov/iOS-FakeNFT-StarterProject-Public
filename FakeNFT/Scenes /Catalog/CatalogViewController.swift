@@ -7,9 +7,12 @@
 
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 protocol CatalogViewControllerProtocol: AnyObject {
     func reloadCatalogTableView()
+    func showLoadIndicator()
+    func hideLoadIndicator()
 }
 
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
@@ -103,6 +106,14 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             catalogTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             catalogTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
         ])
+    }
+    
+    func showLoadIndicator() {
+        UIBlockingProgressHUD.show()
+    }
+    
+    func hideLoadIndicator() {
+        UIBlockingProgressHUD.dismiss()
     }
 }
 

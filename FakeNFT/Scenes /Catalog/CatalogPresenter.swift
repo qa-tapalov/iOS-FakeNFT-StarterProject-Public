@@ -28,6 +28,7 @@ final class CatalogPresenter: CatalogPresenterProtocol {
     }
     
     func getNftCollections() {
+        catalogView?.showLoadIndicator()
         catalogService.getNftCollections { [weak self] result in
             guard let self else { return }
             switch result {
@@ -41,7 +42,7 @@ final class CatalogPresenter: CatalogPresenterProtocol {
                 print("[DEBUG]: [ERROR]: CatalogPresenter: getNftCollections")
                 ///
             }
-            
+            self.catalogView?.hideLoadIndicator()
         }
     }
     
