@@ -21,7 +21,9 @@ final class EditProfileViewController: UIViewController {
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "multiply"), for: .normal)
+        let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
+        let boldImage = UIImage(systemName: "multiply", withConfiguration: boldConfig)
+        button.setImage(boldImage, for: .normal)
         button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

@@ -8,7 +8,7 @@
 import Foundation
 
 struct UpdateProfileRequest: NetworkRequest {
-    
+
     static let method = "/api/v1/profile/1"
 
     var endpoint: URL? {
@@ -26,7 +26,7 @@ struct UpdateProfileRequest: NetworkRequest {
             URLQueryItem(name: "description", value: profile.description),
             URLQueryItem(name: "website", value: profile.website)
         ]
-        
+
         components.queryItems?.append(
             contentsOf: profile.likes.isEmpty
                 ? [URLQueryItem(name: "likes", value: "null")]

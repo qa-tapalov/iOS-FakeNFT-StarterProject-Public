@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ProfileViewProtocol: AnyObject {
-
+    func display(data: ProfileScreenModel, reloadTableData: Bool)
 }
 
 final class ProfileViewController: UIViewController {
@@ -95,45 +95,25 @@ final class ProfileViewController: UIViewController {
     // MARK: - Lifecycle
 
     override func viewWillAppear(_ animated: Bool) {
+        presenter.updateProfileData()
         presenter.setup()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
         setupView()
         setupTableView()
-        loadMockData()
     }
 
     // MARK: - Private methods
 
-    private func loadMockData() {
-        // Set mock data for UI elements
-        avatarImageView.image = UIImage(systemName: "person.circle")
-        userNameLabel.text = "John Doe"
-        descriptionLabel.text = "This is a short bio or description about the user. It can span multiple lines and should be tested for wrapping."
-        linkTextView.text = "https://www.google.com/"
-
-        // Set mock data for table view cells
-        let cellModels = [
-            ProfileDetailCellModel(title: "Мои NFT", subtitle: "(12)", action: { print("Tapped My NFTs") }),
-            ProfileDetailCellModel(title: "Избранные NFT", subtitle: "(8)", action: { print("Tapped Favorites") }),
-            ProfileDetailCellModel(title: "О разработчике", subtitle: "", action: { print("Tapped Settings") })
-        ]
-
-        model = ProfileScreenModel(
-            userName: "John Doe",
-            userImage: UIImage(systemName: "person.circle")!,
-            userAbout: "This is a short bio or description about the user. It can span multiple lines and should be tested for wrapping.",
-            websiteUrlString: "https://www.google.com/",
-            tableData: ProfileScreenModel.TableData(sections: [
-                .simple(cells: cellModels.map { .detail($0) })
-            ])
-        )
-    }
-
     private func setup() {
         updateLinkTextView()
+        avatarImageView.image = model.userImage
+        userNameLabel.text = model.userName
+        descriptionLabel.text = model.userAbout
+        linkTextView.text = model.websiteUrlString
     }
 
     private func setupView() {
@@ -177,12 +157,16 @@ final class ProfileViewController: UIViewController {
     }
 
     private func configureNavigationBar() {
+        let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
+        let boldImage = UIImage(systemName: "square.and.pencil", withConfiguration: boldConfig)
+
         let editButton = UIBarButtonItem(
-            image: UIImage(systemName: "square.and.pencil"),
+            image: boldImage,
             style: .plain,
             target: self,
             action: #selector(editButtonTapped))
         editButton.tintColor = .black
+
         navigationItem.rightBarButtonItem = editButton
     }
 
@@ -233,7 +217,12 @@ final class ProfileViewController: UIViewController {
 // MARK: - ProfileViewProtocol
 
 extension ProfileViewController: ProfileViewProtocol {
-
+    func display(data: ProfileScreenModel, reloadTableData: Bool) {
+        model = data
+        if reloadTableData {
+            tableView.reloadData()
+        }
+    }
 }
 
 // MARK: - UITextViewDelegate

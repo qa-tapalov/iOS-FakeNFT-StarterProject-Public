@@ -35,10 +35,15 @@ final class TabBarController: UITabBarController {
         view.backgroundColor = UIColor.systemBackground
 
 // MARK: - ProfileViewController
+
         let profileViewController = ProfileViewController()
         let profileRouter = ProfileRouter(view: profileViewController)
-        let profilePresenter = ProfilePresenter(view: profileViewController, router: profileRouter)
+        let networkClient = DefaultNetworkClient()
+        let profileService = ProfileService(networkClient: networkClient)
+        let profilePresenter = ProfilePresenter(view: profileViewController, router: profileRouter, profileService: profileService)
+
         profileViewController.presenter = profilePresenter
+
         let profileNavController = UINavigationController(rootViewController: profileViewController)
         profileNavController.tabBarItem = profileTabBarItem
         //

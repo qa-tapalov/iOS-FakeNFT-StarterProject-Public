@@ -15,13 +15,13 @@ protocol ProfileServiceProtocol: AnyObject {
 }
 
 final class ProfileService: ProfileServiceProtocol {
-    
+
     private let networkClient: NetworkClient
-    
+
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
-    
+
     // MARK: - Get profile data
     func getProfile(profileId: String, completion: @escaping ProfileCompletion) {
         let request = ProfileRequest(id: profileId, dto: nil, httpMethod: .get)
@@ -35,7 +35,7 @@ final class ProfileService: ProfileServiceProtocol {
             }
         }
     }
-    
+
     // MARK: - Update profile data
     func updateProfile(profile: ProfileModel, completion: @escaping ProfileCompletion) {
         let request = UpdateProfileRequest(
@@ -45,7 +45,7 @@ final class ProfileService: ProfileServiceProtocol {
                 website: profile.website,
                 likes: profile.likes)
         )
-        
+
         networkClient.send(request: request, type: ProfileResultModel.self) { result in
             switch result {
             case let .success(profile):
