@@ -6,12 +6,18 @@
 //
 
 import UIKit
+import ProgressHUD
 
 final class CartViewController: UIViewController {
     
     let refreshControl = UIRefreshControl()
     var presenter: CartViewPresenterProtocol!
-    
+    lazy var activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.color = .gray
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     private lazy var sortButton: UIBarButtonItem = {
         let view = UIBarButtonItem(image: UIImage(resource: .sort), style: .plain, target: self, action: #selector(sortItems))
         view.tintColor = .black
@@ -87,6 +93,7 @@ final class CartViewController: UIViewController {
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
         view.addSubview(paymentView)
+        view.addSubview(activityIndicator)
         paymentView.addSubview(paymentButton)
         paymentView.addSubview(totalCountLabel)
         paymentView.addSubview(totalPriceLabel)
@@ -116,13 +123,14 @@ final class CartViewController: UIViewController {
             
             totalPriceLabel.topAnchor.constraint(equalTo: totalCountLabel.bottomAnchor, constant: 2),
             totalPriceLabel.leadingAnchor.constraint(equalTo: totalCountLabel.leadingAnchor),
-            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
     @objc
     private func refreshData(){
-        tableView.reloadData()
+        presenter.loadNfts()
         refreshControl.endRefreshing()
     }
     
@@ -155,7 +163,7 @@ final class CartViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    private func updateUI(){
+    func updateUI(){
         let items = presenter.items
         totalCountLabel.text = String(items.count) + " NFT"
         let totalPrice = items.map {$0.price}.reduce(0, +)
@@ -166,6 +174,16 @@ final class CartViewController: UIViewController {
         paymentView.isHidden = items.isEmpty
         tableView.reloadData()
     }
+    
+    func showLoader(){
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = false
+    }
+    func hideLoader(){
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = true
+    }
+    
     
     private func showConfirmDeleteView(item: ProductModel, indexPath: IndexPath){
         let vc = ConfirmDeletionViewController()

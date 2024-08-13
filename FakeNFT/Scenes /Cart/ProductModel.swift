@@ -12,4 +12,5 @@ struct ProductModel {
     let title: String
     let rating: Int
     let price: Double
+    let id: String
 }

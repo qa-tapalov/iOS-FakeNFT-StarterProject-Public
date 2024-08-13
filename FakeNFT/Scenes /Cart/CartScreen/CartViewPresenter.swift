@@ -18,28 +18,12 @@ protocol CartViewPresenterProtocol: AnyObject {
 
 final class CartViewPresenter: CartViewPresenterProtocol {
     
-    var items: [ProductModel] = [
-        ProductModel(imageUrl: ["https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/April/1.png"],
-                     title: "April",
-                     rating: 3,
-                     price: 3.32),
-        ProductModel(imageUrl: ["https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Lark/1.png"],
-                     title: "Greena",
-                     rating: 2,
-                     price: 3),
-        ProductModel(imageUrl: ["https://code.s3.yandex.net/Mobile/iOS/NFT/Pink/Lilo/1.png"],
-                     title: "Spring",
-                     rating: 3,
-                     price: 1.3),
-        ProductModel(imageUrl: ["https://code.s3.yandex.net/Mobile/iOS/NFT/Beige/Penny/1.png"],
-                     title: "Torro",
-                     rating: 4,
-                     price: 64.3)]
-    
+    var items: [ProductModel] = []
     weak var view: CartViewController?
-    
+    let cartNetwork = CartNetwork.shared
     init(view: CartViewController) {
         self.view = view
+        loadNfts()
     }
     
     func getItem(index: Int) -> ProductModel {
@@ -62,7 +46,50 @@ final class CartViewPresenter: CartViewPresenterProtocol {
     }
     
     func loadNfts() {
-        //TODO: network
+        var count = 0
+        var itemsNetwork: [ProductModel] = []
+        view?.showLoader()
+        cartNetwork.fetchOrder { [weak self] result in
+            guard let self else {return}
+            switch result {
+            case .success(let order):
+                if order.nfts.isEmpty {
+                    self.view?.hideLoader()
+                }
+                else {
+                    order.nfts.forEach { id in
+                        self.cartNetwork.getNftById(id: id) { result in
+                            switch result {
+                            case .success(let nft):
+                                let productModel = ProductModel(
+                                    imageUrl: [nft.images[0]],
+                                    title: nft.name,
+                                    rating: nft.rating,
+                                    price: nft.price,
+                                    id: nft.id
+                                )
+                                itemsNetwork.append(productModel)
+                                count += 1
+                                if count == order.nfts.count {
+                                    DispatchQueue.main.async {
+                                        self.items = itemsNetwork
+                                        self.view?.hideLoader()
+                                        self.view?.updateUI()
+                                    }
+                                }
+                            case .failure(let failure):
+                                self.view?.hideLoader()
+                                print(failure.localizedDescription)
+                            }
+                        }
+                    }
+                }
+                
+            case .failure(let failure):
+                self.view?.hideLoader()
+                print(failure.localizedDescription)
+            }
+        }
     }
     
     func deleteItem(index: Int) {
