@@ -37,8 +37,15 @@ final class TabBarController: UITabBarController {
         //        let profileViewController = UINavigationController(rootViewController: )
         //        profileViewController.tabBarItem = profileTabBarItem
         //
-        //        let catalogViewController = UINavigationController(rootViewController: )
-        //        catalogViewController.tabBarItem = catalogTabBarItem
+        
+        let networkClient = DefaultNetworkClient()
+        let catalogService = CatalogService(networkClient: networkClient)
+        let sortStorage = SortStorage()
+        let catalogPresenter = CatalogPresenter(catalogService: catalogService, sortStorage: sortStorage)
+        
+        let catalogViewController = UINavigationController(rootViewController: CatalogViewController(presenter: catalogPresenter))
+        catalogViewController.tabBarItem = catalogTabBarItem
+
         //
         //        let cartViewController = UINavigationController(rootViewController: )
         //        cartViewController.tabBarItem = cartTabBarItem
@@ -48,6 +55,6 @@ final class TabBarController: UITabBarController {
         //
         //        viewControllers = [profileViewController, catalogViewController, cartViewController, statisticViewController]
         //
-        
+        viewControllers = [catalogViewController]
     }
 }
