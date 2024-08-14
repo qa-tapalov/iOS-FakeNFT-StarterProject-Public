@@ -22,9 +22,7 @@ final class EditProfileViewController: UIViewController {
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
-        let boldImage = UIImage(systemName: "multiply", withConfiguration: boldConfig)
-        button.setImage(boldImage, for: .normal)
+        button.setImage(UIImage(named: "close"), for: .normal)
         button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -134,9 +132,9 @@ final class EditProfileViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: Constants.tableViewTopInsets),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.horizont),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.horizont),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constants.horizont)
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 
