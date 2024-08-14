@@ -57,6 +57,7 @@ final class CartViewController: UIViewController {
         view.titleLabel?.textColor = .white
         view.backgroundColor = .black
         view.layer.cornerRadius = 16
+        view.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -165,6 +166,13 @@ final class CartViewController: UIViewController {
         alert.addAction(name)
         alert.addAction(cancel)
         present(alert, animated: true)
+    }
+    
+    @objc
+    private func buttonAction(){
+        let vc = PaymentViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func updateUI(){
