@@ -17,29 +17,29 @@ protocol ProfilePresenterProtocol: AnyObject {
 
 final class ProfilePresenter {
     // MARK: - Properties
-    
+
     typealias Cell = ProfileScreenModel.TableData.Cell
-    
+
     private weak var view: ProfileViewProtocol?
     private var profile: ProfileModel?
     private var router: ProfileRouterProtocol?
     private var profileService: ProfileServiceProtocol?
-    
+
     // MARK: - Init
-    
+
     init(view: ProfileViewProtocol, router: ProfileRouterProtocol?, profileService: ProfileServiceProtocol?) {
         self.view = view
         self.router = router
         self.profileService = profileService
     }
-    
+
     // MARK: - Private methods
-    
+
     private func loadProfile() {
         UIBlockingProgressHUD.show()
         profileService?.getProfile(profileId: "1", completion: { [weak self] result in
             guard let self = self else { return }
-            
+
             UIBlockingProgressHUD.dismiss()
             switch result {
             case let .success(profileResponse):
@@ -66,7 +66,7 @@ final class ProfilePresenter {
                         }
                     }
                 }
-                
+
             case let .failure(error):
                 self.showErrorAlert(message: "Не удалось загрузить профиль: \(error.localizedDescription)")
                 DispatchQueue.main.async {
@@ -75,13 +75,13 @@ final class ProfilePresenter {
             }
         })
     }
-    
+
     private func loadImage(from urlString: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
             return
         }
-        
+
         KingfisherManager.shared.retrieveImage(with: url) { result in
             switch result {
             case let .success(value):
@@ -91,7 +91,7 @@ final class ProfilePresenter {
             }
         }
     }
-    
+
     private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -99,11 +99,11 @@ final class ProfilePresenter {
             viewController.present(alert, animated: true, completion: nil)
         }
     }
-    
+
     private func render(reloadTableData: Bool = true) {
         view?.display(data: buildScreenModel(), reloadTableData: reloadTableData)
     }
-    
+
     private func buildScreenModel() -> ProfileScreenModel {
         ProfileScreenModel(
             userName: profile?.name ?? "",
@@ -119,39 +119,39 @@ final class ProfilePresenter {
             ])
         )
     }
-    
+
     private func buildMyNFTCell() -> Cell {
         .detail(ProfileDetailCellModel(
-            title: NSLocalizedString("Мои NFT", comment: ""),
+            title: "Мои NFT",
             subtitle: String(profile?.nfts.count ?? 0),
             action: { [weak self] in
                 guard let self else { return }
                 self.showMyNFTScreen()
             }))
     }
-    
+
     private func buildFavouriteNFTCell() -> Cell {
         .detail(ProfileDetailCellModel(
-            title: NSLocalizedString("Избранные NFT", comment: ""),
+            title: "Избранные NFT",
             subtitle: String(profile?.likes.count ?? 0),
             action: { [weak self] in
                 guard let self else { return }
                 self.showFavouritesNFTScreen()
             }))
     }
-    
+
     private func buildAboutDeveloperCell() -> Cell {
         .detail(ProfileDetailCellModel(
-            title: NSLocalizedString("О разработчике", comment: ""),
+            title: "О разработчике",
             subtitle: "",
             action: {
             }))
     }
-    
+
     private func showMyNFTScreen() {
         router?.showMyNFTScreen()
     }
-    
+
     private func showFavouritesNFTScreen() {
         router?.showFavouritesNFTScreen()
     }
@@ -161,15 +161,17 @@ extension ProfilePresenter: ProfilePresenterProtocol {
     func setup() {
         render()
     }
-    
+
     func updateProfileData() {
         loadProfile()
     }
-    
+
     func editProfile() {
-        router?.showEditProfile()
+        guard let profile = profile else { return }
+        router?.showEditProfile(profile: profile)
+        loadProfile()
     }
-    
+
     func showWebsite(URL: URL) {
         router?.showWebView(URL: URL)
     }

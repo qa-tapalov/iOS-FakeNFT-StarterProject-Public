@@ -71,7 +71,13 @@ final class EditProfileViewController: UIViewController {
         }
     }
 
+    var presenter: EditProfilePresenter!
+
     // MARK: - Lifecycle
+
+    override func viewWillAppear(_ animated: Bool) {
+        presenter.setup()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +104,9 @@ final class EditProfileViewController: UIViewController {
         tableView.backgroundColor = .white
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+
         tableView.register(TextViewCell.self, forCellReuseIdentifier: TextViewCell.identifier)
         tableView.register(TextFieldCell.self, forCellReuseIdentifier: TextFieldCell.identifier)
         tableView.register(TableHeaderView.self, forHeaderFooterViewReuseIdentifier: TableHeaderView.identifier)
@@ -112,7 +121,7 @@ final class EditProfileViewController: UIViewController {
 
     private func configureAvatarImageView() {
         avatarImageView.addSubview(avatarOverlay)
-        avatarOverlay.addSubview(avatarLabel)
+        avatarImageView.addSubview(avatarLabel)
 
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: Constants.avatarTopOffset),
@@ -231,6 +240,18 @@ extension EditProfileViewController: UITableViewDataSource {
         return UITableView.automaticDimension
     }
 }
+
+// MARK: - EditProfileViewProtocol
+
+extension EditProfileViewController: EditProfileViewProtocol {
+    func display(data: EditProfileScreenModel, reloadTableData: Bool) {
+        model = data
+        if reloadTableData {
+            tableView.reloadData()
+        }
+    }
+}
+
 // MARK: - Constants
 
 private struct Constants {

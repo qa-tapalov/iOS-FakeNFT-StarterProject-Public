@@ -29,6 +29,7 @@ final class TextViewCell: UITableViewCell {
         let textView = UITextView()
         textView.font = .bodyRegular
         textView.isEditable = true
+        textView.isScrollEnabled = false
         textView.delegate = self
         textView.backgroundColor = .clear
         textView.textColor = .black
