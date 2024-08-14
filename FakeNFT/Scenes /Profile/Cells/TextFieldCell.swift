@@ -49,6 +49,7 @@ final class TextFieldCell: UITableViewCell {
         reuseIdentifier: String?
     ) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configureTextField()
 
     }
 

@@ -37,6 +37,16 @@ final class TextViewCell: UITableViewCell {
         return textView
     }()
 
+    private lazy var clearButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "multiply.circle.fill"), for: .normal)
+        button.tintColor = UIColor(hexString: "#8E8E93")
+        button.isHidden = true
+        button.addTarget(self, action: #selector(clearText), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     var model: TextViewCellModel = .empty {
         didSet {
             setup()
@@ -51,6 +61,7 @@ final class TextViewCell: UITableViewCell {
     ) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureTextView()
+        configureClearButton()
     }
 
     required init?(coder: NSCoder) {
@@ -71,8 +82,25 @@ final class TextViewCell: UITableViewCell {
             textView.topAnchor.constraint(equalTo: contentView.topAnchor),
             textView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .horizont),
             textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            textView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            textView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40)
         ])
+    }
+
+    private func configureClearButton() {
+        contentView.addSubview(clearButton)
+
+        NSLayoutConstraint.activate([
+            clearButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            clearButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            clearButton.widthAnchor.constraint(equalToConstant: .clearBottonSize),
+            clearButton.heightAnchor.constraint(equalToConstant: .clearBottonSize)
+        ])
+    }
+
+    @objc private func clearText() {
+        textView.text = ""
+        model.textDidChanged("")
+        clearButton.isHidden = true
     }
 }
 
@@ -84,6 +112,8 @@ extension TextViewCell: UITextViewDelegate {
         let size = textView.bounds.size
         let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude))
 
+        clearButton.isHidden = textView.text.isEmpty
+
         if size.height != newSize.height {
             UIView.setAnimationsEnabled(false)
             tableView?.beginUpdates()
@@ -94,6 +124,14 @@ extension TextViewCell: UITextViewDelegate {
                 tableView?.scrollToRow(at: thisIndexPath, at: .bottom, animated: false)
             }
         }
+    }
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        clearButton.isHidden = textView.text.isEmpty
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        clearButton.isHidden = true
     }
 
     var tableView: UITableView? {
@@ -109,4 +147,5 @@ extension TextViewCell: UITextViewDelegate {
 
 private extension CGFloat {
     static let horizont: CGFloat = 16
+    static let clearBottonSize: CGFloat = 17
 }
