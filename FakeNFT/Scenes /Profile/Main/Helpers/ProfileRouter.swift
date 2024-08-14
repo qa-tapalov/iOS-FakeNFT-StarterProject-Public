@@ -11,6 +11,8 @@ import SafariServices
 protocol ProfileRouterProtocol: AnyObject {
     func showWebView(URL: URL)
     func showEditProfile()
+    func showMyNFTScreen()
+    func showFavouritesNFTs()
 }
 
 final class ProfileRouter: ProfileRouterProtocol {
@@ -37,5 +39,19 @@ final class ProfileRouter: ProfileRouterProtocol {
         editProfileController.hidesBottomBarWhenPushed = true
         editProfileController.modalPresentationStyle = .pageSheet
         view.present(editProfileController, animated: true)
+    }
+
+    func showMyNFTScreen() {
+        guard let view = view as? UIViewController else { return }
+        let myNFTController = MyNFTViewController()
+        myNFTController.hidesBottomBarWhenPushed = true
+        view.navigationController?.pushViewController(myNFTController, animated: true)
+    }
+
+    func showFavouritesNFTs() {
+        guard let view = view as? UIViewController else { return }
+        let favouritesNFTsController = FavouritesNFTViewController()
+        favouritesNFTsController.hidesBottomBarWhenPushed = true
+        view.navigationController?.pushViewController(favouritesNFTsController, animated: true)
     }
 }

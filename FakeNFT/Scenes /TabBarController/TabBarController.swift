@@ -40,13 +40,17 @@ final class TabBarController: UITabBarController {
         let profileRouter = ProfileRouter(view: profileViewController)
         let networkClient = DefaultNetworkClient()
         let profileService = ProfileService(networkClient: networkClient)
-        let profilePresenter = ProfilePresenter(view: profileViewController, router: profileRouter, profileService: profileService)
+        let profilePresenter = ProfilePresenter(
+            view: profileViewController,
+            router: profileRouter,
+            profileService: profileService
+        )
 
         profileViewController.presenter = profilePresenter
 
         let profileNavController = UINavigationController(rootViewController: profileViewController)
         profileNavController.tabBarItem = profileTabBarItem
-        //
+
         //        let catalogViewController = UINavigationController(rootViewController: )
         //        catalogViewController.tabBarItem = catalogTabBarItem
         //
