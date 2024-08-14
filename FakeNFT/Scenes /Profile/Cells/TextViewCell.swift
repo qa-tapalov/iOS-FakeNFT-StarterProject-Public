@@ -81,6 +81,27 @@ final class TextViewCell: UITableViewCell {
 extension TextViewCell: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         model.textDidChanged(textView.text)
+        let size = textView.bounds.size
+        let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude))
+
+        if size.height != newSize.height {
+            UIView.setAnimationsEnabled(false)
+            tableView?.beginUpdates()
+            tableView?.endUpdates()
+            UIView.setAnimationsEnabled(true)
+
+            if let thisIndexPath = tableView?.indexPath(for: self) {
+                tableView?.scrollToRow(at: thisIndexPath, at: .bottom, animated: false)
+            }
+        }
+    }
+
+    var tableView: UITableView? {
+        var view = superview
+        while let newView = view, !(newView is UITableView) {
+            view = newView.superview
+        }
+        return view as? UITableView
     }
 }
 

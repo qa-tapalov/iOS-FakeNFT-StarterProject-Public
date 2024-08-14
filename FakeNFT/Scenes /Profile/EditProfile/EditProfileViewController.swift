@@ -97,6 +97,7 @@ final class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        configureTapGesture()
     }
 
     override func viewWillDisappear(_ animated: Bool) {

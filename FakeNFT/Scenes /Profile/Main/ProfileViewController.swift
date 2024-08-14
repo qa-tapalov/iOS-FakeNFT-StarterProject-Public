@@ -194,7 +194,7 @@ final class ProfileViewController: UIViewController {
 
     private func configureTableView() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: profileContainerView.bottomAnchor, constant: .tableViewTopInsets),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: .tableViewTopConst),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.horizontalOffset),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .horizontalOffset),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -287,4 +287,5 @@ private extension CGFloat {
     static let topOffset: CGFloat = 20
     static let avatarWidthHeight: CGFloat = 70
     static let tableViewTopInsets: CGFloat = 20
+    static let tableViewTopConst: CGFloat = 346
 }
