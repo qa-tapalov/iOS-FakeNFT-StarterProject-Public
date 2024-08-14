@@ -20,7 +20,7 @@ final class CartViewPresenter: CartViewPresenterProtocol {
     
     var items: [ProductModel] = []
     weak var view: CartViewController?
-    let cartNetwork = CartNetwork.shared
+    let cartNetwork = CartNetworkService.shared
     init(view: CartViewController) {
         self.view = view
         loadNfts()

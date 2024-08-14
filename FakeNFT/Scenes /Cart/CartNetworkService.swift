@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class CartNetwork {
-    static var shared = CartNetwork()
+final class CartNetworkService {
+    static var shared = CartNetworkService()
     private init() {}
     
     func fetchOrder(completion: @escaping (Result<OrderModel, Error>) -> Void){

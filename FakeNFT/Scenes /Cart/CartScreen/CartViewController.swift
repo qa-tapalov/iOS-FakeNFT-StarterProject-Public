@@ -13,7 +13,7 @@ final class CartViewController: UIViewController {
     var presenter: CartViewPresenterProtocol!
     let storage = SortingStorage.shared
     
-    lazy var activityIndicator: UIActivityIndicatorView = {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(style: .medium)
         view.color = .gray
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -172,7 +172,7 @@ final class CartViewController: UIViewController {
         let items = presenter.items
         totalCountLabel.text = String(items.count) + " NFT"
         let totalPrice = items.map {$0.price}.reduce(0, +)
-        totalPriceLabel.text = totalPrice.formatDecimal() + " ETH"
+        totalPriceLabel.text = String(totalPrice) + " ETH"
         tableView.isHidden = items.isEmpty
         emptyLabel.isHidden = !items.isEmpty
         navigationItem.rightBarButtonItem = items.isEmpty ? nil : sortButton
@@ -249,11 +249,3 @@ extension CartViewController: DeleteItemFromCartDelegate{
     }
 }
 
-extension Double {
-    func formatDecimal() -> String{
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
-        formatter.numberStyle = .decimal
-        return formatter.string(from: NSNumber(value: self)) ?? ""
-    }
-}
