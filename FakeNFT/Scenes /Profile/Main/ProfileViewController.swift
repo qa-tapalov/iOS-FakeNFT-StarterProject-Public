@@ -9,6 +9,7 @@ import UIKit
 
 protocol ProfileViewProtocol: AnyObject {
     func display(data: ProfileScreenModel, reloadTableData: Bool)
+    func showErrorAlert(message: String)
 }
 
 final class ProfileViewController: UIViewController {
@@ -16,7 +17,7 @@ final class ProfileViewController: UIViewController {
 
     typealias Cell = ProfileScreenModel.TableData.Cell
 
-    var presenter: ProfilePresenterProtocol!
+    var presenter: ProfilePresenterProtocol?
 
     // MARK: - UI Elements
 
@@ -95,8 +96,8 @@ final class ProfileViewController: UIViewController {
     // MARK: - Lifecycle
 
     override func viewWillAppear(_ animated: Bool) {
-        presenter.updateProfileData()
-        presenter.setup()
+        presenter?.updateProfileData()
+        presenter?.setup()
     }
 
     override func viewDidLoad() {
@@ -210,7 +211,7 @@ final class ProfileViewController: UIViewController {
     }
 
     @objc private func editButtonTapped() {
-        presenter.editProfile()
+        presenter?.editProfile()
     }
 }
 
@@ -223,13 +224,19 @@ extension ProfileViewController: ProfileViewProtocol {
             tableView.reloadData()
         }
     }
+
+    func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UITextViewDelegate
 
 extension ProfileViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        presenter.showWebsite(URL: URL)
+        presenter?.showWebsite(URL: URL)
         return false
     }
 }

@@ -51,15 +51,6 @@ final class TabBarController: UITabBarController {
         let profileNavController = UINavigationController(rootViewController: profileViewController)
         profileNavController.tabBarItem = profileTabBarItem
 
-        //        let catalogViewController = UINavigationController(rootViewController: )
-        //        catalogViewController.tabBarItem = catalogTabBarItem
-        //
-        //        let cartViewController = UINavigationController(rootViewController: )
-        //        cartViewController.tabBarItem = cartTabBarItem
-        //
-        //        let statisticViewController = UINavigationController(rootViewController: )
-        //        statsViewController.tabBarItem = statisticsTabBarItem
-        //
         viewControllers = [profileNavController]
     }
 }

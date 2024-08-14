@@ -60,7 +60,7 @@ final class ProfilePresenter {
                             self?.render()
                         }
                     case let .failure(error):
-                        self?.showErrorAlert(message: "Не удалось загрузить изображение: \(error.localizedDescription)")
+                        self?.view?.showErrorAlert(message: "Не удалось загрузить изображение: \(error.localizedDescription)")
                         DispatchQueue.main.async {
                             self?.render()
                         }
@@ -68,7 +68,7 @@ final class ProfilePresenter {
                 }
 
             case let .failure(error):
-                self.showErrorAlert(message: "Не удалось загрузить профиль: \(error.localizedDescription)")
+                view?.showErrorAlert(message: "Не удалось загрузить профиль: \(error.localizedDescription)")
                 DispatchQueue.main.async {
                     self.render()
                 }
@@ -89,14 +89,6 @@ final class ProfilePresenter {
             case let .failure(error):
                 completion(.failure(error))
             }
-        }
-    }
-
-    private func showErrorAlert(message: String) {
-        let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        if let viewController = view as? UIViewController {
-            viewController.present(alert, animated: true, completion: nil)
         }
     }
 
@@ -123,7 +115,7 @@ final class ProfilePresenter {
     private func buildMyNFTCell() -> Cell {
         .detail(ProfileDetailCellModel(
             title: "Мои NFT",
-            subtitle: String(profile?.nfts.count ?? 0),
+            subtitle: "(\(profile?.nfts.count ?? 0))",
             action: { [weak self] in
                 guard let self else { return }
                 self.showMyNFTScreen()
@@ -133,7 +125,7 @@ final class ProfilePresenter {
     private func buildFavouriteNFTCell() -> Cell {
         .detail(ProfileDetailCellModel(
             title: "Избранные NFT",
-            subtitle: String(profile?.likes.count ?? 0),
+            subtitle: "(\(profile?.likes.count ?? 0))",
             action: { [weak self] in
                 guard let self else { return }
                 self.showFavouritesNFTScreen()

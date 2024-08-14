@@ -72,7 +72,7 @@ final class EditProfileViewController: UIViewController {
 
     // MARK: - Public properties
 
-    var presenter: EditProfilePresenter!
+    var presenter: EditProfilePresenter?
     var onDismiss: (() -> Void)?
 
     // MARK: - Init
@@ -89,7 +89,7 @@ final class EditProfileViewController: UIViewController {
     // MARK: - Lifecycle
 
     override func viewWillAppear(_ animated: Bool) {
-        presenter.setup()
+        presenter?.setup()
     }
 
     override func viewDidLoad() {
@@ -99,7 +99,7 @@ final class EditProfileViewController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        presenter.saveChanges()
+        presenter?.saveChanges()
         onDismiss?()
     }
 
@@ -186,7 +186,7 @@ final class EditProfileViewController: UIViewController {
     }
 
     @objc private func backButtonTapped() {
-        presenter.saveChanges()
+        presenter?.saveChanges()
         onDismiss?()
         dismiss(animated: true)
     }
@@ -225,11 +225,22 @@ extension EditProfileViewController: UITableViewDataSource {
 
         switch cellType {
         case let .textViewCell(model):
-            guard let textViewCell = tableView.dequeueReusableCell(withIdentifier: TextViewCell.identifier, for: indexPath) as? TextViewCell else { return UITableViewCell() }
+            guard let textViewCell = tableView.dequeueReusableCell(
+                withIdentifier: TextViewCell.identifier,
+                for: indexPath
+            )
+                    as? TextViewCell else { return UITableViewCell() }
+
             textViewCell.model = model
             cell = textViewCell
+
         case let .textFieldCell(model):
-            guard let textFieldCell = tableView.dequeueReusableCell(withIdentifier: TextFieldCell.identifier, for: indexPath) as? TextFieldCell else { return UITableViewCell() }
+            guard let textFieldCell = tableView.dequeueReusableCell(
+                withIdentifier: TextFieldCell.identifier,
+                for: indexPath
+            )
+                    as? TextFieldCell else { return UITableViewCell() }
+
             textFieldCell.model = model
             cell = textFieldCell
         }
@@ -241,7 +252,9 @@ extension EditProfileViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as? TableHeaderView else {
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: TableHeaderView.identifier) as? TableHeaderView else {
+
             return nil
         }
 
