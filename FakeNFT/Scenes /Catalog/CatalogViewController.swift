@@ -16,7 +16,8 @@ protocol CatalogViewControllerProtocol: AnyObject {
 }
 
 final class CatalogViewController: UIViewController, CatalogViewControllerProtocol {
-    private var presenter: CatalogPresenterProtocol
+    // MARK: - Private Properties
+    private let presenter: CatalogPresenterProtocol
     
     private lazy var sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
@@ -42,49 +43,40 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
         return tableView
     }()
     
+    // MARK: - Overrides Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.getNftCollections()
+        setupCatalogViewController()
+    }
+    
+    // MARK: - Initializers
     init(presenter: CatalogPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
+        self.presenter.catalogView = self
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        presenter.catalogView = self
-        presenter.getNftCollections()
-        setupCatalogViewController()
-    }
-    
+    // MARK: - Action
     @objc
     private func sortButtonTapped() {
-        let actionSheet = UIAlertController(
-            title: "Сортировка",
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        
-        actionSheet.addAction(UIAlertAction(
-            title: "По названию",
-            style: .default) { _ in self.presenter.sortByName()
-            })
-        actionSheet.addAction(UIAlertAction(
-            title: "По количеству NFT",
-            style: .default) { _ in
-                self.presenter.sortByNftCount()
-            })
-        
-        actionSheet.addAction(
-            UIAlertAction(
-                title: "Закрыть",
-                style: .cancel)
-        )
-        
-        present(actionSheet, animated: true)
+        present(presenter.setSortType(), animated: true)
     }
     
+    // MARK: - Public Methods
+    func showLoadIndicator() {
+        UIBlockingProgressHUD.show()
+    }
+    
+    func hideLoadIndicator() {
+        UIBlockingProgressHUD.dismiss()
+    }
+    
+    // MARK: - Private Methods
     private func setupCatalogViewController() {
         view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = sortButton
@@ -107,14 +99,6 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             catalogTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
         ])
     }
-    
-    func showLoadIndicator() {
-        UIBlockingProgressHUD.show()
-    }
-    
-    func hideLoadIndicator() {
-        UIBlockingProgressHUD.dismiss()
-    }
 }
 
 // MARK: - CatalogViewController
@@ -135,13 +119,19 @@ extension CatalogViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let collection = presenter.collectionsNft[indexPath.row]
-        let collectionCover = URL(string: collection.cover)
-        cell.catalogImage.kf.indicatorType = .activity
-        cell.catalogImage.kf.setImage(with: collectionCover)
-        cell.catalogLabel.text = "\(collection.name) (\(collection.nfts.count))"
+        configCell(for: cell, with: indexPath)
         
         return cell
+    }
+}
+
+extension CatalogViewController {
+    func configCell(for cell: CatalogTableViewCell, with indexPath: IndexPath) {
+        let collection = presenter.collectionsNft[indexPath.row]
+        guard let collectionCover = URL(string: collection.cover) else { return }
+        
+        cell.setCatalogImage(with: collectionCover)
+        cell.setCatalogLabel(with: collection.name, quantity: collection.nfts.count)
     }
 }
 

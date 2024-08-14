@@ -13,16 +13,18 @@ protocol SortStorageProtocol: AnyObject {
 }
 
 final class SortStorage: SortStorageProtocol {
-    private let SortingStorageKey = ""
+    // MARK: - Private Properties
+    private let sortingStorageKey = "SortingType"
     private let userDefaults = UserDefaults.standard
     private var sorting: Sorting?
     
+    // MARK: - Public Methods
     func saveSort(_ sorting: Sorting) {
-        userDefaults.set(sorting.rawValue, forKey: SortingStorageKey)
+        userDefaults.set(sorting.rawValue, forKey: sortingStorageKey)
     }
     
     func getSort() -> Sorting? {
-        guard let saveSort = userDefaults.string(forKey: SortingStorageKey) else {
+        guard let saveSort = userDefaults.string(forKey: sortingStorageKey) else {
             return Sorting.byNftCount
         }
         return Sorting(rawValue: saveSort)

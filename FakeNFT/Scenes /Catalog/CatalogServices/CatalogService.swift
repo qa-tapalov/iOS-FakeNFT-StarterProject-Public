@@ -12,12 +12,15 @@ protocol CatalogServiceProtocol: AnyObject {
 }
 
 final class CatalogService: CatalogServiceProtocol {
+    // MARK: - Private Properties
     private let networkClient: DefaultNetworkClient
     
+    // MARK: - Initializers
     init(networkClient: DefaultNetworkClient) {
         self.networkClient = networkClient
     }
     
+    // MARK: - Public Methods
     func getNftCollections(completion: @escaping (Result<[NFTCollection], any Error>) -> Void) {
         let request = NFTCollectionsRequest()
         networkClient.send(

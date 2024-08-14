@@ -45,7 +45,7 @@ final class TabBarController: UITabBarController {
         
         let catalogViewController = UINavigationController(rootViewController: CatalogViewController(presenter: catalogPresenter))
         catalogViewController.tabBarItem = catalogTabBarItem
-
+        
         //
         //        let cartViewController = UINavigationController(rootViewController: )
         //        cartViewController.tabBarItem = cartTabBarItem
