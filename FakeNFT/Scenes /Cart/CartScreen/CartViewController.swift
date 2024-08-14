@@ -11,6 +11,8 @@ final class CartViewController: UIViewController {
     
     let refreshControl = UIRefreshControl()
     var presenter: CartViewPresenterProtocol!
+    let storage = SortingStorage.shared
+    
     lazy var activityIndicator: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(style: .medium)
         view.color = .gray
@@ -136,16 +138,19 @@ final class CartViewController: UIViewController {
     @objc
     private func sortItems(){
         let price = UIAlertAction(title: "По цене", style: .default) { _ in
+            self.storage.selectedSort = Sorting.price.rawValue
             self.presenter?.sortItems(options: .price)
             self.tableView.reloadData()
         }
         
         let rating = UIAlertAction(title: "По рейтингу", style: .default) { _ in
+            self.storage.selectedSort = Sorting.rating.rawValue
             self.presenter?.sortItems(options: .rating)
             self.tableView.reloadData()
         }
         
         let name = UIAlertAction(title: "По названию", style: .default) { _ in
+            self.storage.selectedSort = Sorting.names.rawValue
             self.presenter?.sortItems(options: .names)
             self.tableView.reloadData()
         }
@@ -163,6 +168,7 @@ final class CartViewController: UIViewController {
     }
     
     func updateUI(){
+        presenter.sortItems(options: storage.getSort())
         let items = presenter.items
         totalCountLabel.text = String(items.count) + " NFT"
         let totalPrice = items.map {$0.price}.reduce(0, +)

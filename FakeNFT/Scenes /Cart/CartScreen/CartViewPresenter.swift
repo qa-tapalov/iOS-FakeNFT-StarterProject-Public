@@ -115,8 +115,8 @@ final class CartViewPresenter: CartViewPresenterProtocol {
     }
 }
 
-enum Sorting {
-    case price
-    case rating
-    case names
+enum Sorting: String {
+    case price = "цена"
+    case rating = "рейтинг"
+    case names = "название"
 }
