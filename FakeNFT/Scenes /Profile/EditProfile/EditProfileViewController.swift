@@ -9,6 +9,7 @@ import UIKit
 
 protocol EditProfileViewProtocol: AnyObject {
     func display(data: EditProfileScreenModel, reloadTableData: Bool)
+    var onDismiss: (() -> Void)? { get set }
 }
 
 final class EditProfileViewController: UIViewController {
@@ -71,7 +72,21 @@ final class EditProfileViewController: UIViewController {
         }
     }
 
+    // MARK: - Public properties
+
     var presenter: EditProfilePresenter!
+    var onDismiss: (() -> Void)?
+
+    // MARK: - Init
+
+    init(onDismiss: (@escaping () -> Void)) {
+        self.onDismiss = onDismiss
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Lifecycle
 
@@ -82,6 +97,11 @@ final class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        presenter.saveChanges()
+        onDismiss?()
     }
 
     // MARK: - Private methods
@@ -167,7 +187,8 @@ final class EditProfileViewController: UIViewController {
     }
 
     @objc private func backButtonTapped() {
-        // TODO: - Add changes save logic
+        presenter.saveChanges()
+        onDismiss?()
         dismiss(animated: true)
     }
 }

@@ -10,7 +10,7 @@ import SafariServices
 
 protocol ProfileRouterProtocol: AnyObject {
     func showWebView(URL: URL)
-    func showEditProfile(profile: ProfileModel)
+    func showEditProfile(profile: ProfileModel, onDismiss: @escaping () -> Void)
     func showMyNFTScreen()
     func showFavouritesNFTScreen()
 }
@@ -36,10 +36,10 @@ final class ProfileRouter: ProfileRouterProtocol {
         view.present(safariViewController, animated: true)
     }
 
-    func showEditProfile(profile: ProfileModel) {
+    func showEditProfile(profile: ProfileModel, onDismiss: @escaping () -> Void) {
         guard let view = view as? UIViewController else { return }
 
-        let editProfileController = EditProfileViewController()
+        let editProfileController = EditProfileViewController(onDismiss: onDismiss)
         let networkClient = DefaultNetworkClient()
         let profileService = ProfileService(networkClient: networkClient)
         let presenter = EditProfilePresenter(view: editProfileController, profileService: profileService, profile: profile)

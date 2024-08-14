@@ -168,8 +168,10 @@ extension ProfilePresenter: ProfilePresenterProtocol {
 
     func editProfile() {
         guard let profile = profile else { return }
-        router?.showEditProfile(profile: profile)
-        loadProfile()
+        router?.showEditProfile(profile: profile, onDismiss: { [weak self] in
+            guard let self else { return }
+            self.loadProfile()
+        })
     }
 
     func showWebsite(URL: URL) {

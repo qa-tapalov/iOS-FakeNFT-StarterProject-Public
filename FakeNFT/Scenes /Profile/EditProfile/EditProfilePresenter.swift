@@ -90,9 +90,24 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
                          ])
     }
 
+    private func updateProfileInfo(profile: ProfileModel) {
+        profileService?.updateProfile(profile: profile, completion: { result in
+            switch result {
+            case let .success(profile):
+                print("profile info successfully updated")
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+
     // MARK: - Public methods
 
     func setup() {
         render()
+    }
+
+    func saveChanges() {
+        updateProfileInfo(profile: profile)
     }
 }
