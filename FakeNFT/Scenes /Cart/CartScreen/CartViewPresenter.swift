@@ -94,6 +94,24 @@ final class CartViewPresenter: CartViewPresenterProtocol {
     
     func deleteItem(index: Int) {
         items.remove(at: index)
+        let newItems = items.map {$0.id}
+        view?.showLoader()
+        cartNetwork.deleteNftById(id: newItems) { [weak self] result in
+            guard let self else {return}
+            
+            switch result {
+            case .success(let order):
+                DispatchQueue.main.async {
+                    if order.nfts.isEmpty {
+                        self.items = []
+                    }
+                    self.view?.hideLoader()
+                    self.view?.updateUI()
+                }
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
     }
 }
 

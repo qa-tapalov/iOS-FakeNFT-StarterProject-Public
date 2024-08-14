@@ -205,10 +205,10 @@
 			isa = PBXGroup;
 			children = (
 				1B1D9C102C64DA40007E9CAA /* ProductModel.swift */,
+				1B76389C2C6A91A200F33170 /* OrderModel.swift */,
+				1B76389A2C6A7C8600F33170 /* CartNetwork.swift */,
 				1B7638992C6A7BBF00F33170 /* Cells */,
 				1B7638982C6A7B9400F33170 /* CartScreen */,
-				1B76389A2C6A7C8600F33170 /* CartNetwork.swift */,
-				1B76389C2C6A91A200F33170 /* OrderModel.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";

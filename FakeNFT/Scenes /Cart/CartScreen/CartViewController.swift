@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ProgressHUD
 
 final class CartViewController: UIViewController {
     
@@ -74,7 +73,7 @@ final class CartViewController: UIViewController {
     
     private lazy var emptyLabel: UILabel = {
         let view = UILabel()
-        view.text = "Корзина пустая"
+        view.text = "Корзина пуста"
         view.font = .bodyBold
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -193,7 +192,6 @@ final class CartViewController: UIViewController {
         vc.confirmDelete = { [weak self] in
             guard let self else {return}
             self.presenter.deleteItem(index: indexPath.row)
-            self.updateUI()
         }
         self.present(vc, animated: true)
     }

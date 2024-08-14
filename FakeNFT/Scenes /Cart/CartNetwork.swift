@@ -19,8 +19,7 @@ final class CartNetwork {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
         
-        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OrderModel, Error>) in
-            guard let self else {return}
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<OrderModel, Error>) in
             
             switch result {
             case .success(let order):
@@ -34,13 +33,12 @@ final class CartNetwork {
     
     func getNftById(id: String, completion: @escaping (Result<NftNetworkModel, Error>) -> Void) {
         guard let url = URL(string: "\(RequestConstants.baseURL)/api/v1/nft/\(id)") else { return }
-               var request = URLRequest(url: url)
-               request.httpMethod = "GET"
-               request.setValue("application/json", forHTTPHeaderField: "Accept")
-               request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
         
-        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<NftNetworkModel, Error> ) in
-            guard let self else {return}
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<NftNetworkModel, Error> ) in
             
             switch result {
             case .success(let nftModel):
@@ -52,11 +50,33 @@ final class CartNetwork {
         task.resume()
     }
     
+    func deleteNftById(id: [String], completion: @escaping (Result<OrderModel, Error>) -> Void) {
+        guard let url = URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        
+        if !id.isEmpty {
+            let id = "nfts=\(id.joined(separator: ","))"
+            guard let bodyData = id.data(using: .utf8) else { return }
+            request.httpBody = bodyData
+        }
+        
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<OrderModel, Error> ) in
+            switch result {
+            case .success(let order):
+                completion(.success(order))
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
+        }
+        task.resume()
+    }
+    
 }
-
-
-
-
 
 enum NetworkError: Error {
     case httpStatusCode(Int)
