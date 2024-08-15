@@ -23,7 +23,7 @@ final class ProfileViewController: UIViewController {
 
     private lazy var profileContainerView: UIStackView = {
         let stackView = UIStackView()
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fill
         stackView.axis = .vertical
         stackView.spacing = .profileStackSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -179,7 +179,8 @@ final class ProfileViewController: UIViewController {
         NSLayoutConstraint.activate([
             profileContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: .topOffset),
             profileContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: .horizontalOffset),
-            profileContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.horizontalOffset)
+            profileContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -.horizontalOffset),
+            linkTextView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: .descriptionLinkSpacing)
         ])
     }
 
@@ -295,4 +296,5 @@ private extension CGFloat {
     static let avatarWidthHeight: CGFloat = 70
     static let tableViewTopInsets: CGFloat = 20
     static let tableViewTopConst: CGFloat = 346
+    static let descriptionLinkSpacing: CGFloat = 8
 }
