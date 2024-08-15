@@ -5,8 +5,7 @@
 //  Created by Юрий Клеймёнов on 10/08/2024.
 //
 
-import UIKit
-import Kingfisher
+import Foundation
 
 protocol ProfilePresenterProtocol: AnyObject {
     func setup()
@@ -24,13 +23,15 @@ final class ProfilePresenter {
     private var profile: ProfileModel?
     private var router: ProfileRouterProtocol?
     private var profileService: ProfileServiceProtocol?
+    private var imageLoader: ImageLoaderProtocol?
 
     // MARK: - Init
 
-    init(view: ProfileViewProtocol, router: ProfileRouterProtocol?, profileService: ProfileServiceProtocol?) {
+    init(view: ProfileViewProtocol, router: ProfileRouterProtocol?, profileService: ProfileServiceProtocol?, imageLoader: ImageLoaderProtocol?) {
         self.view = view
         self.router = router
         self.profileService = profileService
+        self.imageLoader = imageLoader
     }
 
     // MARK: - Private methods
@@ -45,7 +46,7 @@ final class ProfilePresenter {
             case let .success(profileResponse):
                 self.profile = ProfileModel(
                     name: profileResponse.name,
-                    avatar: UIImage(),
+                    avatar: ImageWrapper(data: Data()),
                     description: profileResponse.description,
                     website: profileResponse.website,
                     nfts: profileResponse.nfts,
@@ -76,20 +77,8 @@ final class ProfilePresenter {
         })
     }
 
-    private func loadImage(from urlString: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "Invalid URL", code: 0, userInfo: nil)))
-            return
-        }
-
-        KingfisherManager.shared.retrieveImage(with: url) { result in
-            switch result {
-            case let .success(value):
-                completion(.success(value.image))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
+    private func loadImage(from urlString: String, completion: @escaping (Result<ImageWrapper, Error>) -> Void) {
+        imageLoader?.loadImage(from: urlString, completion: completion)
     }
 
     private func render(reloadTableData: Bool = true) {
@@ -99,7 +88,7 @@ final class ProfilePresenter {
     private func buildScreenModel() -> ProfileScreenModel {
         ProfileScreenModel(
             userName: profile?.name ?? "",
-            userImage: profile?.avatar ?? UIImage(),
+            userImage: profile?.avatar ?? ImageWrapper(data: Data()),
             userAbout: profile?.description ?? "",
             websiteUrlString: profile?.website ?? "",
             tableData: ProfileScreenModel.TableData(sections: [

@@ -111,7 +111,7 @@ final class ProfileViewController: UIViewController {
 
     private func setup() {
         updateLinkTextView()
-        avatarImageView.image = model.userImage
+        avatarImageView.image = model.userImage.toUIImage()
         userNameLabel.text = model.userName
         descriptionLabel.text = model.userAbout
         linkTextView.text = model.websiteUrlString

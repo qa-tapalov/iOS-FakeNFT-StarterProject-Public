@@ -38,12 +38,14 @@ final class TabBarController: UITabBarController {
 
         let profileViewController = ProfileViewController()
         let profileRouter = ProfileRouter(view: profileViewController)
+        let imageLoader = ImageLoader()
         let networkClient = DefaultNetworkClient()
         let profileService = ProfileService(networkClient: networkClient)
         let profilePresenter = ProfilePresenter(
             view: profileViewController,
             router: profileRouter,
-            profileService: profileService
+            profileService: profileService,
+            imageLoader: imageLoader
         )
 
         profileViewController.presenter = profilePresenter

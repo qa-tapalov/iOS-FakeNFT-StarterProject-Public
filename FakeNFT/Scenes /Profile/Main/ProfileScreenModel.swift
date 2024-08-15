@@ -21,14 +21,14 @@ struct ProfileScreenModel {
     }
 
     let userName: String
-    let userImage: UIImage
+    let userImage: ImageWrapper
     let userAbout: String
     let websiteUrlString: String
     let tableData: TableData
 
     static let empty = ProfileScreenModel(
         userName: "",
-        userImage: UIImage(),
+        userImage: ImageWrapper(data: Data()),
         userAbout: "",
         websiteUrlString: "",
         tableData: TableData(sections: [])

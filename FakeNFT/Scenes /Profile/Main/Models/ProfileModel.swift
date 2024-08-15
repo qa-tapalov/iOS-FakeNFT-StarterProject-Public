@@ -9,7 +9,7 @@ import UIKit
 
 struct ProfileModel {
     var name: String
-    var avatar: UIImage
+    var avatar: ImageWrapper
     var description: String
     var website: String
     var nfts: [String]

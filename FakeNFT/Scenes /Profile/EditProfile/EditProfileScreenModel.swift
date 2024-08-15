@@ -21,11 +21,11 @@ struct EditProfileScreenModel {
         let sections: [Section]
     }
 
-    let image: UIImage
+    let image: ImageWrapper
     let tableData: TableData
 
     static let empty: EditProfileScreenModel = EditProfileScreenModel(
-        image: UIImage(),
+        image: ImageWrapper(data: Data()),
         tableData: TableData(sections: [])
     )
 }

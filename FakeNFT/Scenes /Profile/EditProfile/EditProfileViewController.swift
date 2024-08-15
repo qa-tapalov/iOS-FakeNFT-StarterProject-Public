@@ -106,7 +106,7 @@ final class EditProfileViewController: UIViewController {
     // MARK: - Private methods
 
     private func setup() {
-        avatarImageView.image = model.image
+        avatarImageView.image = model.image.toUIImage()
     }
 
     private func setupView() {
