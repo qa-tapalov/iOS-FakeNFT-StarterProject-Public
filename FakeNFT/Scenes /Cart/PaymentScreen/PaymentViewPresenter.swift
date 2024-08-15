@@ -56,8 +56,28 @@ final class PaymentViewPresenter: PaymentViewPresenterProtocol {
     }
     
     func payOrder(id: String) {
-        //TODO: pay order
+        view?.showLoader()
+        cartNetwork.payOrder(id: id) { [weak self] result in
+            guard let self else {return}
+            switch result {
+            case .success(_):
+                DispatchQueue.main.async {
+                    self.view?.hideLoader()
+                    self.view?.presentSuccess()
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    print(failure.localizedDescription)
+                    self.view?.hideLoader()
+                    self.view?.showAlert(model: 
+                                            ErrorModel(
+                                                message: "Не удалось произвести оплату",
+                                                actionText: "Повторить",
+                                                action: {self.payOrder(id: id)})
+                    )
+                }
+            }
+        }
     }
-    
     
 }

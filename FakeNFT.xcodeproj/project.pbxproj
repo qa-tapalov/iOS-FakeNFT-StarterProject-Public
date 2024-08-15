@@ -37,6 +37,8 @@
 		1B7638AD2C6D155000F33170 /* CurrencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7638AC2C6D155000F33170 /* CurrencyModel.swift */; };
 		1B7638AF2C6DD91B00F33170 /* WebViewAgreemantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7638AE2C6DD91B00F33170 /* WebViewAgreemantViewController.swift */; };
 		1B7638B12C6DDB9A00F33170 /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7638B02C6DDB9A00F33170 /* WebViewPresenter.swift */; };
+		1B7638B32C6DF55000F33170 /* SuccessOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7638B22C6DF55000F33170 /* SuccessOrderViewController.swift */; };
+		1B7638B52C6E067900F33170 /* OrderSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7638B42C6E067900F33170 /* OrderSuccessModel.swift */; };
 		3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ECE29DB474E00F6D39E /* Colors.swift */; };
 		3F478ED129DB476500F6D39E /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F478ED029DB476500F6D39E /* Fonts.swift */; };
 		3F603CCD29DB4A53000C43D7 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 3F603CCC29DB4A53000C43D7 /* ProgressHUD */; };
@@ -108,6 +110,8 @@
 		1B7638AC2C6D155000F33170 /* CurrencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyModel.swift; sourceTree = "<group>"; };
 		1B7638AE2C6DD91B00F33170 /* WebViewAgreemantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewAgreemantViewController.swift; sourceTree = "<group>"; };
 		1B7638B02C6DDB9A00F33170 /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
+		1B7638B22C6DF55000F33170 /* SuccessOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessOrderViewController.swift; sourceTree = "<group>"; };
+		1B7638B42C6E067900F33170 /* OrderSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSuccessModel.swift; sourceTree = "<group>"; };
 		3F478ECE29DB474E00F6D39E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		3F478ED029DB476500F6D39E /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		3F68069329CBBAF100B4F915 /* FakeNFT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeNFT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -226,6 +230,7 @@
 				1B7638992C6A7BBF00F33170 /* Cells */,
 				1B7638A52C6CE4D300F33170 /* PaymentScreen */,
 				1B7638982C6A7B9400F33170 /* CartScreen */,
+				1B7638B42C6E067900F33170 /* OrderSuccessModel.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 				1B7638A82C6CEBE500F33170 /* PaymentViewPresenter.swift */,
 				1B7638AE2C6DD91B00F33170 /* WebViewAgreemantViewController.swift */,
 				1B7638B02C6DDB9A00F33170 /* WebViewPresenter.swift */,
+				1B7638B22C6DF55000F33170 /* SuccessOrderViewController.swift */,
 			);
 			path = PaymentScreen;
 			sourceTree = "<group>";
@@ -592,6 +598,7 @@
 			files = (
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				1B7638A72C6CE4FD00F33170 /* PaymentViewController.swift in Sources */,
+				1B7638B52C6E067900F33170 /* OrderSuccessModel.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
 				1B7638972C69CC5100F33170 /* CartViewPresenter.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
@@ -610,6 +617,7 @@
 				1B7638A92C6CEBE500F33170 /* PaymentViewPresenter.swift in Sources */,
 				0CFCB7402A78002A0009A829 /* NftService.swift in Sources */,
 				1B7638AF2C6DD91B00F33170 /* WebViewAgreemantViewController.swift in Sources */,
+				1B7638B32C6DF55000F33170 /* SuccessOrderViewController.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				1B76389B2C6A7C8600F33170 /* CartNetworkService.swift in Sources */,

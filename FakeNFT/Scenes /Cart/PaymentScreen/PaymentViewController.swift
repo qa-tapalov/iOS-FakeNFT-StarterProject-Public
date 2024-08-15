@@ -11,6 +11,8 @@ protocol PaymentViewControllerProtocol: AnyObject {
     func showLoader()
     func hideLoader()
     func reloadCollection()
+    func presentSuccess()
+    func showAlert(model: ErrorModel)
 }
 
 final class PaymentViewController: UIViewController, PaymentViewControllerProtocol {
@@ -163,14 +165,35 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
         activityIndicator.isHidden = true
     }
     
+    func presentSuccess(){
+        let vc = SuccessOrderViewController()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
     @objc private func buttonAction(){
-        
+        presenter.payOrder(id: self.id)
         
     }
     
     private func updatePaymentButtonState(){
         paymentButton.isEnabled = !id.isEmpty
         paymentButton.backgroundColor = .black
+    }
+    
+    func showAlert(model: ErrorModel) {
+        let alert = UIAlertController(
+            title: model.message,
+            message: nil,
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: model.actionText, style: UIAlertAction.Style.default) {_ in
+            model.action()
+        }
+        let cancel = UIAlertAction(title: "Отмена", style: .cancel)
+        alert.addAction(cancel)
+        alert.addAction(action)
+        present(alert, animated: true)
     }
     
 }
@@ -229,3 +252,4 @@ extension PaymentViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
+
