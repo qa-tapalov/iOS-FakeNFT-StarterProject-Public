@@ -19,9 +19,10 @@ final class PaymentViewPresenter: PaymentViewPresenterProtocol {
     
     var currencies: [CurrencyModel] = []
     
-    weak var view: PaymentViewController?
+    weak var view: PaymentViewControllerProtocol?
     let cartNetwork = CartNetworkService.shared
-    init(view: PaymentViewController) {
+    
+    init(view: PaymentViewControllerProtocol) {
         self.view = view
         fetchCurrencies()
     }
@@ -35,7 +36,23 @@ final class PaymentViewPresenter: PaymentViewPresenterProtocol {
     }
     
     func fetchCurrencies() {
-        //TODO: load currencies
+        view?.showLoader()
+        cartNetwork.fetchCurrencies { [weak self] result in
+            guard let self else {return}
+            switch result {
+            case .success(let currencies):
+                DispatchQueue.main.async {
+                    self.currencies = currencies
+                    self.view?.hideLoader()
+                    self.view?.reloadCollection()
+                }
+            case .failure(let failure):
+                DispatchQueue.main.async {
+                    print(failure.localizedDescription)
+                    self.view?.hideLoader()
+                }
+            }
+        }
     }
     
     func payOrder(id: String) {

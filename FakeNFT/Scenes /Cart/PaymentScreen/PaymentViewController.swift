@@ -7,9 +7,15 @@
 
 import UIKit
 
-final class PaymentViewController: UIViewController {
+protocol PaymentViewControllerProtocol: AnyObject {
+    func showLoader()
+    func hideLoader()
+    func reloadCollection()
+}
+
+final class PaymentViewController: UIViewController, PaymentViewControllerProtocol {
     
-    var presenter: PaymentViewPresenterProtocol!
+    private var presenter: PaymentViewPresenterProtocol!
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -57,12 +63,20 @@ final class PaymentViewController: UIViewController {
         return view
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.color = .gray
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = PaymentViewPresenter(view: self)
         setupView()
         setupCollection()
-        presenter = PaymentViewPresenter(view: self)
     }
+    
     
     private func setupView(){
         title = "Выберите способ оплаты"
@@ -72,6 +86,7 @@ final class PaymentViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.black
         view.addSubview(collectionView)
         view.addSubview(paymentView)
+        view.addSubview(activityIndicator)
         paymentView.addSubview(labelAgreement)
         paymentView.addSubview(linkAgreement)
         paymentView.addSubview(paymentButton)
@@ -92,7 +107,9 @@ final class PaymentViewController: UIViewController {
             
             linkAgreement.leadingAnchor.constraint(equalTo: paymentView.leadingAnchor, constant: 16),
             linkAgreement.trailingAnchor.constraint(equalTo: paymentView.trailingAnchor, constant: -16),
-            linkAgreement.topAnchor.constraint(equalTo: labelAgreement.bottomAnchor, constant: 4)
+            linkAgreement.topAnchor.constraint(equalTo: labelAgreement.bottomAnchor, constant: 4),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
@@ -109,6 +126,20 @@ final class PaymentViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
         collectionView.register(CurrencyCollectionViewCell.self, forCellWithReuseIdentifier: CurrencyCollectionViewCell.identifier)
+    }
+    
+    func reloadCollection(){
+        collectionView.reloadData()
+    }
+    
+    func showLoader(){
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = false
+    }
+    
+    func hideLoader(){
+        activityIndicator.startAnimating()
+        activityIndicator.isHidden = true
     }
     
     @objc private func buttonAction(){
