@@ -5,4 +5,8 @@
 //  Created by Gleb on 15.08.2024.
 //
 
-import Foundation
+import UIKit
+
+final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
+    
+}

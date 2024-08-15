@@ -47,6 +47,7 @@
 		F77501FB2C6DE67500DAAFF7 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77501FA2C6DE67500DAAFF7 /* CollectionViewCell.swift */; };
 		F77501FD2C6DE68C00DAAFF7 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77501FC2C6DE68C00DAAFF7 /* CollectionViewController.swift */; };
 		F77502002C6DEA5000DAAFF7 /* SortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77501FF2C6DEA5000DAAFF7 /* SortType.swift */; };
+		F77502032C6DF59F00DAAFF7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F77502022C6DF59F00DAAFF7 /* Media.xcassets */; };
 		F7750C942C6A2FDC0007DEC1 /* SortStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7750C932C6A2FDC0007DEC1 /* SortStorage.swift */; };
 		F7750C972C6A30BF0007DEC1 /* Sorting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7750C962C6A30BF0007DEC1 /* Sorting.swift */; };
 		F7750C9A2C6A44930007DEC1 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7750C992C6A44930007DEC1 /* UIBlockingProgressHUD.swift */; };
@@ -119,6 +120,7 @@
 		F77501FA2C6DE67500DAAFF7 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		F77501FC2C6DE68C00DAAFF7 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		F77501FF2C6DEA5000DAAFF7 /* SortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortType.swift; sourceTree = "<group>"; };
+		F77502022C6DF59F00DAAFF7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		F7750C932C6A2FDC0007DEC1 /* SortStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortStorage.swift; sourceTree = "<group>"; };
 		F7750C962C6A30BF0007DEC1 /* Sorting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sorting.swift; sourceTree = "<group>"; };
 		F7750C992C6A44930007DEC1 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 		0CFCB7472A7808870009A829 /* Catalog */ = {
 			isa = PBXGroup;
 			children = (
+				F77502012C6DF58200DAAFF7 /* TestAssets */,
 				F77501FE2C6DE6F700DAAFF7 /* Catalog */,
 				F77501F72C6DE63700DAAFF7 /* Collection */,
 				F7750C982C6A44880007DEC1 /* UIBlockingProgressHUD */,
@@ -402,6 +405,14 @@
 			path = Catalog;
 			sourceTree = "<group>";
 		};
+		F77502012C6DF58200DAAFF7 /* TestAssets */ = {
+			isa = PBXGroup;
+			children = (
+				F77502022C6DF59F00DAAFF7 /* Media.xcassets */,
+			);
+			path = TestAssets;
+			sourceTree = "<group>";
+		};
 		F7750C982C6A44880007DEC1 /* UIBlockingProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -546,6 +557,7 @@
 			files = (
 				3F6806A329CBBAF200B4F915 /* LaunchScreen.storyboard in Resources */,
 				E1CD40DC2A96BECC00BE7FE8 /* Localizable.strings in Resources */,
+				F77502032C6DF59F00DAAFF7 /* Media.xcassets in Resources */,
 				3F6806A029CBBAF200B4F915 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
