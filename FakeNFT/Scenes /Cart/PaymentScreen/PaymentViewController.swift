@@ -16,6 +16,11 @@ protocol PaymentViewControllerProtocol: AnyObject {
 final class PaymentViewController: UIViewController, PaymentViewControllerProtocol {
     
     private var presenter: PaymentViewPresenterProtocol!
+    private var id: String = "" {
+        didSet {
+            updatePaymentButtonState()
+        }
+    }
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -28,7 +33,7 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
         view.setTitle("Оплатить", for: .normal)
         view.titleLabel?.font = .bodyBold
         view.titleLabel?.textColor = .white
-        view.backgroundColor = .black
+        view.backgroundColor = .gray
         view.layer.cornerRadius = 16
         view.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -146,6 +151,11 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
         
     }
     
+    private func updatePaymentButtonState(){
+        paymentButton.isEnabled = !id.isEmpty
+        paymentButton.backgroundColor = .black
+    }
+    
 }
 
 extension PaymentViewController: UICollectionViewDataSource {
@@ -186,4 +196,19 @@ extension PaymentViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderColor = UIColor.black.cgColor
+        cell?.layer.borderWidth = 1
+        cell?.layer.cornerRadius = 12
+        id = presenter.getItem(index: indexPath.row).id
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.layer.borderWidth = 0
+    }
+    
 }
