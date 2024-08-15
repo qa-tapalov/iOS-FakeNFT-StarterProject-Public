@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Cover Collection 1.png",
+      "filename" : "Light.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Cover Collection.png",
+      "filename" : "Light@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Cover Collection 2.png",
+      "filename" : "Light@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
