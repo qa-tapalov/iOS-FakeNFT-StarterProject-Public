@@ -64,7 +64,33 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     // MARK: - Action
     @objc
     private func sortButtonTapped() {
-        present(presenter.setSortType(), animated: true)
+        
+        let sortTypeModel = presenter.makeSortTypeModel()
+        
+        let actionSheet = UIAlertController(
+            title: sortTypeModel.title,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        actionSheet.addAction(UIAlertAction(
+            title: sortTypeModel.byName,
+            style: .default) { _ in
+                self.presenter.sortByName()
+            })
+        actionSheet.addAction(UIAlertAction(
+            title: sortTypeModel.byNftCount,
+            style: .default) { _ in
+                self.presenter.sortByNftCount()
+            })
+        
+        actionSheet.addAction(
+            UIAlertAction(
+                title: sortTypeModel.close,
+                style: .cancel)
+        )
+        
+        present(actionSheet, animated: true)
     }
     
     // MARK: - Public Methods
