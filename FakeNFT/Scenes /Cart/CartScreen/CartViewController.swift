@@ -180,7 +180,7 @@ final class CartViewController: UIViewController {
         let items = presenter.items
         totalCountLabel.text = String(items.count) + " NFT"
         let totalPrice = items.map {$0.price}.reduce(0, +)
-        totalPriceLabel.text = String(totalPrice) + " ETH"
+        totalPriceLabel.text = String(format: "%.2f", totalPrice) + " ETH"
         tableView.isHidden = items.isEmpty
         emptyLabel.isHidden = !items.isEmpty
         navigationItem.rightBarButtonItem = items.isEmpty ? nil : sortButton

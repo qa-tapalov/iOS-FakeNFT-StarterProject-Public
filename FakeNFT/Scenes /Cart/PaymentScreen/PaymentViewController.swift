@@ -116,6 +116,22 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
+        linkAgreement.addGestureRecognizer(tapGesture)
+        linkAgreement.isUserInteractionEnabled = true
+    }
+    
+    @objc
+    private func labelTapped(){
+        guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else {return}
+        let request = URLRequest(url: url)
+        let viewController = WebViewAgreemantViewController()
+        let webViewPresenter = WebViewPresenter(view: viewController)
+        viewController.presenter = webViewPresenter
+        viewController.request = request
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true, completion: nil)
     }
     
     private func setupCollection(){
@@ -148,6 +164,7 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
     }
     
     @objc private func buttonAction(){
+        
         
     }
     
