@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     static let identifier = "CollectionCell"
+    
+    var nftModel: NFTs?
     
     private lazy var ratingView = RatingView()
     
@@ -42,7 +45,6 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     private lazy var nftPrice: UILabel = {
         let label = UILabel()
-        label.text = "303030"
         label.font = .headline3
         label.textColor = .textPrimary
         label.numberOfLines = 0
@@ -68,7 +70,13 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     func configCollectionCell() {
-
+        guard let nftModel = nftModel else { return }
+        if let imageURL = nftModel.images.first {
+            nftImageView.kf.setImage(with: imageURL)
+        }
+        nftName.text = nftModel.name
+        nftPrice.text = "\(nftModel.price) ETH"
+        ratingView.createRating(with: nftModel.rating)
     }
     
     private func setupCollectionViewCell() {

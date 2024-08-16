@@ -9,14 +9,15 @@ import Foundation
 
 protocol CollectionPresenterProtocol: AnyObject {
     var nfts: [NFTs] { get }
-    var collectionView: CollectionPresenterProtocol? { get set }
+    var collectionView: CollectionViewControllerProtocol? { get set }
     func getNfts()
+    func loadAuthor()
 }
 
 final class CollectionPresenter: CollectionPresenterProtocol {
-    var nfts: [NFTs]
+    var nfts: [NFTs] = []
     var collectionNft: NFTCollection?
-    weak var collectionView: (any CollectionPresenterProtocol)?
+    weak var collectionView: CollectionViewControllerProtocol?
     
     private let catalogService: CatalogServiceProtocol
     
@@ -30,7 +31,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
         collectionNft.nfts.forEach {
             collectionView?.showLoadIndicator()
             catalogService.getNFTs(id: $0, completion: { [weak self] result in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch result {
                 case .success(let nft):
                     self.nfts.append(nft)
@@ -44,5 +45,24 @@ final class CollectionPresenter: CollectionPresenterProtocol {
         }
     }
     
+    func loadAuthor() {
+        guard let id = collectionNft?.author else { return }
+        collectionView?.showLoadIndicator()
+        catalogService.getAuthorNftCollection(id: id) { [weak self] result in
+            guard let self else { return }
+            self.prepare(authorName: result.name)
+            self.collectionView?.hideLoadIndicator()
+        }
+    }
     
+    private func prepare(authorName: String) {
+        guard let collection = collectionNft else { return }
+        let collectionViewData = CollectionViewData(
+            coverImage: collection.cover,
+            collectionName: collection.name,
+            authorName: authorName,
+            description: collection.description
+        )
+        collectionView?.collectionViewData(data: collectionViewData)
+    }
 }

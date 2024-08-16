@@ -9,6 +9,7 @@ import UIKit
 import Kingfisher
 
 protocol CollectionViewControllerProtocol: AnyObject {
+    func collectionViewData(data: CollectionViewData)
     func reloadNftCollectionView()
     func showLoadIndicator()
     func hideLoadIndicator()
@@ -56,7 +57,6 @@ final class CollectionViewController: UIViewController {
     
     private lazy var collectionName: UILabel = {
         let label = UILabel()
-        label.text = "Классная коллекция"
         label.font = .headline3
         label.textColor = .textPrimary
         label.numberOfLines = 0
@@ -65,7 +65,6 @@ final class CollectionViewController: UIViewController {
     
     private lazy var collectionAuthor: UILabel = {
         let label = UILabel()
-        label.text = "Автор коллекции:"
         label.font = .caption2
         label.textColor = .textPrimary
         label.numberOfLines = 0
@@ -74,7 +73,6 @@ final class CollectionViewController: UIViewController {
     
     private lazy var collectionAuthorLink: UILabel = {
         let label = UILabel()
-        label.text = "Иван Петров"
         label.font = .caption1
         label.textColor = .yaBlueUniversal
         label.numberOfLines = 0
@@ -84,7 +82,6 @@ final class CollectionViewController: UIViewController {
     
     private lazy var collectionDescription: UILabel = {
         let label = UILabel()
-        label.text = "Просто текст имитирующий описание коллекции которую открыли выбором на предыдущем экране. Никакой смысловой нагрузки."
         label.font = .caption2
         label.textColor = .textPrimary
         label.numberOfLines = 0
@@ -105,6 +102,9 @@ final class CollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.collectionView = self
+        presenter.loadAuthor()
+        presenter.getNfts()
         setupCollectionViewController()
     }
     
@@ -199,14 +199,23 @@ final class CollectionViewController: UIViewController {
 
 // MARK: - CollectionViewControllerProtocol
 extension CollectionViewController: CollectionViewControllerProtocol {
+    func collectionViewData(data: CollectionViewData) {
+        DispatchQueue.main.async {
+            self.collectionCoverImage.kf.setImage(with: URL(string: data.coverImage))
+            self.collectionName.text = data.collectionName
+            self.collectionAuthorLink.text = data.authorName
+            self.collectionDescription.text = data.description
+        }
+    }
+    
     func reloadNftCollectionView() {
         nftCollectionView.reloadData()
     }
-
+    
     func showLoadIndicator() {
         UIBlockingProgressHUD.show()
     }
-
+    
     func hideLoadIndicator() {
         UIBlockingProgressHUD.dismiss()
     }
@@ -223,6 +232,10 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell else {
             return UICollectionViewCell()
         }
+        
+        let cellData = presenter.nfts[indexPath.row]
+        cell.nftModel = cellData
+        cell.configCollectionCell()
         return cell
     }
 }
