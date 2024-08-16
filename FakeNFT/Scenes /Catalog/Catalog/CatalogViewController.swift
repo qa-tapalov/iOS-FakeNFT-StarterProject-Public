@@ -144,20 +144,9 @@ extension CatalogViewController: UITableViewDataSource {
         guard let cell = catalogTableView.dequeueReusableCell(withIdentifier: CatalogTableViewCell.identifier, for: indexPath) as? CatalogTableViewCell else {
             return UITableViewCell()
         }
-        
-        configCell(for: cell, with: indexPath)
-        
-        return cell
-    }
-}
-
-extension CatalogViewController {
-    func configCell(for cell: CatalogTableViewCell, with indexPath: IndexPath) {
         let collection = presenter.collectionsNft[indexPath.row]
-        guard let collectionCover = URL(string: collection.cover) else { return }
-        
-        cell.setCatalogImage(with: collectionCover)
-        cell.setCatalogLabel(with: collection.name, quantity: collection.nfts.count)
+        cell.configCell(for: cell, with: indexPath, for: collection)
+        return cell
     }
 }
 

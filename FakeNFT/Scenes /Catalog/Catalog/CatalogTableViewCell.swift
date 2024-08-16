@@ -41,16 +41,23 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     // MARK: - Public Methods
-    func setCatalogImage(with collectionCover: URL) {
+    func configCell(for cell: CatalogTableViewCell, with indexPath: IndexPath, for collection: NFTCollection) {
+        guard let collectionCover = URL(string: collection.cover) else { return }
+        
+        setCatalogImage(with: collectionCover)
+        setCatalogLabel(with: collection.name, quantity: collection.nfts.count)
+    }
+    
+    // MARK: - Private Methods
+    private func setCatalogImage(with collectionCover: URL) {
         catalogImage.kf.indicatorType = .activity
         catalogImage.kf.setImage(with: collectionCover)
     }
     
-    func setCatalogLabel(with name: String, quantity count: Int ) {
+    private func setCatalogLabel(with name: String, quantity count: Int ) {
         catalogLabel.text = "\(name) (\(count))"
     }
     
-    // MARK: - Private Methods
     private func setupCatalogTableViewCell() {
         backgroundColor = .clear
         selectionStyle = .none
