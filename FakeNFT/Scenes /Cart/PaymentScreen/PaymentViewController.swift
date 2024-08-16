@@ -15,7 +15,7 @@ protocol PaymentViewControllerProtocol: AnyObject {
 
 final class PaymentViewController: UIViewController, PaymentViewControllerProtocol {
     
-    private var presenter: PaymentViewPresenterProtocol!
+    var presenter: PaymentViewPresenterProtocol?
     private var id: String = "" {
         didSet {
             updatePaymentButtonState()
@@ -77,11 +77,9 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = PaymentViewPresenter(view: self)
         setupView()
         setupCollection()
     }
-    
     
     private func setupView(){
         title = "Выберите способ оплаты"
@@ -164,7 +162,7 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
     }
     
     @objc private func buttonAction(){
-        
+        //TODO: pay order
         
     }
     
@@ -177,13 +175,13 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
 
 extension PaymentViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        presenter.numberOfRows()
+        presenter?.numberOfRows() ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrencyCollectionViewCell.identifier, for: indexPath) as? CurrencyCollectionViewCell else {
             return UICollectionViewCell()}
-        let currency = presenter.getItem(index: indexPath.row)
+        guard let currency = presenter?.getItem(index: indexPath.row) else {return UICollectionViewCell()}
         cell.configure(cell: currency)
         return cell
     }
@@ -219,7 +217,8 @@ extension PaymentViewController: UICollectionViewDelegateFlowLayout {
         cell?.layer.borderColor = UIColor.black.cgColor
         cell?.layer.borderWidth = 1
         cell?.layer.cornerRadius = 12
-        id = presenter.getItem(index: indexPath.row).id
+        guard let idCurrency = presenter?.getItem(index: indexPath.row).id else {return}
+        id = idCurrency
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
