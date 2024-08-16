@@ -40,7 +40,7 @@ final class WebViewAgreemantViewController: UIViewController, WebViewControllerP
     
     private lazy var progressView: UIProgressView = {
         let view = UIProgressView()
-        view.progressTintColor = .systemBackground
+        view.progressTintColor = .gray
         view.progress = 0.1
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
