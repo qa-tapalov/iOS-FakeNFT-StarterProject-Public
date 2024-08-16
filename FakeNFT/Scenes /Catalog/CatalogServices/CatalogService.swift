@@ -9,6 +9,7 @@ import Foundation
 
 protocol CatalogServiceProtocol: AnyObject {
     func getNftCollections(completion: @escaping (Result<[NFTCollection], Error>) -> Void)
+    func getNft(id: String, completion: @escaping (Result<[NFT], Error>) -> Void)
 }
 
 final class CatalogService: CatalogServiceProtocol {
@@ -37,5 +38,22 @@ final class CatalogService: CatalogServiceProtocol {
                     }
                 }
             }
+    }
+    
+    func getNft(id: String, completion: @escaping (Result<NFTs, Error>) -> Void) {
+        let request = NFTCollectionsRequest()
+        
+        networkClient.send(request: request, type: NFTs.self) { result in
+            switch result {
+            case .success(let nft):
+                completion(.success(nft))
+            case .failure(let error):
+                if let networkError = error as? NetworkClientError {
+                    completion(.failure(networkError))
+                } else {
+                    completion(.failure(error))
+                }
+            }
+        }
     }
 }

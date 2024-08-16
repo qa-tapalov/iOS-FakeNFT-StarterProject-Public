@@ -6,8 +6,17 @@
 //
 
 import UIKit
+import Kingfisher
+
+protocol CollectionViewControllerProtocol: AnyObject {
+    func reloadNftCollectionView()
+    func showLoadIndicator()
+    func hideLoadIndicator()
+}
 
 final class CollectionViewController: UIViewController {
+    private var presenter: CollectionPresenterProtocol
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
@@ -99,6 +108,15 @@ final class CollectionViewController: UIViewController {
         setupCollectionViewController()
     }
     
+    init(presenter: CollectionPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     @objc
     private func backButtonTapped() {
         // TODO: переход на экран каталога NFT
@@ -179,22 +197,32 @@ final class CollectionViewController: UIViewController {
     }
 }
 
-extension CollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+// MARK: - CollectionViewControllerProtocol
+extension CollectionViewController: CollectionViewControllerProtocol {
+    func reloadNftCollectionView() {
+        nftCollectionView.reloadData()
     }
-    
+
+    func showLoadIndicator() {
+        UIBlockingProgressHUD.show()
+    }
+
+    func hideLoadIndicator() {
+        UIBlockingProgressHUD.dismiss()
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+extension CollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return presenter.nfts.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell else {
             return UICollectionViewCell()
         }
-        
-        cell.configCollectionCell()
         return cell
     }
 }
