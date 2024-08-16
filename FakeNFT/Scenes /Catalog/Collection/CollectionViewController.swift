@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class UICollectionViewController: UIViewController {
+final class CollectionViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
@@ -24,6 +24,17 @@ final class UICollectionViewController: UIViewController {
         stackView.axis = .vertical
         stackView.distribution = .fill
         return stackView
+    }()
+    
+    private lazy var backButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.backward"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        button.tintColor = .black
+        return button
     }()
     
     private lazy var collectionCoverImage: UIImageView = {
@@ -58,6 +69,7 @@ final class UICollectionViewController: UIViewController {
         label.font = .caption1
         label.textColor = .yaBlueUniversal
         label.numberOfLines = 0
+        // TODO: - Ссылка на страницу автора
         return label
     }()
     
@@ -77,6 +89,7 @@ final class UICollectionViewController: UIViewController {
             collectionViewLayout: UICollectionViewFlowLayout()
         )
         collectionView.backgroundColor = .clear
+        collectionView.allowsMultipleSelection = false
         collectionView.isScrollEnabled = false
         return collectionView
     }()
@@ -86,8 +99,14 @@ final class UICollectionViewController: UIViewController {
         setupCollectionViewController()
     }
     
+    @objc
+    private func backButtonTapped() {
+        // TODO: переход на экран каталога NFT
+    }
+    
     private func setupCollectionViewController() {
         view.backgroundColor = .systemBackground
+        navigationItem.leftBarButtonItem = backButton
         addSubviews()
         setupCollectionView()
         setupCollectionViewControllerConstrains()
@@ -116,7 +135,9 @@ final class UICollectionViewController: UIViewController {
     }
     
     private func setupCollectionView() {
-        
+        nftCollectionView.dataSource = self
+        nftCollectionView.delegate = self
+        nftCollectionView.register(CollectionViewCell.self)
     }
     
     private func setupCollectionViewControllerConstrains() {
@@ -155,5 +176,40 @@ final class UICollectionViewController: UIViewController {
             nftCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             nftCollectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
+    }
+}
+
+extension CollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.identifier, for: indexPath) as? CollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        cell.configCollectionCell()
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension CollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.bounds.width - 18) / 3, height: 192)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 9
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
     }
 }
