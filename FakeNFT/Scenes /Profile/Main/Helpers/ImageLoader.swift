@@ -5,7 +5,7 @@
 //  Created by Юрий Клеймёнов on 15/08/2024.
 //
 
-import UIKit
+import Foundation
 import Kingfisher
 
 protocol ImageLoaderProtocol {

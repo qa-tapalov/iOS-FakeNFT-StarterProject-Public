@@ -5,7 +5,7 @@
 //  Created by Юрий Клеймёнов on 10/08/2024.
 //
 
-import UIKit
+import Foundation
 
 struct ProfileScreenModel {
     struct TableData {
