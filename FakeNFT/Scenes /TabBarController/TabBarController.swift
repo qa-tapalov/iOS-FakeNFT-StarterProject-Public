@@ -2,24 +2,57 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
-    var servicesAssembly: ServicesAssembly!
+    private let profileTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.profile", comment: "Профиль"),
+        image: UIImage(resource: .tabProfile),
+        tag: 0
+    )
 
     private let catalogTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.catalog", comment: ""),
-        image: UIImage(systemName: "square.stack.3d.up.fill"),
-        tag: 0
+        title: NSLocalizedString("Tab.catalog", comment: "Каталог"),
+        image: UIImage(resource: .tabCatalog),
+        tag: 1
+    )
+
+    private let cartTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.cart", comment: "Корзина"),
+        image: UIImage(resource: .tabCart),
+        tag: 2
+    )
+
+    private let statisticsTabBarItem = UITabBarItem(
+        title: NSLocalizedString("Tab.statistics", comment: "Статистика"),
+        image: UIImage(resource: .tabStatistic),
+        tag: 3
     )
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTabBar()
+    }
 
-        let catalogController = TestCatalogViewController(
-            servicesAssembly: servicesAssembly
+    private func setupTabBar() {
+        view.backgroundColor = UIColor.systemBackground
+
+// MARK: - ProfileViewController
+
+        let profileViewController = ProfileViewController()
+        let profileRouter = ProfileRouter(view: profileViewController)
+        let imageLoader = ImageLoader()
+        let networkClient = DefaultNetworkClient()
+        let profileService = ProfileService(networkClient: networkClient)
+        let profilePresenter = ProfilePresenter(
+            view: profileViewController,
+            router: profileRouter,
+            profileService: profileService,
+            imageLoader: imageLoader
         )
-        catalogController.tabBarItem = catalogTabBarItem
 
-        viewControllers = [catalogController]
+        profileViewController.presenter = profilePresenter
 
-        view.backgroundColor = .systemBackground
+        let profileNavController = UINavigationController(rootViewController: profileViewController)
+        profileNavController.tabBarItem = profileTabBarItem
+
+        viewControllers = [profileNavController]
     }
 }
