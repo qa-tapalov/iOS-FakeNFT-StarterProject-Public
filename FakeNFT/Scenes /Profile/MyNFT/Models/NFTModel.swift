@@ -8,7 +8,6 @@
 import Foundation
 
 struct NFTModel {
-    let createdAt: Date?
     let name: String
     let rating: Int
     let authorName: String

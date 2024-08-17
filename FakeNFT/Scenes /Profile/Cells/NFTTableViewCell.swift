@@ -73,6 +73,7 @@ final class NFTTableViewCell: UITableViewCell {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
+        label.numberOfLines = 2
         label.textColor = .segmentActive
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

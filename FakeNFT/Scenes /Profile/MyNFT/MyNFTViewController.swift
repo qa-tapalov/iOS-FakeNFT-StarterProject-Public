@@ -7,7 +7,16 @@
 
 import UIKit
 
+protocol MyNFTViewProtocol: AnyObject {
+    func display(data: MyNFTScreenModel, reloadData: Bool)
+}
+
 final class MyNFTViewController: UIViewController {
+
+    // MARK: - Properties
+
+    typealias Cell = MyNFTScreenModel.TableData.Cell
+    var presenter: MyNFTPresenterProtocol!
 
     // MARK: - UI Elements
 
@@ -28,21 +37,22 @@ final class MyNFTViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(NFTTableViewCell.self, forCellReuseIdentifier: NFTTableViewCell.identifier)
         return tableView
     }()
 
-    private var nftModels: [NFTTableViewCellModel] = [
-        NFTTableViewCellModel(
-            image: "https://code.s3.yandex.net/Mobile/iOS/NFT/Pink/Lilo/1.png",
-            name: "Lilo",
-            authorName: "John Doe",
-            price: "1,78",
-            rating: 3,
-            isLiked: true,
-            onLikeAction: { isLiked in print("CryptoPunk #3100 liked: \(isLiked)") }
-        )]
+    private var model: MyNFTScreenModel = .empty {
+        didSet {
+            title = model.title
+        }
+    }
 
     // MARK: - Lifecycle
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.setup()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,61 +63,61 @@ final class MyNFTViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .white
-        view.addSubview(emptyStateLabel)
-        isNFTsEmpty()
         configureNavigationBar()
+        updateView()
     }
 
-    private func isNFTsEmpty() {
-        if nftModels.isEmpty {
-            configureEmptyStateLabel()
+    private func updateView() {
+        if presenter.nftIds.isEmpty {
+            showEmptyState()
         } else {
-            view.addSubview(tableView)
-            configureTableView()
+            showTableView()
         }
-        configureNavigationBar()
     }
 
-    private func configureEmptyStateLabel() {
+    private func showEmptyState() {
+        view.addSubview(emptyStateLabel)
         NSLayoutConstraint.activate([
             emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 
-    private func configureTableView() {
+    private func showTableView() {
+        view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: -Constants.tableViewTopOffset),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-
-        tableView.register(NFTTableViewCell.self, forCellReuseIdentifier: NFTTableViewCell.identifier)
     }
 
     private func configureNavigationBar() {
         let boldConfig = UIImage.SymbolConfiguration(weight: .bold)
 
-        let backButton = UIButton(type: .custom)
-        let sortButton = UIButton(type: .custom)
+        let backButton = createBarButtonItem(imageName: "chevron.left", config: boldConfig, action: #selector(backButtonTapped))
+        let sortButton = createBarButtonItem(imageName: "text.justify.left", config: boldConfig, action: #selector(sortButtonTapped))
 
-        let backImage = UIImage(systemName: "chevron.left", withConfiguration: boldConfig)
-        let sortImage = UIImage(systemName: "text.justify.left", withConfiguration: boldConfig)
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.rightBarButtonItem = sortButton
+    }
 
-        backButton.setImage(backImage, for: .normal)
-        backButton.tintColor = .black
-        sortButton.setImage(sortImage, for: .normal)
-        sortButton.tintColor = .black
+    private func createBarButtonItem(imageName: String, config: UIImage.SymbolConfiguration, action: Selector) -> UIBarButtonItem {
+        let button = UIButton(type: .custom)
+        let image = UIImage(systemName: imageName, withConfiguration: config)
+        button.setImage(image, for: .normal)
+        button.tintColor = .black
+        button.addTarget(self, action: action, for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
+    }
 
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        sortButton.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
-
-        let leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        let rightBarButtonItem = UIBarButtonItem(customView: sortButton)
-
-        navigationItem.leftBarButtonItem = leftBarButtonItem
-        navigationItem.rightBarButtonItem = rightBarButtonItem
+    private func tableDataCell(indexPath: IndexPath) -> Cell {
+        let section = model.tableData.sections[indexPath.section]
+        switch section {
+        case let .simple(cells):
+            return cells[indexPath.row]
+        }
     }
 
     @objc private func backButtonTapped() {
@@ -120,33 +130,46 @@ final class MyNFTViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - MyNFTViewProtocol
 
-extension MyNFTViewController: UITableViewDelegate {
-
+extension MyNFTViewController: MyNFTViewProtocol {
+    func display(data: MyNFTScreenModel, reloadData: Bool) {
+        model = data
+        if reloadData {
+            tableView.reloadData()
+        }
+    }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension MyNFTViewController: UITableViewDataSource {
+extension MyNFTViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return model.tableData.sections.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return nftModels.count
+        switch model.tableData.sections[section] {
+        case let .simple(cells):
+            return cells.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
-            return UITableViewCell()
+        let cellType = tableDataCell(indexPath: indexPath)
+        switch cellType {
+        case let .NFTCell(model):
+            guard let nftCell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
+                return UITableViewCell()
+            }
+            nftCell.model = model
+            return nftCell
         }
-
-        let model = nftModels[indexPath.row]
-        cell.model = model
-
-        return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        Constants.cellHeight
+        return Constants.cellHeight
     }
 }
 
