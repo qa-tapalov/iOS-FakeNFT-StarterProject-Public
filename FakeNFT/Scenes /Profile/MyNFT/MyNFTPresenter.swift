@@ -9,6 +9,10 @@ import Foundation
 
 protocol MyNFTPresenterProtocol: AnyObject {
     func setup()
+    func sortByPrice()
+    func sortByRating()
+    func sortByName()
+    func loadSortOrder() -> String
     var nftIds: [String] { get }
 }
 
@@ -21,6 +25,8 @@ final class MyNFTPresenter {
     private var profileService: ProfileServiceProtocol?
     private var profile: ProfileModel?
     private (set) var nftIds: [String]
+
+    private let sortOrderKey = "MyNFTSortOrderKey"
 
     private var nfts: [NFTModel] = [] {
         didSet {
@@ -166,12 +172,49 @@ final class MyNFTPresenter {
             self?.nfts.append(nftModel)
         }
     }
+
+    private func saveSortOrder(_ order: String) {
+        UserDefaults.standard.set(order, forKey: sortOrderKey)
+    }
+
 }
 
 // MARK: - MyNFTPresenterProtocol
 
 extension MyNFTPresenter: MyNFTPresenterProtocol {
+    func loadSortOrder() -> String {
+        return UserDefaults.standard.string(forKey: sortOrderKey) ?? "rating"
+    }
+    func sortByPrice() {
+        nfts.sort(by: { $0.price < $1.price })
+        saveSortOrder("price")
+        render()
+    }
+
+    func sortByRating() {
+        nfts.sort(by: { $0.rating < $1.rating })
+        saveSortOrder("rating")
+        render()
+    }
+
+    func sortByName() {
+        nfts.sort(by: { $0.name < $1.name})
+        saveSortOrder("name")
+        render()
+    }
+
     func setup() {
+
+        let sortOrder = loadSortOrder()
+
+        switch sortOrder {
+        case "price":
+            sortByPrice()
+        case "name":
+            sortByName()
+        default:
+            sortByRating()
+        }
         render()
     }
 }

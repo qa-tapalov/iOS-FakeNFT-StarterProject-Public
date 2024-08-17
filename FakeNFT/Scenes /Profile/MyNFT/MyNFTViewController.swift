@@ -120,13 +120,53 @@ final class MyNFTViewController: UIViewController {
         }
     }
 
+    private func showSortAlert() {
+        let sortOrder = presenter.loadSortOrder()
+
+        let alert = UIAlertController(
+            title: "Сортировка",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+
+        let priceAction = UIAlertAction(
+            title: "По цене",
+            style: .default
+        ) { [weak self] _ in
+            self?.presenter.sortByPrice()
+        }
+        priceAction.setValue(sortOrder == "price", forKey: "checked")
+
+        let ratingAction = UIAlertAction(
+            title: "По рейтингу",
+            style: .default
+        ) { [weak self] _ in
+            self?.presenter.sortByRating()
+        }
+        ratingAction.setValue(sortOrder == "rating", forKey: "checked")
+
+        let nameAction = UIAlertAction(
+            title: "По названию",
+            style: .default
+        ) { [weak self] _ in
+            self?.presenter.sortByName()
+        }
+        nameAction.setValue(sortOrder == "name", forKey: "checked")
+
+        alert.addAction(priceAction)
+        alert.addAction(ratingAction)
+        alert.addAction(nameAction)
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
 
     @objc private func sortButtonTapped() {
-        // TODO: - Add sorting logic
-        print("Sort NFTs")
+        showSortAlert()
     }
 }
 
