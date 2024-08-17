@@ -9,7 +9,7 @@ import Foundation
 
 struct ProfileRequest: NetworkRequest {
 
-    private static let method = "/api/v1/profile/"
+    static let method = "/api/v1/profile/"
 
     let id: String
     let dto: Encodable?
