@@ -2,7 +2,7 @@
 <br /> Когорта: 16
 <br /> Группа: 1
 <br /> Эпик: Статистика
-<br /> Ссылка: https://github.com/users/qa-tapalov/projects/4/views/1
+<br /> Ссылка: https://github.com/users/qa-tapalov/projects/4/views/2
 
 # Statistics Flow Decomposition
 
