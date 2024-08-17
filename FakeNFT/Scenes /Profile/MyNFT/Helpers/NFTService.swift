@@ -12,13 +12,13 @@ protocol NFTServiceProtocol: AnyObject {
 }
 
 final class NFTService: NFTServiceProtocol {
-    
+
     private let networkClient: NetworkClient
-    
+
     init(networkClient: NetworkClient) {
         self.networkClient = networkClient
     }
-    
+
     func getNFT(id: String, completion: @escaping (Result<NFTResultModel, any Error>) -> Void) {
         let request = NFTsRequest(id: id, httpMethod: .get)
         networkClient.send(request: request, type: NFTResultModel.self) { result in

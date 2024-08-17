@@ -8,16 +8,16 @@
 import Foundation
 
 struct NFTsRequest: NetworkRequest {
-    
+
     static let method = "/api/v1/nft/"
-    
+
     let id: String
     let httpMethod: HttpMethod
-    
+
     var token: String? {
         RequestConstants.token
     }
-    
+
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)\(NFTsRequest.method)\(id)")
     }

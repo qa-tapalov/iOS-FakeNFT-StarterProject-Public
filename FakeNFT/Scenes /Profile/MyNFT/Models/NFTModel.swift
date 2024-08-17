@@ -15,6 +15,6 @@ struct NFTModel {
     let price: CGFloat
     let image: String
     let id: String
-    
+
     var isLiked: Bool
 }

@@ -31,6 +31,17 @@ final class MyNFTViewController: UIViewController {
         return tableView
     }()
 
+    private var nftModels: [NFTTableViewCellModel] = [
+        NFTTableViewCellModel(
+            image: "https://code.s3.yandex.net/Mobile/iOS/NFT/Pink/Lilo/1.png",
+            name: "Lilo",
+            authorName: "John Doe",
+            price: "1,78",
+            rating: 3,
+            isLiked: true,
+            onLikeAction: { isLiked in print("CryptoPunk #3100 liked: \(isLiked)") }
+        )]
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -43,12 +54,18 @@ final class MyNFTViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = .white
         view.addSubview(emptyStateLabel)
-        configureEmptyStateLabel()
+        isNFTsEmpty()
         configureNavigationBar()
     }
 
     private func isNFTsEmpty() {
-
+        if nftModels.isEmpty {
+            configureEmptyStateLabel()
+        } else {
+            view.addSubview(tableView)
+            configureTableView()
+        }
+        configureNavigationBar()
     }
 
     private func configureEmptyStateLabel() {
@@ -113,13 +130,23 @@ extension MyNFTViewController: UITableViewDelegate {
 
 extension MyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        return 3
+        return nftModels.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NFTTableViewCell.identifier, for: indexPath) as? NFTTableViewCell else {
+            return UITableViewCell()
+        }
+
+        let model = nftModels[indexPath.row]
+        cell.model = model
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        Constants.cellHeight
     }
 }
 
@@ -127,4 +154,5 @@ extension MyNFTViewController: UITableViewDataSource {
 
 private struct Constants {
     static let tableViewTopOffset: CGFloat = 20
+    static let cellHeight: CGFloat = 140
 }
