@@ -38,12 +38,12 @@ final class TabBarController: UITabBarController {
         //        profileViewController.tabBarItem = profileTabBarItem
         //
         
-        let networkClient = DefaultNetworkClient()
-        let catalogService = CatalogService(networkClient: networkClient)
-        let sortStorage = SortStorage()
-        let catalogPresenter = CatalogPresenter(catalogService: catalogService, sortStorage: sortStorage)
+        let catalogConfiguration = CatalogSceneConfiguration()
+
+        let catalogViewController = UINavigationController(
+            rootViewController: catalogConfiguration.catalogViewController
+        )
         
-        let catalogViewController = UINavigationController(rootViewController: CatalogViewController(presenter: catalogPresenter))
         catalogViewController.tabBarItem = catalogTabBarItem
         
         //

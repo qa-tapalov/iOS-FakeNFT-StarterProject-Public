@@ -125,6 +125,13 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             catalogTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
         ])
     }
+    
+    private func showNFTCollection(indexPath: IndexPath) {
+        let configuration = CatalogSceneConfiguration()
+        let collection = presenter.collectionsNft[indexPath.row]
+        let viewController = configuration.assemblyCollection(collection)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 // MARK: - CatalogViewController
@@ -157,6 +164,6 @@ extension CatalogViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: Обработать выбор ячейки (переход на CollectionViewController)
+        showNFTCollection(indexPath: indexPath)
     }
 }

@@ -16,7 +16,7 @@ protocol CollectionViewControllerProtocol: AnyObject {
 }
 
 final class CollectionViewController: UIViewController {
-    private var presenter: CollectionPresenterProtocol
+    var presenter: CollectionPresenterProtocol
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -65,6 +65,7 @@ final class CollectionViewController: UIViewController {
     
     private lazy var collectionAuthor: UILabel = {
         let label = UILabel()
+        label.text = "Автор коллекции:"
         label.font = .caption2
         label.textColor = .textPrimary
         label.numberOfLines = 0
@@ -89,7 +90,7 @@ final class CollectionViewController: UIViewController {
         return label
     }()
     
-    private lazy var nftCollectionView: UICollectionView = {
+    private let nftCollectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
             collectionViewLayout: UICollectionViewFlowLayout()
@@ -103,7 +104,7 @@ final class CollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.collectionView = self
-        presenter.loadAuthor()
+        presenter.loadCollectionData()
         presenter.getNfts()
         setupCollectionViewController()
     }
@@ -119,7 +120,7 @@ final class CollectionViewController: UIViewController {
     
     @objc
     private func backButtonTapped() {
-        // TODO: переход на экран каталога NFT
+        navigationController?.popViewController(animated: true)
     }
     
     private func setupCollectionViewController() {
@@ -155,12 +156,17 @@ final class CollectionViewController: UIViewController {
     private func setupCollectionView() {
         nftCollectionView.dataSource = self
         nftCollectionView.delegate = self
-        nftCollectionView.register(CollectionViewCell.self)
+        nftCollectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: CollectionViewCell.identifier)
     }
     
     private func setupCollectionViewControllerConstrains() {
+        var navigationBarHeight: CGFloat {
+            (navigationController?.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
+            (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        }
+        
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: -navigationBarHeight),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -178,7 +184,7 @@ final class CollectionViewController: UIViewController {
             collectionName.leadingAnchor.constraint(equalTo: descriptionStackView.leadingAnchor, constant: 16),
             collectionName.trailingAnchor.constraint(equalTo: descriptionStackView.trailingAnchor, constant: -16),
             
-            collectionAuthor.topAnchor.constraint(equalTo: collectionName.bottomAnchor, constant: 8),
+            collectionAuthor.topAnchor.constraint(equalTo: collectionName.bottomAnchor, constant: 13),
             collectionAuthor.leadingAnchor.constraint(equalTo: collectionName.leadingAnchor),
             
             collectionAuthorLink.leadingAnchor.constraint(equalTo: collectionAuthor.trailingAnchor, constant: 4),
@@ -192,7 +198,7 @@ final class CollectionViewController: UIViewController {
             nftCollectionView.topAnchor.constraint(equalTo: descriptionStackView.bottomAnchor, constant: 24),
             nftCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             nftCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            nftCollectionView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
+            nftCollectionView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
     }
 }
@@ -233,9 +239,8 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
             return UICollectionViewCell()
         }
         
-        let cellData = presenter.nfts[indexPath.row]
-        cell.nftModel = cellData
-        cell.configCollectionCell()
+        let cellModel = presenter.getModel(for: indexPath)
+        cell.configCollectionCell(nftModel: cellModel)
         return cell
     }
 }

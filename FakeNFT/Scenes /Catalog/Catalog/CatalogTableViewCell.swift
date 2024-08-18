@@ -55,7 +55,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     private func setCatalogLabel(with name: String, quantity count: Int ) {
-        catalogLabel.text = "\(name) (\(count))"
+        catalogLabel.text = ("\(name) (\(count))").firstUppercased
     }
     
     private func setupCatalogTableViewCell() {

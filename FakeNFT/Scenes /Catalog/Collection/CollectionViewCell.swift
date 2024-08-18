@@ -26,6 +26,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var likeButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        button.tintColor = .yaWhiteUniversal
         button.contentEdgeInsets = UIEdgeInsets(
             top: 11,
             left: 9,
@@ -37,7 +38,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     private lazy var nftName: UILabel = {
         let label = UILabel()
-        label.font = .headline3
+        label.font = .bodyBold
         label.textColor = .textPrimary
         label.numberOfLines = 0
         return label
@@ -45,7 +46,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     
     private lazy var nftPrice: UILabel = {
         let label = UILabel()
-        label.font = .headline3
+        label.font = .medium10
         label.textColor = .textPrimary
         label.numberOfLines = 0
         return label
@@ -62,23 +63,21 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCollectionViewCell()
-        setupTrackerCollectionViewConstrains()
+        setupCollectionViewConstrains()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configCollectionCell() {
-        guard let nftModel = nftModel else { return }
-        if let imageURL = nftModel.images.first {
-            nftImageView.kf.setImage(with: imageURL)
+    func configCollectionCell(nftModel: NFTCellModel) {
+        DispatchQueue.main.async {
+            self.nftImageView.kf.setImage(with: nftModel.image)
+            self.nftName.text = nftModel.name
+            self.nftPrice.text = "\(nftModel.price) ETH"
+            self.ratingView.createRating(with: nftModel.rating)
         }
-        nftName.text = nftModel.name
-        nftPrice.text = "\(nftModel.price) ETH"
-        ratingView.createRating(with: nftModel.rating)
     }
-    
     private func setupCollectionViewCell() {
         [
             ratingView,
@@ -95,7 +94,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
     
-    private func setupTrackerCollectionViewConstrains() {
+    private func setupCollectionViewConstrains() {
         NSLayoutConstraint.activate([
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
