@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 protocol CatalogPresenterProtocol: AnyObject {
     var collectionsNft: [NFTCollection] { get }
