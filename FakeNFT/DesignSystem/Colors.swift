@@ -2,9 +2,9 @@ import UIKit
 
 extension UIColor {
     static let viewBackgroundColor = UIColor.systemBackground
-    static let ypBlack = UIColor(named: "ypBlack")
-    static let ypLightGrey = UIColor(named: "ypLightGrey")
-    static let ypWhite = UIColor(named: "ypWhite")
+    static let ypBlack = UIColor(hexString: "1A1B22")
+    static let ypLightGrey = UIColor(hexString: "F7F7F8")
+    static let ypWhite = UIColor(hexString: "FFFFFF")
     
     static let ypGrayUniversal = UIColor(hexString: "625C5C")
     static let ypRedUniversal = UIColor(hexString: "F56B6C")
