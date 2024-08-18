@@ -6,7 +6,6 @@
 
 # Catalog Flow Decomposition
 
-
 ## Module 1:
 
 ##### Верстка [Экран] Catalogue:
@@ -26,16 +25,16 @@
 ## Module 2:
         
 ##### Верстка [Экран] Collection:
-- Элементы экрана коллекции (обложка, название и т.д.) (est: 80 min; fact: x min).
-- Ячейка коллекции (est: 120 min; fact: x min).
-- Футер ячейки коллекции (est: 120 min; fact: x min).
-- Коллекция NFT (UICollectionView) - (est: 180 min; fact: x min).
+- Элементы экрана коллекции (обложка, название и т.д.) (est: 80 min; fact: 90 min).
+- Ячейка коллекции (est: 120 min; fact: 180 min).
+- Футер ячейки коллекции (est: 120 min; fact: 90 min).
+- Коллекция NFT (UICollectionView) - (est: 180 min; fact: 200 min).
 
 ##### Логика:
-- Загрузка с сервера на экран коллекции (est: 180 min; fact: x min).
-- Переход между экранами (est: 180 min; fact: x min).
+- Загрузка с сервера на экран коллекции (est: 180 min; fact: 200 min).
+- Переход между экранами (est: 180 min; fact: 200 min).
 
-`Total:` est: 860 min; fact: x min.
+`Total:` est: 860 min; fact: 960 min.
         
 ## Module 3:
 
