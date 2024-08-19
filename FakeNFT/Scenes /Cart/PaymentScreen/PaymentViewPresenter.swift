@@ -58,6 +58,4 @@ final class PaymentViewPresenter: PaymentViewPresenterProtocol {
     func payOrder(id: String) {
         //TODO: pay order
     }
-    
-    
 }

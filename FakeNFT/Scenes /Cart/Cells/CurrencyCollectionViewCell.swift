@@ -62,7 +62,7 @@ final class CurrencyCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupView(){
+    private func setupView(){
         contentView.layer.cornerRadius = 12
         contentView.backgroundColor = .init(hexString: "F7F7F8")
         contentView.addSubview(containerView)

@@ -14,11 +14,7 @@ protocol WebViewControllerProtocol: AnyObject {
     func setProgressHidden(_ isHidden: Bool)
 }
 
-final class WebViewAgreemantViewController: UIViewController, WebViewControllerProtocol {
-    
-    func load(request: URLRequest) {
-        webView.load(request)
-    }
+final class WebViewAgreemantViewController: UIViewController {
     
     private var estimatedProgressObservation: NSKeyValueObservation?
     var presenter: WebViewPresenterProtocol?
@@ -66,14 +62,6 @@ final class WebViewAgreemantViewController: UIViewController, WebViewControllerP
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
     }
     
-    func setProgressValue(_ newValue: Float) {
-        progressView.setProgress(newValue, animated: true)
-    }
-    
-    func setProgressHidden(_ isHidden: Bool) {
-        progressView.isHidden = isHidden
-    }
-    
     private func setupConstraitsWebView(){
         NSLayoutConstraint.activate([
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -116,8 +104,22 @@ final class WebViewAgreemantViewController: UIViewController, WebViewControllerP
         setupButtonAction()
     }
     
-    @objc func tapCloseButton() {
+    @objc 
+    private func tapCloseButton() {
         dismiss(animated: true)
     }
 }
 
+extension WebViewAgreemantViewController: WebViewControllerProtocol {
+    func load(request: URLRequest) {
+        webView.load(request)
+    }
+    
+    func setProgressValue(_ newValue: Float) {
+        progressView.setProgress(newValue, animated: true)
+    }
+    
+    func setProgressHidden(_ isHidden: Bool) {
+        progressView.isHidden = isHidden
+    }
+}

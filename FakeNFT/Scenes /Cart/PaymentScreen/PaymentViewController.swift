@@ -122,7 +122,7 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
     
     @objc
     private func labelTapped(){
-        guard let url = URL(string: "https://yandex.ru/legal/practicum_termsofuse/") else {return}
+        guard let url = URL(string: Constants.agreementUrl) else {return}
         let request = URLRequest(url: url)
         let viewController = WebViewAgreemantViewController()
         let webViewPresenter = WebViewPresenter(view: viewController)
@@ -226,5 +226,8 @@ extension PaymentViewController: UICollectionViewDelegateFlowLayout {
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 0
     }
-    
+}
+
+private struct Constants {
+    static var agreementUrl = "https://yandex.ru/legal/practicum_termsofuse/"
 }

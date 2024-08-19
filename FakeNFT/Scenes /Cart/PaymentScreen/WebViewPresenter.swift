@@ -25,13 +25,12 @@ final class WebViewPresenter: WebViewPresenterProtocol {
         view?.setProgressHidden(shouldHideProgress(for: newProgressValue))
     }
     
-    func shouldHideProgress(for value: Float) -> Bool {
-        abs(value - 1.0) <= 0.0001
-    }
-    
     func didLoad(request: URLRequest) {
         didUpdateProgressValue(0)
         view?.load(request: request)
     }
     
+    private func shouldHideProgress(for value: Float) -> Bool {
+        abs(value - 1.0) <= 0.0001
+    }
 }
