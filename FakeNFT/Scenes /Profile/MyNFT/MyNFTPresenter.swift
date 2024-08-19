@@ -98,6 +98,7 @@ final class MyNFTPresenter {
     }
 
     private func handleLikeAction(isLiked: Bool, for nftId: String) {
+        UIBlockingProgressHUD.show()
         if isLiked {
             if !likedNFTs.contains(nftId) {
                 likedNFTs.append(nftId)
@@ -120,6 +121,7 @@ final class MyNFTPresenter {
             likes: likedNFTs,
             id: profile.id)
         ) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
             guard let self = self else { return }
             switch result {
             case .success:
@@ -176,7 +178,6 @@ final class MyNFTPresenter {
     private func saveSortOrder(_ order: String) {
         UserDefaults.standard.set(order, forKey: sortOrderKey)
     }
-
 }
 
 // MARK: - MyNFTPresenterProtocol
@@ -185,6 +186,7 @@ extension MyNFTPresenter: MyNFTPresenterProtocol {
     func loadSortOrder() -> String {
         return UserDefaults.standard.string(forKey: sortOrderKey) ?? "rating"
     }
+
     func sortByPrice() {
         nfts.sort(by: { $0.price < $1.price })
         saveSortOrder("price")
