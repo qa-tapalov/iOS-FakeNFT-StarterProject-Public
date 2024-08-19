@@ -130,7 +130,8 @@ final class ProfilePresenter {
     }
 
     private func showMyNFTScreen() {
-        router?.showMyNFTScreen()
+        guard let profile = profile else { return }
+        router?.showMyNFTScreen(profile: profile)
     }
 
     private func showFavouritesNFTScreen() {
