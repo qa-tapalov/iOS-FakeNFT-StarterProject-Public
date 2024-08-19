@@ -15,7 +15,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     // MARK: - Private Properties
     private lazy var catalogImage: UIImageView = {
         let image = UIImageView()
-        image.layer.cornerRadius = 12
+        image.layer.cornerRadius = Constants.cornerRadius
         image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
         return image
@@ -25,7 +25,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
         let label = UILabel()
         label.font = .bodyBold
         label.textColor = .textPrimary
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         return label
     }()
     
@@ -74,16 +74,16 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     
     private func setupCatalogTableViewCellConstrains() {
         NSLayoutConstraint.activate([
-            catalogImage.heightAnchor.constraint(equalToConstant: 140),
+            catalogImage.heightAnchor.constraint(equalToConstant: Constants.catalogImageHeigth),
             catalogImage.topAnchor.constraint(equalTo: topAnchor),
-            catalogImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            catalogImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            catalogImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: Constants.catalogImageLeading),
+            catalogImage.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: Constants.catalogImageTrailing),
             
-            catalogLabel.topAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: 4),
-            catalogLabel.bottomAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: 25),
+            catalogLabel.topAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: Constants.catalogLabelTopIdent),
+            catalogLabel.bottomAnchor.constraint(equalTo: catalogImage.bottomAnchor, constant: Constants.catalogLabelBottomIdent),
             catalogLabel.leadingAnchor.constraint(equalTo: catalogImage.leadingAnchor),
             catalogLabel.trailingAnchor.constraint(equalTo: catalogImage.trailingAnchor),
-            catalogLabel.heightAnchor.constraint(equalToConstant: 22)
+            catalogLabel.heightAnchor.constraint(equalToConstant: Constants.catalogLabelHeigth)
         ])
     }
 }

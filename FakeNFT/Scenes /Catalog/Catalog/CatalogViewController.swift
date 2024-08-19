@@ -160,7 +160,7 @@ extension CatalogViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 179
+        return Constants.catalogViewControllerheightForRowAt
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

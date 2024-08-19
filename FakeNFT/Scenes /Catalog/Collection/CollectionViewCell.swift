@@ -9,17 +9,19 @@ import UIKit
 import Kingfisher
 
 final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
+    // MARK: - Public Properties
     static let identifier = "CollectionCell"
     
     var nftModel: NFTs?
     
+    // MARK: - Private Properties
     private lazy var ratingView = RatingView()
     
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 12
+        imageView.layer.cornerRadius = Constants.cornerRadius
         return imageView
     }()
     
@@ -28,10 +30,10 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         button.tintColor = .yaWhiteUniversal
         button.contentEdgeInsets = UIEdgeInsets(
-            top: 11,
-            left: 9,
-            bottom: 11,
-            right: 10)
+            top: Constants.likeButtonInsetsTopBottom,
+            left: Constants.likeButtonInsetsLeft,
+            bottom: Constants.likeButtonInsetsTopBottom,
+            right: Constants.likeButtonInsetsRight)
         // TODO: - добавить таргет
         return button
     }()
@@ -40,7 +42,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         let label = UILabel()
         label.font = .bodyBold
         label.textColor = .textPrimary
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         return label
     }()
     
@@ -48,7 +50,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         let label = UILabel()
         label.font = .medium10
         label.textColor = .textPrimary
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         return label
     }()
     
@@ -60,6 +62,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         return button
     }()
     
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCollectionViewCell()
@@ -70,6 +73,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Public Methods
     func configCollectionCell(nftModel: NFTCellModel) {
         DispatchQueue.main.async {
             self.nftImageView.kf.setImage(with: nftModel.image)
@@ -78,6 +82,8 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             self.ratingView.createRating(with: nftModel.rating)
         }
     }
+    
+    // MARK: - Private Methods
     private func setupCollectionViewCell() {
         [
             ratingView,
@@ -99,30 +105,30 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            nftImageView.heightAnchor.constraint(equalToConstant: 108),
+            nftImageView.heightAnchor.constraint(equalToConstant: Constants.nftImageViewHeigth),
             
-            likeButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -2),
-            likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 2),
-            likeButton.heightAnchor.constraint(equalToConstant: 40),
-            likeButton.widthAnchor.constraint(equalToConstant: 40),
+            likeButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.likeButtonTopIdent),
+            likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.likeButtonTrailing),
+            likeButton.heightAnchor.constraint(equalToConstant: Constants.likeButtonHeigthWidth),
+            likeButton.widthAnchor.constraint(equalToConstant: Constants.likeButtonHeigthWidth),
             
-            ratingView.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: 8),
+            ratingView.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: Constants.ratingViewTopIdent),
             ratingView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            ratingView.heightAnchor.constraint(equalToConstant: 12),
-            ratingView.widthAnchor.constraint(equalToConstant: 70),
+            ratingView.heightAnchor.constraint(equalToConstant: Constants.ratingViewHeigth),
+            ratingView.widthAnchor.constraint(equalToConstant: Constants.ratingViewWidth),
             
-            nftName.topAnchor.constraint(equalTo: ratingView.bottomAnchor, constant: 4),
+            nftName.topAnchor.constraint(equalTo: ratingView.bottomAnchor, constant: Constants.nftNameTopIdent),
             nftName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            nftName.widthAnchor.constraint(equalToConstant: 68),
-            nftName.heightAnchor.constraint(equalToConstant: 22),
+            nftName.heightAnchor.constraint(equalToConstant: Constants.nftNameHeigth),
+            nftName.widthAnchor.constraint(equalToConstant: Constants.nftNameWidth),
             
-            nftPrice.topAnchor.constraint(equalTo: nftName.bottomAnchor, constant: 4),
+            nftPrice.topAnchor.constraint(equalTo: nftName.bottomAnchor, constant: Constants.nftPriceTopIdent),
             nftPrice.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             
             cardButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            cardButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
-            cardButton.heightAnchor.constraint(equalToConstant: 40),
-            cardButton.widthAnchor.constraint(equalToConstant: 40)
+            cardButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.cardButtonTopIdent),
+            cardButton.heightAnchor.constraint(equalToConstant: Constants.cardButtonHeigthWidth),
+            cardButton.widthAnchor.constraint(equalToConstant: Constants.cardButtonHeigthWidth)
         ])
     }
 }

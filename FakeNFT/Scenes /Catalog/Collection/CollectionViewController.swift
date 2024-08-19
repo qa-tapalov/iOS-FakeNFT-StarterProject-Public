@@ -16,8 +16,10 @@ protocol CollectionViewControllerProtocol: AnyObject {
 }
 
 final class CollectionViewController: UIViewController {
+    // MARK: - Public Properties
     var presenter: CollectionPresenterProtocol
     
+    // MARK: - Private Properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .clear
@@ -51,7 +53,7 @@ final class CollectionViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "CoverCollection")
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 12
+        imageView.layer.cornerRadius = Constants.cornerRadius
         return imageView
     }()
     
@@ -59,7 +61,7 @@ final class CollectionViewController: UIViewController {
         let label = UILabel()
         label.font = .headline3
         label.textColor = .textPrimary
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         return label
     }()
     
@@ -68,7 +70,7 @@ final class CollectionViewController: UIViewController {
         label.text = "Автор коллекции:"
         label.font = .caption2
         label.textColor = .textPrimary
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         return label
     }()
     
@@ -76,7 +78,7 @@ final class CollectionViewController: UIViewController {
         let label = UILabel()
         label.font = .caption1
         label.textColor = .yaBlueUniversal
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         // TODO: - Ссылка на страницу автора
         return label
     }()
@@ -85,7 +87,7 @@ final class CollectionViewController: UIViewController {
         let label = UILabel()
         label.font = .caption2
         label.textColor = .textPrimary
-        label.numberOfLines = 0
+        label.numberOfLines = .zero
         label.sizeToFit()
         return label
     }()
@@ -101,6 +103,7 @@ final class CollectionViewController: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.collectionView = self
@@ -109,6 +112,7 @@ final class CollectionViewController: UIViewController {
         setupCollectionViewController()
     }
     
+    // MARK: - Initializers
     init(presenter: CollectionPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -118,11 +122,13 @@ final class CollectionViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Action
     @objc
     private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
     
+    // MARK: - Private Methods
     private func setupCollectionViewController() {
         view.backgroundColor = .systemBackground
         navigationItem.leftBarButtonItem = backButton
@@ -161,8 +167,8 @@ final class CollectionViewController: UIViewController {
     
     private func setupCollectionViewControllerConstrains() {
         var navigationBarHeight: CGFloat {
-            (navigationController?.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0) +
-            (self.navigationController?.navigationBar.frame.height ?? 0.0)
+            (navigationController?.view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? Constants.floatZero) +
+            (self.navigationController?.navigationBar.frame.height ?? Constants.floatZero)
         }
         
         NSLayoutConstraint.activate([
@@ -174,30 +180,30 @@ final class CollectionViewController: UIViewController {
             collectionCoverImage.topAnchor.constraint(equalTo: scrollView.topAnchor),
             collectionCoverImage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionCoverImage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionCoverImage.heightAnchor.constraint(equalToConstant: 310),
+            collectionCoverImage.heightAnchor.constraint(equalToConstant: Constants.collectionCoverImageHeight),
             
-            descriptionStackView.topAnchor.constraint(equalTo: collectionCoverImage.bottomAnchor, constant: 16),
+            descriptionStackView.topAnchor.constraint(equalTo: collectionCoverImage.bottomAnchor, constant: Constants.descriptionStackViewTopIdent),
             descriptionStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             descriptionStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             collectionName.topAnchor.constraint(equalTo: descriptionStackView.topAnchor),
-            collectionName.leadingAnchor.constraint(equalTo: descriptionStackView.leadingAnchor, constant: 16),
-            collectionName.trailingAnchor.constraint(equalTo: descriptionStackView.trailingAnchor, constant: -16),
+            collectionName.leadingAnchor.constraint(equalTo: descriptionStackView.leadingAnchor, constant: Constants.collectionNameLeading),
+            collectionName.trailingAnchor.constraint(equalTo: descriptionStackView.trailingAnchor, constant: Constants.collectionNameTrailing),
             
-            collectionAuthor.topAnchor.constraint(equalTo: collectionName.bottomAnchor, constant: 13),
+            collectionAuthor.topAnchor.constraint(equalTo: collectionName.bottomAnchor, constant: Constants.collectionAuthorTopIdent),
             collectionAuthor.leadingAnchor.constraint(equalTo: collectionName.leadingAnchor),
             
-            collectionAuthorLink.leadingAnchor.constraint(equalTo: collectionAuthor.trailingAnchor, constant: 4),
+            collectionAuthorLink.leadingAnchor.constraint(equalTo: collectionAuthor.trailingAnchor, constant: Constants.collectionAuthorLinkLeading),
             collectionAuthorLink.centerYAnchor.constraint(equalTo: collectionAuthor.centerYAnchor),
             
-            collectionDescription.topAnchor.constraint(equalTo: collectionAuthor.bottomAnchor, constant: 5),
+            collectionDescription.topAnchor.constraint(equalTo: collectionAuthor.bottomAnchor, constant: Constants.collectionDescriptionTopIdent),
             collectionDescription.leadingAnchor.constraint(equalTo: collectionName.leadingAnchor),
             collectionDescription.trailingAnchor.constraint(equalTo: collectionName.trailingAnchor),
             collectionDescription.bottomAnchor.constraint(equalTo: descriptionStackView.bottomAnchor),
             
-            nftCollectionView.topAnchor.constraint(equalTo: descriptionStackView.bottomAnchor, constant: 24),
-            nftCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            nftCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            nftCollectionView.topAnchor.constraint(equalTo: descriptionStackView.bottomAnchor, constant: Constants.nftCollectionViewTopIdent),
+            nftCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.nftCollectionViewLeading),
+            nftCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constants.nftCollectionViewTrailing),
             nftCollectionView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
     }
@@ -248,14 +254,14 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
 // MARK: - UICollectionViewDelegateFlowLayout
 extension CollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (collectionView.bounds.width - 18) / 3, height: 192)
+        return CGSize(width: (collectionView.bounds.width - Constants.eighteen) / Constants.three, height: Constants.oneHundredNinetyTwo)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 9
+        return Constants.collectionViewminimumLineSpacingForSectionAt
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return Constants.collectionViewminimumInteritemSpacingForSectionAt
     }
 }

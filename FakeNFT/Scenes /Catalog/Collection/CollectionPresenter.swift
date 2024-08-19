@@ -16,17 +16,21 @@ protocol CollectionPresenterProtocol: AnyObject {
 }
 
 final class CollectionPresenter: CollectionPresenterProtocol {
+    // MARK: - Public Properties
     var nfts: [NFTs] = []
     var collectionNft: NFTCollection?
     weak var collectionView: CollectionViewControllerProtocol?
     
+    // MARK: - Private Properties
     private let catalogService: CatalogServiceProtocol
     
+    // MARK: - Initializers
     init(collectionNft: NFTCollection?, catalogService: CatalogServiceProtocol) {
         self.collectionNft = collectionNft
         self.catalogService = catalogService
     }
     
+    // MARK: - Public Methods
     func getNfts() {
         guard let collectionNft, !collectionNft.nfts.isEmpty else { return }
         collectionNft.nfts.forEach {
@@ -55,6 +59,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
         self.convertToCellModel(nft: nfts[indexPath.row])
     }
     
+    // MARK: - Private Methods
     private func prepare() {
         guard let collection = collectionNft else { return }
         let collectionViewData = CollectionViewData(

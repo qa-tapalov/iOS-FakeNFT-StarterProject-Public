@@ -8,8 +8,10 @@
 import UIKit
 
 final class RatingView: UIStackView {
+    // MARK: - Public Properties
     private var stars: [UIImageView] = []
     
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupStack()
@@ -19,9 +21,10 @@ final class RatingView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Public Methods
     func createRating(with rating: Int) {
         for (index, imageView) in stars.enumerated() {
-            let roundRating = Int(round(Double(rating / 2)))
+            let roundRating = Int(round(Double(rating / Constants.intTwo)))
             if index < roundRating {
                 imageView.tintColor = .yaYellowUniversal
             } else {
@@ -30,9 +33,10 @@ final class RatingView: UIStackView {
         }
     }
     
+    // MARK: - Private Methods
     private func setupStack() {
         axis = .horizontal
-        spacing = 2
+        spacing = Constants.two
         distribution = .fillEqually
         for _ in 1...5 {
             let starImageView = starView()

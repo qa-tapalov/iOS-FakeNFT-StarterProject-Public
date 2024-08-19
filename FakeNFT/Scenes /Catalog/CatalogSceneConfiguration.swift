@@ -8,8 +8,10 @@
 import UIKit
 
 class CatalogSceneConfiguration {
+    // MARK: - Public Properties
     let catalogViewController: UIViewController
-
+    
+    // MARK: - Initializers
     init() {
         let networkClient = DefaultNetworkClient()
         let catalogService = CatalogService(networkClient: networkClient)
@@ -19,7 +21,8 @@ class CatalogSceneConfiguration {
             sortStorage: sortStorage)
         catalogViewController = CatalogViewController(presenter: catalogPresenter)
     }
-
+    
+    // MARK: - Public Methods
     func assemblyCollection(_ collection: NFTCollection) -> UIViewController {
         let networkClient = DefaultNetworkClient()
         let catalogService = CatalogService(networkClient: networkClient)

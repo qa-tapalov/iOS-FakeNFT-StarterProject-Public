@@ -39,7 +39,7 @@ final class TabBarController: UITabBarController {
         //
         
         let catalogConfiguration = CatalogSceneConfiguration()
-
+        
         let catalogViewController = UINavigationController(
             rootViewController: catalogConfiguration.catalogViewController
         )
