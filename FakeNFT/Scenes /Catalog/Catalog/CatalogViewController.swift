@@ -21,7 +21,7 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     
     private lazy var sortButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
-            image: UIImage( systemName: "text.justifyleft"),
+            image: UIImage(named: "SortButton"),
             style: .plain,
             target: self,
             action: #selector(sortButtonTapped)
@@ -54,7 +54,6 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     init(presenter: CatalogPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        self.presenter.catalogView = self
     }
     
     required init?(coder: NSCoder) {
@@ -64,7 +63,33 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     // MARK: - Action
     @objc
     private func sortButtonTapped() {
-        present(presenter.setSortType(), animated: true)
+        
+        let sortTypeModel = presenter.makeSortTypeModel()
+        
+        let actionSheet = UIAlertController(
+            title: sortTypeModel.title,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        actionSheet.addAction(UIAlertAction(
+            title: sortTypeModel.byName,
+            style: .default) { _ in
+                self.presenter.sortByName()
+            })
+        actionSheet.addAction(UIAlertAction(
+            title: sortTypeModel.byNftCount,
+            style: .default) { _ in
+                self.presenter.sortByNftCount()
+            })
+        
+        actionSheet.addAction(
+            UIAlertAction(
+                title: sortTypeModel.close,
+                style: .cancel)
+        )
+        
+        present(actionSheet, animated: true)
     }
     
     // MARK: - Public Methods
@@ -99,6 +124,13 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
             catalogTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
         ])
     }
+    
+    private func showNFTCollection(indexPath: IndexPath) {
+        let configuration = CatalogSceneConfiguration()
+        let collection = presenter.collectionsNft[indexPath.row]
+        let viewController = configuration.assemblyCollection(collection)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 // MARK: - CatalogViewController
@@ -118,30 +150,19 @@ extension CatalogViewController: UITableViewDataSource {
         guard let cell = catalogTableView.dequeueReusableCell(withIdentifier: CatalogTableViewCell.identifier, for: indexPath) as? CatalogTableViewCell else {
             return UITableViewCell()
         }
-        
-        configCell(for: cell, with: indexPath)
-        
-        return cell
-    }
-}
-
-extension CatalogViewController {
-    func configCell(for cell: CatalogTableViewCell, with indexPath: IndexPath) {
         let collection = presenter.collectionsNft[indexPath.row]
-        guard let collectionCover = URL(string: collection.cover) else { return }
-        
-        cell.setCatalogImage(with: collectionCover)
-        cell.setCatalogLabel(with: collection.name, quantity: collection.nfts.count)
+        cell.configCell(for: collection)
+        return cell
     }
 }
 
 // MARK: - UITableViewDelegate
 extension CatalogViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 179
+        return Constants.catalogViewControllerheightForRowAt
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: Обработать выбор ячейки (переход на CollectionViewController)
+        showNFTCollection(indexPath: indexPath)
     }
 }
