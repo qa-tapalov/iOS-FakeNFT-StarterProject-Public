@@ -57,6 +57,7 @@ final class CartViewController: UIViewController {
         view.titleLabel?.textColor = .white
         view.backgroundColor = .black
         view.layer.cornerRadius = 16
+        view.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -167,12 +168,21 @@ final class CartViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    @objc
+    private func buttonAction(){
+        let vc = PaymentViewController()
+        let presenter = PaymentViewPresenter(view: vc)
+        vc.presenter = presenter
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func updateUI(){
         presenter.sortItems(options: storage.getSort())
         let items = presenter.items
         totalCountLabel.text = String(items.count) + " NFT"
         let totalPrice = items.map {$0.price}.reduce(0, +)
-        totalPriceLabel.text = String(totalPrice) + " ETH"
+        totalPriceLabel.text = String(format: "%.2f", totalPrice) + " ETH"
         tableView.isHidden = items.isEmpty
         emptyLabel.isHidden = !items.isEmpty
         navigationItem.rightBarButtonItem = items.isEmpty ? nil : sortButton
@@ -188,7 +198,6 @@ final class CartViewController: UIViewController {
         activityIndicator.startAnimating()
         activityIndicator.isHidden = true
     }
-    
     
     private func showConfirmDeleteView(item: ProductModel, indexPath: IndexPath){
         let vc = ConfirmDeletionViewController()
