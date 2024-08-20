@@ -170,8 +170,7 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
     }
     
     @objc private func buttonAction(){
-        presenter.payOrder(id: self.id)
-        
+        presenter?.payOrder(id: self.id)
     }
     
     private func updatePaymentButtonState(){
@@ -193,7 +192,6 @@ final class PaymentViewController: UIViewController, PaymentViewControllerProtoc
         alert.addAction(action)
         present(alert, animated: true)
     }
-    
 }
 
 extension PaymentViewController: UICollectionViewDataSource {
@@ -254,4 +252,3 @@ extension PaymentViewController: UICollectionViewDelegateFlowLayout {
 private struct Constants {
     static var agreementUrl = "https://yandex.ru/legal/practicum_termsofuse/"
 }
-

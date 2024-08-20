@@ -68,13 +68,10 @@ final class SuccessOrderViewController: UIViewController {
     
     @objc
     private func buttonAction(){
-        //TODO: push to Catalog
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         
         let tabBarController = TabBarController()
 //        tabBarController.selectedIndex = 1 открыть, когда будет каталог в проекте
         window.rootViewController = tabBarController
-        
     }
-    
 }
