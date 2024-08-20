@@ -171,6 +171,8 @@ final class CartViewController: UIViewController {
     @objc
     private func buttonAction(){
         let vc = PaymentViewController()
+        let presenter = PaymentViewPresenter(view: vc)
+        vc.presenter = presenter
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -196,7 +198,6 @@ final class CartViewController: UIViewController {
         activityIndicator.startAnimating()
         activityIndicator.isHidden = true
     }
-    
     
     private func showConfirmDeleteView(item: ProductModel, indexPath: IndexPath){
         let vc = ConfirmDeletionViewController()
