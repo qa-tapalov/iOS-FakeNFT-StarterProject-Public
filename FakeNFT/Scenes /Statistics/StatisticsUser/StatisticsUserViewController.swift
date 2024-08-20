@@ -112,7 +112,11 @@ final class StatisticsUserViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        [avatarImageView, usernameLabel, userDescriptionTextView, userWebsiteButton, nftCollectionButton].forEach {
+        [avatarImageView, 
+         usernameLabel,
+         userDescriptionTextView,
+         userWebsiteButton,
+         nftCollectionButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
