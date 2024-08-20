@@ -20,6 +20,7 @@ class CatalogSceneConfiguration {
             catalogService: catalogService,
             sortStorage: sortStorage)
         catalogViewController = CatalogViewController(presenter: catalogPresenter)
+        catalogPresenter.catalogView = catalogViewController as? any CatalogViewControllerProtocol
     }
     
     // MARK: - Public Methods
@@ -28,9 +29,11 @@ class CatalogSceneConfiguration {
         let catalogService = CatalogService(networkClient: networkClient)
         let presenter = CollectionPresenter(
             collectionNft: collection,
-            catalogService: catalogService)
-        let viewCintroller = CollectionViewController(presenter: presenter)
-        viewCintroller.hidesBottomBarWhenPushed = true
-        return viewCintroller
+            catalogService: catalogService
+        )
+        let viewController = CollectionViewController(presenter: presenter)
+        presenter.collectionView = viewController
+        viewController.hidesBottomBarWhenPushed = true
+        return viewController
     }
 }

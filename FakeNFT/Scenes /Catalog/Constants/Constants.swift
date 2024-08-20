@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Constants
 struct Constants {
-    // MARK: - Constants For All
+    // MARK: - For All
     static let floatZero: CGFloat = 0.0
     static let intTwo: Int = 2
     static let two: CGFloat = 2
@@ -18,20 +18,19 @@ struct Constants {
     static let eighteen: CGFloat = 18
     static let oneHundredNinetyTwo: CGFloat = 192
     
-    // MARK: - Constants CatalogViewController
+    // MARK: - CatalogViewController
     static let catalogViewControllerheightForRowAt: CGFloat = 179
     
-    // MARK: - Constants CatalogTableViewCell
+    // MARK: - CatalogTableViewCell
     static let catalogImageHeigth: CGFloat = 140
     static let catalogImageLeading: CGFloat = 16
-    
     static let catalogImageTrailing: CGFloat = -16
     
     static let catalogLabelTopIdent: CGFloat = 4
     static let catalogLabelBottomIdent: CGFloat = 25
     static let catalogLabelHeigth: CGFloat = 22
     
-    // MARK: - Constants CollectionViewCell
+    // MARK: - CollectionViewCell
     static let nftImageViewHeigth: CGFloat = 108
     
     static let likeButtonInsetsTopBottom: CGFloat = 11
@@ -54,7 +53,7 @@ struct Constants {
     static let cardButtonTopIdent: CGFloat = -20
     static let cardButtonHeigthWidth: CGFloat = 40
     
-    // MARK: - Constants CollectionViewController
+    // MARK: - CollectionViewController
     static let collectionCoverImageHeight: CGFloat = 310
     
     static let descriptionStackViewTopIdent: CGFloat = 16
@@ -63,7 +62,6 @@ struct Constants {
     static let collectionNameTrailing: CGFloat = -16
     
     static let collectionAuthorTopIdent: CGFloat = 13
-    
     static let collectionAuthorLinkLeading: CGFloat = 4
     
     static let collectionDescriptionTopIdent: CGFloat = 5

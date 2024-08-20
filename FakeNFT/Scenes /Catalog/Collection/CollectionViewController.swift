@@ -17,7 +17,7 @@ protocol CollectionViewControllerProtocol: AnyObject {
 
 final class CollectionViewController: UIViewController {
     // MARK: - Public Properties
-    var presenter: CollectionPresenterProtocol
+    private let presenter: CollectionPresenterProtocol
     
     // MARK: - Private Properties
     private let scrollView: UIScrollView = {
@@ -106,7 +106,6 @@ final class CollectionViewController: UIViewController {
     // MARK: - Overrides Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter.collectionView = self
         presenter.loadCollectionData()
         presenter.getNfts()
         setupCollectionViewController()

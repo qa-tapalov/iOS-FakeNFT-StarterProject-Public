@@ -54,7 +54,6 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     init(presenter: CatalogPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        self.presenter.catalogView = self
     }
     
     required init?(coder: NSCoder) {
@@ -152,7 +151,7 @@ extension CatalogViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         let collection = presenter.collectionsNft[indexPath.row]
-        cell.configCell(for: cell, with: indexPath, for: collection)
+        cell.configCell(for: collection)
         return cell
     }
 }

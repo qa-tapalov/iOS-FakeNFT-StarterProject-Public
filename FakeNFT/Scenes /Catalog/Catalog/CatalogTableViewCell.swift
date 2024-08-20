@@ -41,7 +41,7 @@ final class CatalogTableViewCell: UITableViewCell, ReuseIdentifying {
     }
     
     // MARK: - Public Methods
-    func configCell(for cell: CatalogTableViewCell, with indexPath: IndexPath, for collection: NFTCollection) {
+    func configCell(for collection: NFTCollection) {
         guard let collectionCover = URL(string: collection.cover) else { return }
         
         setCatalogImage(with: collectionCover)
