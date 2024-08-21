@@ -15,9 +15,9 @@ struct NFTCollectionViewCellModel {
     let price: String
     let rating: Int
     var isLiked: Bool
-    
+
     var onLikeAction: (Bool) -> Void
-    
+
     static let empty: NFTCollectionViewCellModel = NFTCollectionViewCellModel(
         image: "",
         name: "",
@@ -30,26 +30,26 @@ struct NFTCollectionViewCellModel {
 }
 
 final class NFTCollectionViewCell: UICollectionViewCell {
-    
+
     // MARK: - Properties
-    
+
     static let identifier  = "NFTCollectionViewCell"
-    
+
     var model: NFTCollectionViewCellModel = .empty {
         didSet {
             setup()
         }
     }
-    
+
     // MARK: - UI Elements
-    
+
     private lazy var NFTView: UIView = {
         let view = UIView()
         view.backgroundColor = .background
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     private lazy var NFTImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -58,14 +58,14 @@ final class NFTCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     private lazy var likeButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
@@ -73,14 +73,14 @@ final class NFTCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     private lazy var priceValueLabel: UILabel = {
         let label: UILabel = UILabel()
         label.font = .caption1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     private lazy var ratingStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -90,7 +90,7 @@ final class NFTCollectionViewCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
+
     private lazy var NFTStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -99,48 +99,48 @@ final class NFTCollectionViewCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
+
     // MARK: - Init
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
-    
+
     // MARK: - Private methods
-    
+
     private func setup() {
         setNFTImage()
         setupView()
         setupConstraints()
-        
-        nameLabel.text = model.name
+
+        nameLabel.text = model.name.components(separatedBy: " ").first
         priceValueLabel.text = "\(model.price) ETH"
         likeButton.setImage(model.isLiked ? Images.liked : Images.unliked, for: .normal)
     }
-    
+
     private func setupView() {
         backgroundColor = .white
-        
+
         contentView.addSubview(NFTView)
-        
+
         NFTView.addSubview(NFTImageView)
         NFTView.addSubview(NFTStackView)
         NFTView.addSubview(likeButton)
-        
+
         NFTStackView.addArrangedSubview(nameLabel)
         NFTStackView.addArrangedSubview(ratingStackView)
         NFTStackView.addArrangedSubview(priceValueLabel)
     }
-    
+
     private func setupConstraints() {
         configureNFTView()
         configureNFTImageView()
@@ -148,7 +148,7 @@ final class NFTCollectionViewCell: UICollectionViewCell {
         configureRatingStackView()
         configureLikeButton()
     }
-    
+
     private func configureNFTView() {
         NSLayoutConstraint.activate([
             NFTView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -157,7 +157,7 @@ final class NFTCollectionViewCell: UICollectionViewCell {
             NFTView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    
+
     private func configureLikeButton() {
         NSLayoutConstraint.activate([
             likeButton.widthAnchor.constraint(equalToConstant: Constants.likeButtonSize),
@@ -166,7 +166,7 @@ final class NFTCollectionViewCell: UICollectionViewCell {
             likeButton.trailingAnchor.constraint(equalTo: NFTImageView.trailingAnchor)
         ])
     }
-    
+
     private func configureNFTImageView() {
         NSLayoutConstraint.activate([
             NFTImageView.topAnchor.constraint(equalTo: NFTView.topAnchor),
@@ -175,19 +175,19 @@ final class NFTCollectionViewCell: UICollectionViewCell {
             NFTImageView.heightAnchor.constraint(equalToConstant: Constants.NFTImageSize)
         ])
     }
-    
+
     private func configureNFTStackView() {
         NSLayoutConstraint.activate([
             NFTStackView.leadingAnchor.constraint(equalTo: NFTImageView.trailingAnchor, constant: Constants.stackViewLeading),
             NFTStackView.trailingAnchor.constraint(equalTo: NFTView.trailingAnchor),
             NFTStackView.centerYAnchor.constraint(equalTo: NFTView.centerYAnchor),
-            NFTStackView.heightAnchor.constraint(equalToConstant: Constants.stackViewHeight),
+            NFTStackView.heightAnchor.constraint(equalToConstant: Constants.stackViewHeight)
         ])
     }
-    
+
     private func configureRatingStackView() {
         ratingStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
+
         for index in 1...5 {
             let starImageView = UIImageView(image: index <= model.rating ? Images.activeStar : Images.inactiveStar)
             starImageView.contentMode = .scaleAspectFit
@@ -200,13 +200,13 @@ final class NFTCollectionViewCell: UICollectionViewCell {
             ])
         }
     }
-    
+
     private func setNFTImage() {
         if let url = URL(string: model.image) {
             NFTImageView.kf.setImage(with: url)
         }
     }
-    
+
     @objc private func likeButtonTapped() {
         model.isLiked.toggle()
         model.onLikeAction(model.isLiked)
@@ -245,7 +245,7 @@ private struct Images {
         systemName: "heart.fill")?.withTintColor(UIColor(hexString: "#F56B6C"), renderingMode: .alwaysOriginal)
     static let unliked = UIImage(
         systemName: "heart.fill")?.withTintColor(UIColor(hexString: "#FFFFFF"), renderingMode: .alwaysOriginal)
-    
+
     static let activeStar = UIImage(
         systemName: "star.fill")?.withTintColor(UIColor(hexString: "#FEEF0D"), renderingMode: .alwaysOriginal).resized(to: CGSize(width: Constants.starSize, height: Constants.starSize))
     static let inactiveStar = UIImage(

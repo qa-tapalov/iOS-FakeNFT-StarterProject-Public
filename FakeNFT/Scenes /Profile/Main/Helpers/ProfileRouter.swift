@@ -12,7 +12,7 @@ protocol ProfileRouterProtocol: AnyObject {
     func showWebView(URL: URL)
     func showEditProfile(profile: ProfileModel, onDismiss: @escaping () -> Void)
     func showMyNFTScreen(profile: ProfileModel)
-    func showFavouritesNFTScreen()
+    func showFavouritesNFTScreen(profile: ProfileModel)
 }
 
 final class ProfileRouter: ProfileRouterProtocol {
@@ -65,12 +65,17 @@ final class ProfileRouter: ProfileRouterProtocol {
         view.navigationController?.pushViewController(myNFTController, animated: true)
     }
 
-    func showFavouritesNFTScreen() {
+    func showFavouritesNFTScreen(profile: ProfileModel) {
         guard let view = view as? UIViewController else { return }
 
         let favouritesNFTsController = FavouritesNFTViewController()
-        favouritesNFTsController.hidesBottomBarWhenPushed = true
+        let networkClient = DefaultNetworkClient()
+        let nftService = NFTService(networkClient: networkClient)
+        let profileService = ProfileService(networkClient: networkClient)
+        let presenter = FavouritesNFTPresenter(view: favouritesNFTsController, nftService: nftService, profileService: profileService, profile: profile)
+        favouritesNFTsController.presenter = presenter
 
+        favouritesNFTsController.hidesBottomBarWhenPushed = true
         view.navigationController?.pushViewController(favouritesNFTsController, animated: true)
     }
 }
