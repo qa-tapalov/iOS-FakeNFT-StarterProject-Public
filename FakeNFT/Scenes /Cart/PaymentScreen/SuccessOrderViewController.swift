@@ -29,7 +29,7 @@ final class SuccessOrderViewController: UIViewController {
     
     private lazy var paymentButton: UIButton = {
         let view = UIButton()
-        view.setTitle("Вернуться в каталог", for: .normal)
+        view.setTitle("Вернуться в корзину", for: .normal)
         view.titleLabel?.font = .bodyBold
         view.titleLabel?.textColor = .white
         view.backgroundColor = .black
@@ -71,7 +71,7 @@ final class SuccessOrderViewController: UIViewController {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         
         let tabBarController = TabBarController()
-//        tabBarController.selectedIndex = 1 открыть, когда будет каталог в проекте
+//        tabBarController.selectedIndex = 2 открыть, когда будут все остальные табы
         window.rootViewController = tabBarController
     }
 }
