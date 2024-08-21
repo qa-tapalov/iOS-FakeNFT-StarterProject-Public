@@ -4,25 +4,25 @@ final class TabBarController: UITabBarController {
     
     private let profileTabBarItem = UITabBarItem(
         title: "Профиль",
-        image: UIImage(resource: .tabProfile),
+        image: UIImage.profileTabBar,
         tag: 0
     )
     
     private let catalogTabBarItem = UITabBarItem(
         title: "Каталог",
-        image: UIImage(resource: .tabCatalog),
+        image: UIImage.catalogTabBar,
         tag: 1
     )
     
     private let cartTabBarItem = UITabBarItem(
         title: "Корзина",
-        image: UIImage(resource: .tabCart),
+        image: UIImage.basketTabBar,
         tag: 2
     )
     
     private let statisticsTabBarItem = UITabBarItem(
         title: "Статистика",
-        image: UIImage(resource: .tabStatistic),
+        image: UIImage.statisticsTabBar,
         tag: 3
     )
     
