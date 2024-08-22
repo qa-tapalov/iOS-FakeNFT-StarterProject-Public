@@ -1,10 +1,3 @@
-//
-//  StatisticsUserDefaults.swift
-//  FakeNFT
-//
-//  Created by Артур Гайфуллин on 19.08.2024.
-//
-
 import Foundation
 
 final class StatisticsUserDefaults {

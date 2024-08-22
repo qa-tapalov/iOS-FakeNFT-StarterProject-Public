@@ -413,14 +413,14 @@
 		85BD6A4B2C6D238A006C98F3 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
-				8516A9042C779850007E77AE /* StatisticsUserNFTCollection */,
-				8516A8FB2C73B37E007E77AE /* StatisticsUser */,
-				8516A8F82C73B273007E77AE /* StatisticsStorage */,
-				85BD6A4C2C6D23D2006C98F3 /* StatisticsNetwork */,
 				85BD6A512C6D264F006C98F3 /* StatisticsViewController.swift */,
 				85BD6A532C6D2674006C98F3 /* StatisticsTableViewCell.swift */,
 				85BD6A572C6D26B4006C98F3 /* StatisticsPresenter.swift */,
 				85BD6A592C6D26E1006C98F3 /* StatisticsService.swift */,
+				8516A8FB2C73B37E007E77AE /* StatisticsUser */,
+				8516A9042C779850007E77AE /* StatisticsUserNFTCollection */,
+				8516A8F82C73B273007E77AE /* StatisticsStorage */,
+				85BD6A4C2C6D23D2006C98F3 /* StatisticsNetwork */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
