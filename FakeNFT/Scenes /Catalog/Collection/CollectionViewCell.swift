@@ -8,13 +8,21 @@
 import UIKit
 import Kingfisher
 
+protocol CollectionViewCellDelegate: AnyObject {
+    func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool)
+}
+
 final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     // MARK: - Public Properties
     static let identifier = "CollectionCell"
     
     var nftModel: NFTs?
+    var indexPath: IndexPath?
+    weak var delegate: CollectionViewCellDelegate?
+    
     
     // MARK: - Private Properties
+    private var isLiked: Bool = false
     private lazy var ratingView = RatingView()
     
     private lazy var nftImageView: UIImageView = {
@@ -34,7 +42,10 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             left: Constants.likeButtonInsetsLeft,
             bottom: Constants.likeButtonInsetsTopBottom,
             right: Constants.likeButtonInsetsRight)
-        // TODO: - добавить таргет
+        button.addTarget(
+            self,
+            action: #selector (likeButtonTapped),
+            for: .touchUpInside)
         return button
     }()
     
@@ -73,6 +84,12 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc
+    func likeButtonTapped() {
+        guard let indexPath = indexPath else { return }
+        delegate?.likeButtonDidChange(for: indexPath, isLiked: isLiked)
+    }
+    
     // MARK: - Public Methods
     func configCollectionCell(nftModel: NFTCellModel) {
         DispatchQueue.main.async {
@@ -80,6 +97,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             self.nftName.text = nftModel.name
             self.nftPrice.text = "\(nftModel.price) ETH"
             self.ratingView.createRating(with: nftModel.rating)
+            self.likeButton.tintColor = self.setIsLiked(isLiked: nftModel.isLiked)
         }
     }
     
@@ -98,6 +116,15 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             )
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
+    }
+    
+    private func setIsLiked(isLiked: Bool) -> UIColor {
+        let likeColor = UIColor { _ in
+            return isLiked
+            ? .yaRedUniversal
+            : .yaWhiteUniversal
+        }
+        return likeColor
     }
     
     private func setupCollectionViewConstrains() {

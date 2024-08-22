@@ -257,6 +257,9 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
         
         let cellModel = presenter.getModel(for: indexPath)
         cell.configCollectionCell(nftModel: cellModel)
+        cell.indexPath = indexPath
+        cell.delegate = self
+        
         return cell
     }
 }
@@ -273,5 +276,12 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return Constants.collectionViewminimumInteritemSpacingForSectionAt
+    }
+}
+
+// MARK: - CollectionViewCellDelegate
+extension CollectionViewController: CollectionViewCellDelegate {
+    func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool) {
+        presenter.changeLike(for: indexPath, isLiked: isLiked)
     }
 }
