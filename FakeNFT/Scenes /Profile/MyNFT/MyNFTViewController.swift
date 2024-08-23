@@ -41,6 +41,12 @@ final class MyNFTViewController: UIViewController {
         return tableView
     }()
 
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshTableView), for: .valueChanged)
+        return refreshControl
+    }()
+
     private var model: MyNFTScreenModel = .empty {
         didSet {
             title = model.title
@@ -63,6 +69,7 @@ final class MyNFTViewController: UIViewController {
 
     private func setupView() {
         view.backgroundColor = .white
+        tableView.refreshControl = refreshControl
         configureNavigationBar()
         updateView()
     }
@@ -174,6 +181,10 @@ final class MyNFTViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
+    @objc private func refreshTableView() {
+        presenter?.setup()
+    }
+
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -191,6 +202,7 @@ extension MyNFTViewController: MyNFTViewProtocol {
         if reloadData {
             tableView.reloadData()
         }
+        refreshControl.endRefreshing()
     }
 }
 
