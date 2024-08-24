@@ -1,10 +1,3 @@
-//
-//  ProfileModel.swift
-//  FakeNFT
-//
-//  Created by Артур Гайфуллин on 19.08.2024.
-//
-
 import UIKit
 
 struct ProfileModel {

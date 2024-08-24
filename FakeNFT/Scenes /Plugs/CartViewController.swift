@@ -7,6 +7,4 @@
 
 import UIKit
 
-final class CartViewController: UIViewController {
-    
-}
+final class CartViewController: UIViewController {}

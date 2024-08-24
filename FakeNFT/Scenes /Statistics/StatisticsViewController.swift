@@ -1,10 +1,3 @@
-//
-//  StatisticsViewController.swift
-//  FakeNFT
-//
-//  Created by Артур Гайфуллин on 14.08.2024.
-//
-
 import UIKit
 import ProgressHUD
 
@@ -13,8 +6,6 @@ final class StatisticsViewController: UIViewController {
     // MARK: - Properties
     
     private let refreshControl = UIRefreshControl()
-    
-    private var statisticsServiceObserver: NSObjectProtocol?
     
     private lazy var presenter = StatisticsPresenter()
     private lazy var usersTableView = {

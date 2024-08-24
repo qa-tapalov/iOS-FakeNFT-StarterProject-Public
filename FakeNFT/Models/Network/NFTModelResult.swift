@@ -1,6 +1,13 @@
-import UIKit
+//
+//  NFTModelResult.swift
+//  FakeNFT
+//
+//  Created by Артур Гайфуллин on 22.08.2024.
+//
 
-struct NFTModel {
+import Foundation
+
+struct NFTResult: Codable {
     let createdAt: String
     let name: String
     let images: [String]

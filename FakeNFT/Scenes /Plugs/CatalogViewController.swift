@@ -7,6 +7,4 @@
 
 import UIKit
 
-final class CatalogViewController: UIViewController {
-    
-}
+final class CatalogViewController: UIViewController {}
