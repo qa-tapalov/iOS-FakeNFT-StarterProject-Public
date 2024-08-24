@@ -132,7 +132,8 @@ final class CollectionViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func collectionAuthorLinkTapped() {
+    @objc
+    func collectionAuthorLinkTapped() {
         guard let url = URL(string: presenter.authorURL ?? "") else { return }
         let safaryViewController = SFSafariViewController(url: url)
         navigationController?.present(safaryViewController, animated: true)
@@ -283,5 +284,8 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
 extension CollectionViewController: CollectionViewCellDelegate {
     func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool) {
         presenter.changeLike(for: indexPath, isLiked: isLiked)
+    }
+    func cartButtonDidChange(for indexPath: IndexPath) {
+        presenter.changeOrder(for: indexPath)
     }
 }

@@ -10,6 +10,7 @@ import Kingfisher
 
 protocol CollectionViewCellDelegate: AnyObject {
     func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool)
+    func cartButtonDidChange(for indexPath: IndexPath)
 }
 
 final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
@@ -65,11 +66,13 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         return label
     }()
     
-    private lazy var cardButton: UIButton = {
+    private lazy var cartButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(systemName: "Cart"), for: .normal)
         button.tintColor = .textPrimary
-        // TODO: - добавить таргет
+        button.addTarget(
+            self,
+            action: #selector (cartButtonTapped),
+            for: .touchUpInside)
         return button
     }()
     
@@ -84,10 +87,17 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Actions
     @objc
     func likeButtonTapped() {
         guard let indexPath = indexPath else { return }
         delegate?.likeButtonDidChange(for: indexPath, isLiked: isLiked)
+    }
+    
+    @objc
+    func cartButtonTapped() {
+        guard let indexPath = indexPath else { return }
+        delegate?.cartButtonDidChange(for: indexPath)
     }
     
     // MARK: - Public Methods
@@ -98,6 +108,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             self.nftPrice.text = "\(nftModel.price) ETH"
             self.ratingView.createRating(with: nftModel.rating)
             self.likeButton.tintColor = self.setIsLiked(isLiked: nftModel.isLiked)
+            self.cartButton.setImage(self.setIsCart(isInCart: nftModel.isInCart), for: .normal)
         }
     }
     
@@ -109,7 +120,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             likeButton,
             nftName,
             nftPrice,
-            cardButton
+            cartButton
         ].forEach {
             contentView.addSubview(
                 $0
@@ -119,12 +130,19 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     private func setIsLiked(isLiked: Bool) -> UIColor {
+        self.isLiked = isLiked
         let likeColor = UIColor { _ in
             return isLiked
             ? .yaRedUniversal
             : .yaWhiteUniversal
         }
         return likeColor
+    }
+    
+    private func setIsCart(isInCart: Bool) -> UIImage? {
+        isInCart
+        ? UIImage(named: "Delete")
+        : UIImage(named: "Cart")
     }
     
     private func setupCollectionViewConstrains() {
@@ -152,10 +170,10 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             nftPrice.topAnchor.constraint(equalTo: nftName.bottomAnchor, constant: Constants.nftPriceTopIdent),
             nftPrice.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             
-            cardButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            cardButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.cardButtonTopIdent),
-            cardButton.heightAnchor.constraint(equalToConstant: Constants.cardButtonHeigthWidth),
-            cardButton.widthAnchor.constraint(equalToConstant: Constants.cardButtonHeigthWidth)
+            cartButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            cartButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.cardButtonTopIdent),
+            cartButton.heightAnchor.constraint(equalToConstant: Constants.cardButtonHeigthWidth),
+            cartButton.widthAnchor.constraint(equalToConstant: Constants.cardButtonHeigthWidth)
         ])
     }
 }

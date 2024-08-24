@@ -13,5 +13,6 @@ struct NFTCellModel {
     let image: URL?
     let rating: Int
     let isLiked: Bool
+    let isInCart: Bool
     let price: Float
 }

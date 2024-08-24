@@ -15,6 +15,7 @@ protocol CollectionPresenterProtocol: AnyObject {
     func loadCollectionData()
     func getModel(for indexPath: IndexPath) -> NFTCellModel
     func changeLike(for indexPath: IndexPath, isLiked: Bool)
+    func changeOrder(for indexPath: IndexPath)
 }
 
 final class CollectionPresenter: CollectionPresenterProtocol {
@@ -58,6 +59,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
         self.prepare()
         loadAuthor()
         getLikes()
+        getOrders()
         self.collectionView?.hideLoadIndicator()
     }
     
@@ -76,6 +78,20 @@ final class CollectionPresenter: CollectionPresenterProtocol {
                 print(error)
             }
             self.collectionView?.reloadNftCollectionView()
+            self.collectionView?.hideLoadIndicator()
+        })
+    }
+    
+    func changeOrder(for indexPath: IndexPath) {
+        collectionView?.showLoadIndicator()
+        catalogService.putOrders(id: nfts[indexPath.row].id, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.collectionView?.reloadNftCollectionView()
+            case .failure(let error):
+                print(error)
+            }
             self.collectionView?.hideLoadIndicator()
         })
     }
@@ -105,6 +121,7 @@ final class CollectionPresenter: CollectionPresenterProtocol {
             image: nft.images.first,
             rating: nft.rating,
             isLiked: catalogService.likeStatus(nft.id),
+            isInCart: catalogService.orderStatus(nft.id),
             price: nft.price
         )
     }
@@ -119,6 +136,18 @@ final class CollectionPresenter: CollectionPresenterProtocol {
             switch result {
             case .success(let profile):
                 self.profile = profile
+            case .failure(let error):
+                print(error)
+            }
+        })
+    }
+    
+    private func getOrders() {
+        catalogService.getOrders(completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.collectionView?.reloadNftCollectionView()
             case .failure(let error):
                 print(error)
             }
