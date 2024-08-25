@@ -95,6 +95,25 @@ final class CartNetworkService {
         task.resume()
     }
     
+    func payOrder(id: String, completion: @escaping (Result<OrderSuccessModel, Error>) -> Void){
+        guard let url = URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1/payment/\(id)") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
+        
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<OrderSuccessModel, Error>) in
+            
+            switch result {
+            case .success(let orderSuccessResponce):
+                completion(.success(orderSuccessResponce))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
 }
 
 enum NetworkError: Error {
