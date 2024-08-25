@@ -69,6 +69,7 @@
 		F779D8732C7A032D0097F3F3 /* OrdersResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F779D8722C7A032D0097F3F3 /* OrdersResult.swift */; };
 		F779D8752C7A03CC0097F3F3 /* OrdersPutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F779D8742C7A03CC0097F3F3 /* OrdersPutRequest.swift */; };
 		F779D8772C7A03EB0097F3F3 /* OrdersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F779D8762C7A03EB0097F3F3 /* OrdersRequest.swift */; };
+		F779D87A2C7BCA160097F3F3 /* AlertCatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F779D8792C7BCA160097F3F3 /* AlertCatalogView.swift */; };
 		F7C623BE2C676CC20033D4B5 /* CatalogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C623BD2C676CC20033D4B5 /* CatalogTableViewCell.swift */; };
 		F7C623C02C676CCF0033D4B5 /* CatalogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C623BF2C676CCF0033D4B5 /* CatalogViewController.swift */; };
 		F7C623C52C67AB820033D4B5 /* CatalogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C623C42C67AB820033D4B5 /* CatalogPresenter.swift */; };
@@ -160,6 +161,7 @@
 		F779D8722C7A032D0097F3F3 /* OrdersResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersResult.swift; sourceTree = "<group>"; };
 		F779D8742C7A03CC0097F3F3 /* OrdersPutRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersPutRequest.swift; sourceTree = "<group>"; };
 		F779D8762C7A03EB0097F3F3 /* OrdersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersRequest.swift; sourceTree = "<group>"; };
+		F779D8792C7BCA160097F3F3 /* AlertCatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCatalogView.swift; sourceTree = "<group>"; };
 		F7C623BD2C676CC20033D4B5 /* CatalogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogTableViewCell.swift; sourceTree = "<group>"; };
 		F7C623BF2C676CCF0033D4B5 /* CatalogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogViewController.swift; sourceTree = "<group>"; };
 		F7C623C42C67AB820033D4B5 /* CatalogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogPresenter.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 			children = (
 				0CF2C2DA2A783C1B00FDC837 /* LoadingView.swift */,
 				0CF2C2DC2A783CE600FDC837 /* ErrorView.swift */,
+				F779D8792C7BCA160097F3F3 /* AlertCatalogView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -689,6 +692,7 @@
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				F76B42182C6FB60700ECCACD /* UserModel.swift in Sources */,
 				F77501F92C6DE66400DAAFF7 /* CollectionPresenter.swift in Sources */,
+				F779D87A2C7BCA160097F3F3 /* AlertCatalogView.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				F77501FD2C6DE68C00DAAFF7 /* CollectionViewController.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
