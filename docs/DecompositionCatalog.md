@@ -39,18 +39,18 @@
 ## Module 3:
 
 #### Верстка [Экран] Подробнее об авторе
-- Страница автора (est: 120 min, fact: x min).
+- Страница автора (est: 120 min, fact: 180 min).
 
 ##### Логика:
-- Добавление в избранное (est: 120 min, fact: x min).
-- Удаление из избранного (est: 120 min, fact: x min).
-- Добавление в корзину (est: 120 min, fact: x min).
-- Удаление из корзины (est: 120 min, fact: x min).
-- Переход на страницу автора (est: 120 min, fact: x min).
-- Загрузка страницы автора (est: 120 min, fact: x min).
-- Индикаторы загрузки для действий (est: 60 min, fact: x min).
-- Реализация обработки ошибок на экранах (est: 120 min, fact: x min).
+- Добавление в избранное (est: 120 min, fact: 150 min).
+- Удаление из избранного (est: 120 min, fact: 150 min).
+- Добавление в корзину (est: 120 min, fact: 150 min).
+- Удаление из корзины (est: 120 min, fact: 150 min).
+- Переход на страницу автора (est: 120 min, fact: 100 min).
+- Загрузка страницы автора (est: 120 min, fact: 60 min).
+- Индикаторы загрузки для действий (est: 60 min, fact: 120 min).
+- Реализация обработки ошибок на экранах (est: 120 min, fact: 120 min).
 
-`Total:` est: 1020 min; fact: x min.
+`Total:` est: 1020 min; fact: 1300 min.
 
-####`Total Epic Catalogue:` est: 2440 min; fact: x min.
+####`Total Epic Catalogue:` est: 2440 min; fact: 2820 min.
