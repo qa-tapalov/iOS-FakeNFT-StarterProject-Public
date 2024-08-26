@@ -1,6 +1,20 @@
 import UIKit
 
 extension UIColor {
+    static let viewBackgroundColor = UIColor.systemBackground
+    static let ypBlack = UIColor(hexString: "1A1B22")
+    static let ypLightGrey = UIColor(hexString: "F7F7F8")
+    static let ypWhite = UIColor(hexString: "FFFFFF")
+    
+    static let ypGrayUniversal = UIColor(hexString: "625C5C")
+    static let ypRedUniversal = UIColor(hexString: "F56B6C")
+    static let ypBackgroundUniversal = UIColor(hexString: "1A1B2280")
+    static let ypGreenUniversal = UIColor(hexString: "1C9F00")
+    static let ypBlueUniversal = UIColor(hexString: "0A84FF")
+    static let ypBlackUniversal = UIColor(hexString: "1A1B22")
+    static let ypWhiteUniversal = UIColor(hexString: "FFFFFF")
+    static let ypYellowUniversal = UIColor(hexString: "FEEF0D")
+    
     // Creates color from a hex string
     convenience init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

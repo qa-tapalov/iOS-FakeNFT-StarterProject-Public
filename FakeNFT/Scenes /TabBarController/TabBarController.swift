@@ -3,26 +3,26 @@ import UIKit
 final class TabBarController: UITabBarController {
 
     private let profileTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.profile", comment: "Профиль"),
-        image: UIImage(resource: .tabProfile),
+        title: "Профиль",
+        image: UIImage.profileTabBar,
         tag: 0
     )
 
     private let catalogTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.catalog", comment: "Каталог"),
-        image: UIImage(resource: .tabCatalog),
+        title: "Каталог",
+        image: UIImage.catalogTabBar,
         tag: 1
     )
 
     private let cartTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.cart", comment: "Корзина"),
-        image: UIImage(resource: .tabCart),
+        title: "Корзина",
+        image: UIImage.basketTabBar,
         tag: 2
     )
 
     private let statisticsTabBarItem = UITabBarItem(
-        title: NSLocalizedString("Tab.statistics", comment: "Статистика"),
-        image: UIImage(resource: .tabStatistic),
+        title: "Статистика",
+        image: UIImage.statisticsTabBar,
         tag: 3
     )
 
@@ -54,6 +54,23 @@ final class TabBarController: UITabBarController {
         let profileNavController = UINavigationController(rootViewController: profileViewController)
         profileNavController.tabBarItem = profileTabBarItem
 
-        viewControllers = [profileNavController, cartViewController]
+        let statsViewController = UINavigationController(rootViewController: StatisticsViewController())
+        statsViewController.tabBarItem = statisticsTabBarItem
+        
+        viewControllers = [profileNavController, cartViewController, statsViewController]
+        
+        let tabBarAppearance = tabBar.standardAppearance
+        tabBarAppearance.configureWithDefaultBackground()
+        tabBarAppearance.backgroundColor = .ypWhite
+        
+        let normalAppearance = UITabBarItemAppearance()
+        normalAppearance.normal.iconColor = .ypBlack
+        normalAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.ypBlack ]
+        
+        tabBarAppearance.stackedLayoutAppearance = normalAppearance
+        tabBarAppearance.inlineLayoutAppearance = normalAppearance
+        tabBarAppearance.compactInlineLayoutAppearance = normalAppearance
+        
+        tabBar.standardAppearance = tabBarAppearance
     }
 }
