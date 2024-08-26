@@ -63,7 +63,7 @@ final class StatisticsCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Methods
     
-    func configure(for nft: NFTModel) {
+    func configure(for nft: StatisticsNFTModel) {
         nftPictureImageView.kf.setImage(with: URL(string: nft.images[0]))
         nftRatingImageView.image = UIImage(named: "stars\(nft.rating)")
         nftNameLabel.text = nft.name

@@ -1,6 +1,6 @@
 import UIKit
 
-struct NFTModel {
+struct StatisticsNFTModel {
     let createdAt: String
     let name: String
     let images: [String]

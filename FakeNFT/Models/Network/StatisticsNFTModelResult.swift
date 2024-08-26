@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NFTResult: Codable {
+struct StatisticsNFTModelResult: Codable {
     let createdAt: String
     let name: String
     let images: [String]

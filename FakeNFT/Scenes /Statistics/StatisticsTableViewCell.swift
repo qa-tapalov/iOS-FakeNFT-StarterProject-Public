@@ -64,7 +64,7 @@ final class StatisticsTableViewCell: UITableViewCell {
     
     // MARK: - Methods
     
-    func configure(numberOfCell: Int, for user: UsersModel) {
+    func configure(numberOfCell: Int, for user: StatisticsUsersModel) {
         rankLabel.text = "\(numberOfCell)"
         nftQuantityLabel.text = "\(user.nfts.count)"
         nameLabel.text = user.name

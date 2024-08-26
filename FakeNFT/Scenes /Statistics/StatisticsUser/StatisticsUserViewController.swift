@@ -83,7 +83,7 @@ final class StatisticsUserViewController: UIViewController {
     
     // MARK: - Methods
     
-    func configure(for user: UsersModel) {
+    func configure(for user: StatisticsUsersModel) {
         avatarImageView.kf.setImage(with: URL(string: user.avatar), placeholder: UIImage(named: "person"))
         usernameLabel.text = user.name
         userDescriptionTextView.text = user.description

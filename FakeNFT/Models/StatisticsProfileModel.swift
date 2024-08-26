@@ -1,6 +1,6 @@
 import UIKit
 
-struct ProfileModel {
+struct StatisticsProfileModel {
     let name: String
     let avatar: String?
     let description: String?

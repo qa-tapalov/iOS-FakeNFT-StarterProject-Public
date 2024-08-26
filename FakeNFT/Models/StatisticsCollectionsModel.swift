@@ -1,6 +1,6 @@
 import UIKit
 
-struct CollectionsModel {
+struct StatisticsCollectionsModel {
     let createdAt: Date?
     let name: String
     let cover: String

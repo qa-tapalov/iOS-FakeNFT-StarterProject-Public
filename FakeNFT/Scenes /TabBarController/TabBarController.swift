@@ -34,19 +34,10 @@ final class TabBarController: UITabBarController {
     private func setupTabBar() {
         view.backgroundColor = UIColor.systemBackground
         
-        let profileViewController = UINavigationController(rootViewController: ProfileViewController())
-        profileViewController.tabBarItem = profileTabBarItem
-        
-        let catalogViewController = UINavigationController(rootViewController: CatalogViewController())
-        catalogViewController.tabBarItem = catalogTabBarItem
-        
-        let cartViewController = UINavigationController(rootViewController: CartViewController())
-        cartViewController.tabBarItem = cartTabBarItem
-        
         let statsViewController = UINavigationController(rootViewController: StatisticsViewController())
         statsViewController.tabBarItem = statisticsTabBarItem
         
-        viewControllers = [profileViewController, catalogViewController, cartViewController, statsViewController]
+        viewControllers = [statsViewController]
         
         let tabBarAppearance = tabBar.standardAppearance
         tabBarAppearance.configureWithDefaultBackground()

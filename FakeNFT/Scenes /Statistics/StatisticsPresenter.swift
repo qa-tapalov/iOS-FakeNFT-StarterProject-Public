@@ -4,7 +4,7 @@ protocol StatisticsPresenterProtocol: AnyObject {
     
     func viewDidLoad()
     func loadUsersList()
-    func getUsers() -> [UsersModel]
+    func getUsers() -> [StatisticsUsersModel]
     func updateUsers()
     func sortedUsers(_ type: UsersSortedType)
     func showError()
@@ -25,7 +25,7 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
     private let statisticsUserDefaults = StatisticsUserDefaults()
     
     weak var view: StatisticsViewController?
-    private var users: [UsersModel] = []
+    private var users: [StatisticsUsersModel] = []
     private var state = StatisticsState.initial {
         didSet {
             stateDidChanged()
@@ -39,7 +39,7 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
     }
     
     func loadUsersList() {
-        statisticsService.fetchUsers { [weak self] (response: Result<[UsersModel], Error>) in
+        statisticsService.fetchUsers { [weak self] (response: Result<[StatisticsUsersModel], Error>) in
             guard let self = self else { return }
             
             switch response {
@@ -52,7 +52,7 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
         }
     }
     
-    func getUsers() -> [UsersModel] {
+    func getUsers() -> [StatisticsUsersModel] {
         users
     }
     

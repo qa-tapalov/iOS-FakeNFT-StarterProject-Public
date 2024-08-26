@@ -4,7 +4,7 @@ protocol StatisticsUserNFTCollectionPresenterProtocol: AnyObject {
     
     func viewDidLoad(with userNFTs: [String])
     func loadNFTs()
-    func getUserNFTs() -> [NFTModel]
+    func getUserNFTs() -> [StatisticsNFTModel]
     func updateUserNFTs()
     func showError()
 }
@@ -24,8 +24,8 @@ final class StatisticsUserNFTCollectionPresenter: StatisticsUserNFTCollectionPre
     
     weak var view: StatisticsUserNFTCollectionViewController?
     private var userNftIds: [String] = []
-    private var nfts: [NFTModel] = []
-    private var userNFTs: [NFTModel] = []
+    private var nfts: [StatisticsNFTModel] = []
+    private var userNFTs: [StatisticsNFTModel] = []
     private var state = StatisticUserNFTCollectionsState.initial {
         didSet {
             stateDidChanged()
@@ -40,7 +40,7 @@ final class StatisticsUserNFTCollectionPresenter: StatisticsUserNFTCollectionPre
     }
     
     func loadNFTs() {
-        statisticsService.fetchNFTs() { [weak self] (response: Result<[NFTModel], Error>) in
+        statisticsService.fetchNFTs() { [weak self] (response: Result<[StatisticsNFTModel], Error>) in
             guard let self = self else { return }
             
             switch response {
@@ -53,7 +53,7 @@ final class StatisticsUserNFTCollectionPresenter: StatisticsUserNFTCollectionPre
         }
     }
     
-    func getUserNFTs() -> [NFTModel] {
+    func getUserNFTs() -> [StatisticsNFTModel] {
         for id in userNftIds {
             userNFTs += nfts.filter { $0.id == id }
         }

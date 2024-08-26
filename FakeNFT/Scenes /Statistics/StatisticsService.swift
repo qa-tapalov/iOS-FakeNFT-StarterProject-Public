@@ -12,7 +12,7 @@ final class StatisticsService {
     
     // MARK: - Users fetching
     
-    func fetchUsers(completion: @escaping (Result<[UsersModel], Error>) -> Void) {
+    func fetchUsers(completion: @escaping (Result<[StatisticsUsersModel], Error>) -> Void) {
         assert(Thread.isMainThread)
         
         guard let request = usersRequest()  else {
@@ -20,7 +20,7 @@ final class StatisticsService {
             return
         }
         
-        URLSession.shared.objectTask(for: request) { [weak self] (response: Result<[UsersResult], Error>) in
+        URLSession.shared.objectTask(for: request) { [weak self] (response: Result<[StatisticsUserModelResult], Error>) in
             guard let self = self else { return }
             
             switch response {
@@ -47,8 +47,8 @@ final class StatisticsService {
         return request
     }
     
-    private func convertToUserModel(userResult: UsersResult) -> UsersModel {
-        let userModel = UsersModel(
+    private func convertToUserModel(userResult: StatisticsUserModelResult) -> StatisticsUsersModel {
+        let userModel = StatisticsUsersModel(
             name: userResult.name,
             avatar: userResult.avatar,
             description: userResult.description,
@@ -63,7 +63,7 @@ final class StatisticsService {
     
     // MARK: - NFTs fetching
     
-    func fetchNFTs(completion: @escaping (Result<[NFTModel], Error>) -> Void) {
+    func fetchNFTs(completion: @escaping (Result<[StatisticsNFTModel], Error>) -> Void) {
         assert(Thread.isMainThread)
         
         guard let request = nftRequest()  else {
@@ -71,7 +71,7 @@ final class StatisticsService {
             return
         }
         
-        URLSession.shared.objectTask(for: request) { [weak self] (response: Result<[NFTResult], Error>) in
+        URLSession.shared.objectTask(for: request) { [weak self] (response: Result<[StatisticsNFTModelResult], Error>) in
             guard let self = self else { return }
             
             switch response {
@@ -98,8 +98,8 @@ final class StatisticsService {
         return request
     }
     
-    private func convertToNFTModel(nftResult: NFTResult) -> NFTModel {
-        let nftModel = NFTModel(
+    private func convertToNFTModel(nftResult: StatisticsNFTModelResult) -> StatisticsNFTModel {
+        let nftModel = StatisticsNFTModel(
             createdAt: nftResult.createdAt,
             name: nftResult.name,
             images: nftResult.images,
