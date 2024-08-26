@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import ProgressHUD
 
-protocol CatalogViewControllerProtocol: AnyObject {
+protocol CatalogViewControllerProtocol: AnyObject, AlertCatalogView {
     func reloadCatalogTableView()
     func showLoadIndicator()
     func hideLoadIndicator()
@@ -63,33 +63,21 @@ final class CatalogViewController: UIViewController, CatalogViewControllerProtoc
     // MARK: - Action
     @objc
     private func sortButtonTapped() {
-        
-        let sortTypeModel = presenter.makeSortTypeModel()
-        
-        let actionSheet = UIAlertController(
-            title: sortTypeModel.title,
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        
-        actionSheet.addAction(UIAlertAction(
-            title: sortTypeModel.byName,
-            style: .default) { _ in
+        let sortModel = presenter.makeSortModel()
+        self.openAlert(
+            title: sortModel.title,
+            message: sortModel.message,
+            alertStyle: .actionSheet,
+            actionTitles: sortModel.actionTitles,
+            actionStyles: [.default,
+                           .default,
+                           .cancel],
+            actions: [{ _ in
                 self.presenter.sortByName()
-            })
-        actionSheet.addAction(UIAlertAction(
-            title: sortTypeModel.byNftCount,
-            style: .default) { _ in
+            }, { _ in
                 self.presenter.sortByNftCount()
-            })
-        
-        actionSheet.addAction(
-            UIAlertAction(
-                title: sortTypeModel.close,
-                style: .cancel)
+            }, { _ in }]
         )
-        
-        present(actionSheet, animated: true)
     }
     
     // MARK: - Public Methods
@@ -163,6 +151,7 @@ extension CatalogViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         showNFTCollection(indexPath: indexPath)
     }
 }

@@ -7,8 +7,9 @@
 
 import UIKit
 import Kingfisher
+import SafariServices
 
-protocol CollectionViewControllerProtocol: AnyObject {
+protocol CollectionViewControllerProtocol: AnyObject, AlertCatalogView {
     func collectionViewData(data: CollectionViewData)
     func reloadNftCollectionView()
     func showLoadIndicator()
@@ -79,7 +80,11 @@ final class CollectionViewController: UIViewController {
         label.font = .caption1
         label.textColor = .yaBlueUniversal
         label.numberOfLines = .zero
-        // TODO: - Ссылка на страницу автора
+        let gesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(collectionAuthorLinkTapped))
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(gesture)
         return label
     }()
     
@@ -125,6 +130,13 @@ final class CollectionViewController: UIViewController {
     @objc
     private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc
+    func collectionAuthorLinkTapped() {
+        guard let url = URL(string: presenter.authorURL ?? "") else { return }
+        let safaryViewController = SFSafariViewController(url: url)
+        navigationController?.present(safaryViewController, animated: true)
     }
     
     // MARK: - Private Methods
@@ -246,6 +258,9 @@ extension CollectionViewController: UICollectionViewDataSource, UICollectionView
         
         let cellModel = presenter.getModel(for: indexPath)
         cell.configCollectionCell(nftModel: cellModel)
+        cell.indexPath = indexPath
+        cell.delegate = self
+        
         return cell
     }
 }
@@ -262,5 +277,15 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return Constants.collectionViewminimumInteritemSpacingForSectionAt
+    }
+}
+
+// MARK: - CollectionViewCellDelegate
+extension CollectionViewController: CollectionViewCellDelegate {
+    func likeButtonDidChange(for indexPath: IndexPath, isLiked: Bool) {
+        presenter.changeLike(for: indexPath, isLiked: isLiked)
+    }
+    func cartButtonDidChange(for indexPath: IndexPath) {
+        presenter.changeOrder(for: indexPath)
     }
 }

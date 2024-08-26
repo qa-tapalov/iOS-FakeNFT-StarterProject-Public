@@ -14,6 +14,7 @@ protocol CatalogPresenterProtocol: AnyObject {
     func sortByName()
     func sortByNftCount()
     func makeSortTypeModel() -> SortTypeModel
+    func makeSortModel() -> AlertModel
 }
 
 final class CatalogPresenter: CatalogPresenterProtocol {
@@ -41,11 +42,19 @@ final class CatalogPresenter: CatalogPresenterProtocol {
                 self.collectionsNft = collections
                 self.sotrCollections()
                 self.catalogView?.reloadCatalogTableView()
+                self.catalogView?.hideLoadIndicator()
             case .failure(let error):
-                // TODO: алерт ошибки
-                ///
-                print("[DEBUG]: [ERROR]: CatalogPresenter: getNftCollections")
-                ///
+                let errorModel = makeErrorModel(error)
+                self.catalogView?.hideLoadIndicator()
+                catalogView?.openAlert(
+                    title: errorModel.title,
+                    message: errorModel.message,
+                    alertStyle: .alert,
+                    actionTitles: errorModel.actionTitles,
+                    actionStyles: [.default, .default],
+                    actions: [{ _ in }, { _ in
+                        self.getNftCollections()}]
+                )
             }
             self.catalogView?.hideLoadIndicator()
         }
@@ -77,6 +86,21 @@ final class CatalogPresenter: CatalogPresenterProtocol {
         return sortTypeModel
     }
     
+    func makeSortModel() -> AlertModel {
+        let title: String = NSLocalizedString("Catalog.sorting", comment: "")
+        let message: String? = nil
+        let actionSortByName: String =  NSLocalizedString("Catalog.sortingByName", comment: "")
+        let actionSortByCount: String =  NSLocalizedString("Catalog.sortingByCount", comment: "")
+        let actionClose: String =  NSLocalizedString("Catalog.sortingClose", comment: "")
+        return AlertModel(
+            title: title,
+            message: message,
+            actionTitles: [actionSortByName,
+                           actionSortByCount,
+                           actionClose]
+        )
+    }
+    
     // MARK: - Private Methods
     private func sotrCollections() {
         let sortStorage = sortStorage.getSort()
@@ -87,5 +111,25 @@ final class CatalogPresenter: CatalogPresenterProtocol {
             sortByNftCount()
         default: break
         }
+    }
+    
+    private func makeErrorModel(_ error: Error) -> AlertModel {
+        let title: String = NSLocalizedString("Error.title", comment: "")
+        let message: String
+        switch error {
+        case is NetworkClientError:
+            message = NSLocalizedString("Error.network", comment: "")
+        default:
+            message = NSLocalizedString("Error.unknown", comment: "")
+        }
+        
+        let actionText: String =  NSLocalizedString("Error.repeat", comment: "")
+        let cancelText: String = NSLocalizedString("Error.cancel", comment: "")
+        return AlertModel(
+            title: title,
+            message: message,
+            actionTitles: [cancelText,
+                           actionText]
+        )
     }
 }
