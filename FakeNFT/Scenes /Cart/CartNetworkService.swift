@@ -19,7 +19,7 @@ final class CartNetworkService {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
         
-        let task = URLSession.shared.objectTask(for: request) { (result: Result<OrderModel, Error>) in
+        let task = URLSession.shared.objectsTask(for: request) { (result: Result<OrderModel, Error>) in
             
             switch result {
             case .success(let order):
@@ -38,7 +38,7 @@ final class CartNetworkService {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
         
-        let task = URLSession.shared.objectTask(for: request) { (result: Result<NftNetworkModel, Error> ) in
+        let task = URLSession.shared.objectsTask(for: request) { (result: Result<NftNetworkModel, Error> ) in
             
             switch result {
             case .success(let nftModel):
@@ -65,7 +65,7 @@ final class CartNetworkService {
             request.httpBody = bodyData
         }
         
-        let task = URLSession.shared.objectTask(for: request) { (result: Result<OrderModel, Error> ) in
+        let task = URLSession.shared.objectsTask(for: request) { (result: Result<OrderModel, Error> ) in
             switch result {
             case .success(let order):
                 completion(.success(order))
@@ -83,7 +83,7 @@ final class CartNetworkService {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
         
-        let task = URLSession.shared.objectTask(for: request) { (result: Result<[CurrencyModel], Error>) in
+        let task = URLSession.shared.objectsTask(for: request) { (result: Result<[CurrencyModel], Error>) in
             
             switch result {
             case .success(let currencies):
@@ -102,7 +102,7 @@ final class CartNetworkService {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.setValue(RequestConstants.token, forHTTPHeaderField: "X-Practicum-Mobile-Token")
         
-        let task = URLSession.shared.objectTask(for: request) { (result: Result<OrderSuccessModel, Error>) in
+        let task = URLSession.shared.objectsTask(for: request) { (result: Result<OrderSuccessModel, Error>) in
             
             switch result {
             case .success(let orderSuccessResponce):
@@ -120,11 +120,12 @@ enum NetworkError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
+    case serviceError
 }
 
 extension URLSession {
     
-    func objectTask<T: Decodable>(
+    func objectsTask<T: Decodable>(
         for request: URLRequest,
         completion: @escaping (Result<T, Error>) -> Void
     ) -> URLSessionTask {
