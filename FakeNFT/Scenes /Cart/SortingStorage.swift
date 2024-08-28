@@ -21,9 +21,9 @@ final class SortingStorage {
         }
     }
     
-    func getSort() -> Sorting {
-           guard let saveSort = selectedSort else { return Sorting.names }
-        return Sorting(rawValue: saveSort) ?? .names
+    func getSort() -> SortingCart {
+           guard let saveSort = selectedSort else { return SortingCart.names }
+        return SortingCart(rawValue: saveSort) ?? .names
         }
     
     private init(){}

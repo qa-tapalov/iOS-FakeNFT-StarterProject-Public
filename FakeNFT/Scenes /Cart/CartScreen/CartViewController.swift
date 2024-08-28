@@ -82,6 +82,11 @@ final class CartViewController: UIViewController {
         return view
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter.loadNfts()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
@@ -139,19 +144,19 @@ final class CartViewController: UIViewController {
     @objc
     private func sortItems(){
         let price = UIAlertAction(title: "По цене", style: .default) { _ in
-            self.storage.selectedSort = Sorting.price.rawValue
+            self.storage.selectedSort = SortingCart.price.rawValue
             self.presenter?.sortItems(options: .price)
             self.tableView.reloadData()
         }
         
         let rating = UIAlertAction(title: "По рейтингу", style: .default) { _ in
-            self.storage.selectedSort = Sorting.rating.rawValue
+            self.storage.selectedSort = SortingCart.rating.rawValue
             self.presenter?.sortItems(options: .rating)
             self.tableView.reloadData()
         }
         
         let name = UIAlertAction(title: "По названию", style: .default) { _ in
-            self.storage.selectedSort = Sorting.names.rawValue
+            self.storage.selectedSort = SortingCart.names.rawValue
             self.presenter?.sortItems(options: .names)
             self.tableView.reloadData()
         }

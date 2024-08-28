@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Constants
-struct Constants {
+struct ConstantsCatalog {
     // MARK: - For All
     static let floatZero: CGFloat = 0.0
     static let intTwo: Int = 2

@@ -30,7 +30,7 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = Constants.cornerRadius
+        imageView.layer.cornerRadius = ConstantsCatalog.cornerRadius
         return imageView
     }()
     
@@ -39,10 +39,10 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
         button.setImage(UIImage(systemName: "heart.fill"), for: .normal)
         button.tintColor = .yaWhiteUniversal
         button.contentEdgeInsets = UIEdgeInsets(
-            top: Constants.likeButtonInsetsTopBottom,
-            left: Constants.likeButtonInsetsLeft,
-            bottom: Constants.likeButtonInsetsTopBottom,
-            right: Constants.likeButtonInsetsRight)
+            top: ConstantsCatalog.likeButtonInsetsTopBottom,
+            left: ConstantsCatalog.likeButtonInsetsLeft,
+            bottom: ConstantsCatalog.likeButtonInsetsTopBottom,
+            right: ConstantsCatalog.likeButtonInsetsRight)
         button.addTarget(
             self,
             action: #selector (likeButtonTapped),
@@ -150,30 +150,30 @@ final class CollectionViewCell: UICollectionViewCell, ReuseIdentifying {
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             nftImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            nftImageView.heightAnchor.constraint(equalToConstant: Constants.nftImageViewHeigth),
+            nftImageView.heightAnchor.constraint(equalToConstant: ConstantsCatalog.nftImageViewHeigth),
             
-            likeButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Constants.likeButtonTopIdent),
-            likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constants.likeButtonTrailing),
-            likeButton.heightAnchor.constraint(equalToConstant: Constants.likeButtonHeigthWidth),
-            likeButton.widthAnchor.constraint(equalToConstant: Constants.likeButtonHeigthWidth),
+            likeButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: ConstantsCatalog.likeButtonTopIdent),
+            likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: ConstantsCatalog.likeButtonTrailing),
+            likeButton.heightAnchor.constraint(equalToConstant: ConstantsCatalog.likeButtonHeigthWidth),
+            likeButton.widthAnchor.constraint(equalToConstant: ConstantsCatalog.likeButtonHeigthWidth),
             
-            ratingView.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: Constants.ratingViewTopIdent),
+            ratingView.topAnchor.constraint(equalTo: nftImageView.bottomAnchor, constant: ConstantsCatalog.ratingViewTopIdent),
             ratingView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            ratingView.heightAnchor.constraint(equalToConstant: Constants.ratingViewHeigth),
-            ratingView.widthAnchor.constraint(equalToConstant: Constants.ratingViewWidth),
+            ratingView.heightAnchor.constraint(equalToConstant: ConstantsCatalog.ratingViewHeigth),
+            ratingView.widthAnchor.constraint(equalToConstant: ConstantsCatalog.ratingViewWidth),
             
-            nftName.topAnchor.constraint(equalTo: ratingView.bottomAnchor, constant: Constants.nftNameTopIdent),
+            nftName.topAnchor.constraint(equalTo: ratingView.bottomAnchor, constant: ConstantsCatalog.nftNameTopIdent),
             nftName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            nftName.heightAnchor.constraint(equalToConstant: Constants.nftNameHeigth),
-            nftName.widthAnchor.constraint(equalToConstant: Constants.nftNameWidth),
+            nftName.heightAnchor.constraint(equalToConstant: ConstantsCatalog.nftNameHeigth),
+            nftName.widthAnchor.constraint(equalToConstant: ConstantsCatalog.nftNameWidth),
             
-            nftPrice.topAnchor.constraint(equalTo: nftName.bottomAnchor, constant: Constants.nftPriceTopIdent),
+            nftPrice.topAnchor.constraint(equalTo: nftName.bottomAnchor, constant: ConstantsCatalog.nftPriceTopIdent),
             nftPrice.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             
             cartButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            cartButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constants.cardButtonTopIdent),
-            cartButton.heightAnchor.constraint(equalToConstant: Constants.cardButtonHeigthWidth),
-            cartButton.widthAnchor.constraint(equalToConstant: Constants.cardButtonHeigthWidth)
+            cartButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: ConstantsCatalog.cardButtonTopIdent),
+            cartButton.heightAnchor.constraint(equalToConstant: ConstantsCatalog.cardButtonHeigthWidth),
+            cartButton.widthAnchor.constraint(equalToConstant: ConstantsCatalog.cardButtonHeigthWidth)
         ])
     }
 }

@@ -80,7 +80,7 @@ final class CatalogService: CatalogServiceProtocol {
     }
     
     func getProfile(completion: @escaping (Result<ProfileResult, Error>) -> Void) {
-        let request = ProfileRequest()
+        let request = ProfileFromCatalogRequest()
         networkClient.send(request: request,
                            type: ProfileResult.self) { [weak self] result in
             switch result {

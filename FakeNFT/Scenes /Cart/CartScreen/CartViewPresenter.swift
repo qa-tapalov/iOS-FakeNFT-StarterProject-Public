@@ -11,7 +11,7 @@ protocol CartViewPresenterProtocol: AnyObject {
     var items: [ProductModel] {get set}
     func getItem(index: Int) -> ProductModel
     func numberOfRows() -> Int
-    func sortItems(options: Sorting)
+    func sortItems(options: SortingCart)
     func loadNfts()
     func deleteItem(index: Int)
 }
@@ -23,7 +23,6 @@ final class CartViewPresenter: CartViewPresenterProtocol {
     let cartNetwork = CartNetworkService.shared
     init(view: CartViewController) {
         self.view = view
-        loadNfts()
     }
     
     func getItem(index: Int) -> ProductModel {
@@ -34,7 +33,7 @@ final class CartViewPresenter: CartViewPresenterProtocol {
         return items.count
     }
     
-    func sortItems(options: Sorting) {
+    func sortItems(options: SortingCart) {
         switch options {
         case .price:
             self.items.sort {$0.price < $1.price}
@@ -115,7 +114,7 @@ final class CartViewPresenter: CartViewPresenterProtocol {
     }
 }
 
-enum Sorting: String {
+enum SortingCart: String {
     case price = "цена"
     case rating = "рейтинг"
     case names = "название"

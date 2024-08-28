@@ -24,7 +24,7 @@ final class RatingView: UIStackView {
     // MARK: - Public Methods
     func createRating(with rating: Int) {
         for (index, imageView) in stars.enumerated() {
-            let roundRating = Int(round(Double(rating / Constants.intTwo)))
+            let roundRating = Int(round(Double(rating / ConstantsCatalog.intTwo)))
             if index < roundRating {
                 imageView.tintColor = .yaYellowUniversal
             } else {
@@ -36,7 +36,7 @@ final class RatingView: UIStackView {
     // MARK: - Private Methods
     private func setupStack() {
         axis = .horizontal
-        spacing = Constants.two
+        spacing = ConstantsCatalog.two
         distribution = .fillEqually
         for _ in 1...5 {
             let starImageView = starView()
