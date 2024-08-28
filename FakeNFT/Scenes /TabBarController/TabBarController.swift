@@ -56,9 +56,7 @@ final class TabBarController: UITabBarController {
 
         let statsViewController = UINavigationController(rootViewController: StatisticsViewController())
         statsViewController.tabBarItem = statisticsTabBarItem
-        
-        viewControllers = [profileNavController, cartViewController, statsViewController]
-        
+                
         let tabBarAppearance = tabBar.standardAppearance
         tabBarAppearance.configureWithDefaultBackground()
         tabBarAppearance.backgroundColor = .ypWhite
@@ -72,5 +70,15 @@ final class TabBarController: UITabBarController {
         tabBarAppearance.compactInlineLayoutAppearance = normalAppearance
         
         tabBar.standardAppearance = tabBarAppearance
+        
+        let catalogConfiguration = CatalogSceneConfiguration()
+        
+        let catalogViewController = UINavigationController(
+            rootViewController: catalogConfiguration.catalogViewController
+        )
+        
+        catalogViewController.tabBarItem = catalogTabBarItem
+    
+        viewControllers = [catalogViewController, profileNavController, cartViewController, statsViewController]
     }
 }
