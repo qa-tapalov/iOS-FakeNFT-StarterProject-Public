@@ -400,10 +400,10 @@
 				1B76389A2C6A7C8600F33170 /* CartNetworkService.swift */,
 				1B7638A22C6CC3EE00F33170 /* SortingStorage.swift */,
 				1B7638AC2C6D155000F33170 /* CurrencyModel.swift */,
+				1B7638B42C6E067900F33170 /* OrderSuccessModel.swift */,
 				1B7638992C6A7BBF00F33170 /* Cells */,
 				1B7638A52C6CE4D300F33170 /* PaymentScreen */,
 				1B7638982C6A7B9400F33170 /* CartScreen */,
-				1B7638B42C6E067900F33170 /* OrderSuccessModel.swift */,
 			);
 			path = Cart;
 			sourceTree = "<group>";

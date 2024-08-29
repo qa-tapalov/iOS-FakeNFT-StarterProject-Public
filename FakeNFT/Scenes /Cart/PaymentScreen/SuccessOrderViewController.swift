@@ -71,7 +71,7 @@ final class SuccessOrderViewController: UIViewController {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         
         let tabBarController = TabBarController()
-//        tabBarController.selectedIndex = 2 открыть, когда будут все остальные табы
+        tabBarController.selectedIndex = 2
         window.rootViewController = tabBarController
     }
 }

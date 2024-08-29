@@ -79,6 +79,6 @@ final class TabBarController: UITabBarController {
         
         catalogViewController.tabBarItem = catalogTabBarItem
     
-        viewControllers = [catalogViewController, profileNavController, cartViewController, statsViewController]
+        viewControllers = [profileNavController, catalogViewController, cartViewController, statsViewController]
     }
 }
