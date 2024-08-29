@@ -11,7 +11,7 @@
 
 Демонстрация Корзины - https://disk.yandex.ru/i/Kdlr5DIWi29JZA
 
-Демонстрация Каталог - 
+Демонстрация Каталог - https://disk.yandex.ru/i/ra14pwkPB7L-VA
 
 # Назначение и цели приложения
 
