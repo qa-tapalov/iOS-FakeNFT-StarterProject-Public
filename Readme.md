@@ -4,6 +4,15 @@
 
 [Дизайн Figma](https://www.figma.com/file/k1LcgXHGTHIeiCv4XuPbND/FakeNFT-(YP)?node-id=96-5542&t=YdNbOI8EcqdYmDeg-0)
 
+# Видео эпика
+Демонстрация Профиля - https://disk.yandex.com/i/Z4itpmdzmtFaVA
+
+Демонстрация Статистики - https://disk.yandex.ru/i/Pth3pat7HoRf4Q
+
+Демонстрация Корзины - https://disk.yandex.ru/i/Kdlr5DIWi29JZA
+
+Демонстрация Каталог - https://disk.yandex.ru/i/ra14pwkPB7L-VA
+
 # Назначение и цели приложения
 
 Приложение помогает пользователям просматривать и покупать NFT (Non-Fungible Token). Функционал покупки иммитируется с помощью мокового сервера.
